@@ -1,0 +1,46 @@
+$header-row-height: 48px;
+$box-padding: 24px;
+$border-color: rgb(160, 160, 160);
+
+.month-view-box {
+  padding: $box-padding;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  
+  td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border: 1px solid $border-color;
+    background: rgb(235, 235, 235);
+  }
+}
+
+.header-table {
+  td {
+    border: none;
+    border-top: 1px solid $border-color;
+    height: $header-row-height;
+    text-align: center;
+
+    &:first-child {
+      border-left: 1px solid $border-color;
+    }
+
+    &:last-child {
+      border-right: 1px solid $border-color;
+    }
+  }
+}
+
+.content-table {
+  td {
+    padding: 8px 16px;
+    height: calc((100vh - (#{$header-row-height + 2 * ($box-padding + 1)})) / 5);
+    min-height: 128px;
+  }
+}
