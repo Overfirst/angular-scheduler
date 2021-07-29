@@ -1,0 +1,9 @@
+<div class="date-switcher-wrapper">
+  <div class="date-switcher">
+    <div class="date-group">
+      <span (click)="subDate()" class="switch-btn">🠗</span>
+      <span (click)="addDate()" class="switch-btn">🠕</span>
+      <span>{{ selectedDate | date:'MMMM, YYYY' }}</span>
+    </div>
+  </div>
+</div>

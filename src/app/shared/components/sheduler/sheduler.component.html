@@ -1,1 +1,8 @@
-<sheduler-month-view></sheduler-month-view>
+<div class="sheduler-box">
+  <sheduler-tools></sheduler-tools>
+
+  <div class="view-box">
+    <sheduler-date-switcher (viewDateChanged)="viewDateChanged($event)"></sheduler-date-switcher>
+    <sheduler-month-view [date]="selectedViewDate"></sheduler-month-view>
+  </div>
+</div>

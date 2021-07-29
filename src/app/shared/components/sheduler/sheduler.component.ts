@@ -6,4 +6,10 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./sheduler.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShedulerComponent { }
+export class ShedulerComponent {
+  public selectedViewDate = new Date();
+
+  public viewDateChanged(date: Date): void {
+    this.selectedViewDate = date;
+  }
+}

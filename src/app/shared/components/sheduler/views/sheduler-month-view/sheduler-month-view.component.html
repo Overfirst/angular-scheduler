@@ -18,14 +18,19 @@
   <div class="content-table">
     <table>
       <tbody>
-        <tr *ngFor="let in of [1, 2, 3, 4, 5]">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+        <tr *ngFor="let week of weeks">
+          <td
+            [style.height]="getHeightStyle()"
+            *ngFor="let day of week"
+          >
+            <div
+              class="column-content"
+              [class.pale-date]="!dayInCurrentMonth(day)"
+              [class.today-date]="isToday(day)"
+            >
+              <span>{{ day | date:'MMMM, d' }}</span>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

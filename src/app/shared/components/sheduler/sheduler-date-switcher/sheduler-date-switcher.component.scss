@@ -1,0 +1,38 @@
+@import "../../../common_styles.scss";
+
+.switch-btn {
+  font-size: 32px;
+  user-select: none;
+  margin-right: 12px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.date-switcher-wrapper {
+  padding: 24px;
+  padding-bottom: 0;
+}
+
+.date-switcher {
+  height: $header-row-height;
+  background: $default-table-color;
+  border: 1px solid $border-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+}
+
+.date-group {
+  display: flex;
+  width: 200px;
+  white-space: nowrap;
+  text-align: left;
+  vertical-align: middle;
+  align-items: center;
+}
