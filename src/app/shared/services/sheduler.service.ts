@@ -4,6 +4,8 @@ import { ShedulerEvent, ViewDetalization } from "../interfaces";
 
 @Injectable({ providedIn: 'root' })
 export class ShedulerService {
+  public eventBoxes = new Set<HTMLDivElement>();
+
   public getWeeksForMonthView(date: Date, dateMonth: Date): Array<Date[]> {
     const weeks: Array<Date[]> = [];
     const startDate = addDays(startOfWeek(startOfMonth(date), { weekStartsOn: 1 }), -1);

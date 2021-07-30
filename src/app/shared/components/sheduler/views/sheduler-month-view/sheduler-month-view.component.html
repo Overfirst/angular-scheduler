@@ -42,6 +42,7 @@
               >
                 <div
                   #eventBox
+                  collectEventBox
                   class="event-box"
                   [attr.event-id]="event.id"
                   [class.event-box-margin-left]="eventStartedOnTargetWeek(event, week[0])"
@@ -50,7 +51,6 @@
                   (mouseleave)="eventBoxMouseLeave(eventBox)"
                 >
                   <span>({{ event.start | date:'hh:mm' }}) {{ event.name }}</span>
-                  <div *ngIf="collectEventBox(eventBox)"></div>
                 </div>
               </div>
             </ng-container>

@@ -4,6 +4,7 @@ import { ShedulerComponent } from '../components/sheduler/sheduler.component';
 import { ShedulerMonthViewComponent } from '../components/sheduler/views/sheduler-month-view/sheduler-month-view.component';
 import { ShedulerToolsComponent } from '../components/sheduler/sheduler-tools/sheduler-tools.component';
 import { ShedulerDateSwitcherComponent } from '../components/sheduler/sheduler-date-switcher/sheduler-date-switcher.component';
+import { ShedulerCollectEventBoxDirective } from '../directives/collect-event-box.directive';
 
 @NgModule({
   imports: [SharedModule],
@@ -11,7 +12,8 @@ import { ShedulerDateSwitcherComponent } from '../components/sheduler/sheduler-d
     ShedulerComponent,
     ShedulerMonthViewComponent,
     ShedulerToolsComponent,
-    ShedulerDateSwitcherComponent
+    ShedulerDateSwitcherComponent,
+    ShedulerCollectEventBoxDirective
   ],
   exports: [
     ShedulerComponent,

@@ -12,8 +12,6 @@ export class ShedulerMonthViewComponent implements OnChanges {
   @ViewChild('column', { static: true }) private column: ElementRef<HTMLTableCellElement>;
   @ViewChild('row', { static: true }) private row: ElementRef<HTMLTableRowElement>;
 
-  private eventBoxes = new Set<HTMLDivElement>();
-
   public weeks: Array<Date[]> = [];
 
   private currentDate: Date = new Date();
@@ -30,7 +28,7 @@ export class ShedulerMonthViewComponent implements OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    this.eventBoxes.clear();
+    this.service.eventBoxes.clear();
   }
 
   public dayInCurrentMonth(day: Date): boolean {    
@@ -72,7 +70,7 @@ export class ShedulerMonthViewComponent implements OnChanges {
   }
 
   public eventBoxMouseOver(eventBox: HTMLDivElement): void {
-    this.eventBoxes.forEach(box => {
+    this.service.eventBoxes.forEach(box => {
       if (eventBox.getAttribute('event-id') === box.getAttribute('event-id')) {
         box.style.border = '1px solid #000';
       }
@@ -80,16 +78,11 @@ export class ShedulerMonthViewComponent implements OnChanges {
   }
 
   public eventBoxMouseLeave(eventBox: HTMLDivElement): void {
-    this.eventBoxes.forEach(box => {
+    this.service.eventBoxes.forEach(box => {
       if (eventBox.getAttribute('event-id') === box.getAttribute('event-id')) {
         box.style.border = '1px solid #bbaacf';
       }
     });
-  }
-
-  public collectEventBox(eventBox: HTMLDivElement): boolean {
-    this.eventBoxes.add(eventBox);
-    return false;
   }
 
   @HostListener('window:resize') public onResize(): void {
