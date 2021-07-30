@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ViewChild, ElementRef, HostListener, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ViewChild, ElementRef, HostListener, ChangeDetectorRef, DoCheck, OnChanges, SimpleChanges } from '@angular/core';
 import { ShedulerEvent, ViewDetalization } from 'src/app/shared/interfaces';
 import { ShedulerService } from 'src/app/shared/services/sheduler.service';
 
@@ -8,9 +8,11 @@ import { ShedulerService } from 'src/app/shared/services/sheduler.service';
   styleUrls: ['./sheduler-month-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShedulerMonthViewComponent {
+export class ShedulerMonthViewComponent implements OnChanges {
   @ViewChild('column', { static: true }) private column: ElementRef<HTMLTableCellElement>;
   @ViewChild('row', { static: true }) private row: ElementRef<HTMLTableRowElement>;
+
+  private eventBoxes = new Set<HTMLDivElement>();
 
   public weeks: Array<Date[]> = [];
 
@@ -25,6 +27,10 @@ export class ShedulerMonthViewComponent {
   @Input() public set date(date: Date) {
     this.currentDate = date;
     this.weeks = this.service.getWeeksForMonthView(date, this.currentDate);
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    this.eventBoxes.clear();
   }
 
   public dayInCurrentMonth(day: Date): boolean {    
@@ -65,7 +71,28 @@ export class ShedulerMonthViewComponent {
     return this.service.eventEndedOnTargetWeek(event, monday);
   }
 
-  @HostListener('window:resize') onResize(): void {
+  public eventBoxMouseOver(wrapper: HTMLDivElement): void {
+    this.eventBoxes.forEach(eventBox => {
+      if (wrapper.children[0].getAttribute('event-id') === eventBox.getAttribute('event-id')) {
+        eventBox.style.border = '1px solid #000';
+      }
+    });
+  }
+
+  public eventBoxMouseLeave(wrapper: HTMLDivElement): void {
+    this.eventBoxes.forEach(eventBox => {
+      if (wrapper.children[0].getAttribute('event-id') === eventBox.getAttribute('event-id')) {
+        eventBox.style.border = '1px solid #bbaacf';
+      }
+    });
+  }
+
+  public collectEventBox(eventBox: HTMLDivElement): boolean {
+    this.eventBoxes.add(eventBox);
+    return false;
+  }
+
+  @HostListener('window:resize') public onResize(): void {
     setTimeout(() => this.cdRef.detectChanges(), 0)
   }
 }

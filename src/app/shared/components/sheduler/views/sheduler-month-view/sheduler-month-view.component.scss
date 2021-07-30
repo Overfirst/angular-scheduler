@@ -119,9 +119,10 @@ table {
   display: flex;
   align-items: center;
   background: #5dff78;
-  border: 1px solid #000;
+  border: 1px solid #bbaacf;
   cursor: pointer;
   height: 98%;
+  transition: border 0.2s;
 
   span {
     overflow: hidden;
