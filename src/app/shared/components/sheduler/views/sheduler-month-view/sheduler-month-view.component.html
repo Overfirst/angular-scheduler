@@ -2,8 +2,8 @@
   <div class="header-table">
     <table>
       <thead>
-        <tr>
-          <td>Monday</td>
+        <tr #row>
+          <td #column>Monday</td>
           <td>Tuesday</td>
           <td>Wednesday</td>
           <td>Thursday</td>
@@ -31,6 +31,24 @@
               <span>{{ day | date:'MMMM, d' }}</span>
             </div>
           </td>
+          <div class="events-box">
+            <ng-container *ngFor="let event of events">
+              <div
+                class="event-box-wrapper"
+                *ngIf="eventOnTargetWeek(event, week[0])"
+                [style.left]="getEventWeekDaysOffset(event, week[0])"
+                [style.width]="getEventDurationForTargetWeek(event, week[0])"
+              >
+                <div
+                  class="event-box"
+                  [class.event-box-margin-left]="eventStartedOnTargetWeek(event, week[0])"
+                  [class.event-box-margin-right]="eventEndedOnTargetWeek(event, week[0])"
+                >
+                  <span>({{ event.start | date:'hh:mm' }}) {{ event.name }}</span>
+                </div>
+              </div>
+            </ng-container>
+          </div>
         </tr>
       </tbody>
     </table>

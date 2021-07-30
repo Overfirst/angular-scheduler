@@ -7,5 +7,12 @@ import { ShedulerEvent } from './shared/interfaces';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public events: ShedulerEvent[] = [];
+  public events: ShedulerEvent[] = [
+    {
+      id: 1,
+      name: 'Create sheduler application',
+      start: new Date('2021-7-8 12:00'),
+      end: new Date('2021-7-30 13:00'),
+    }
+  ];
 }

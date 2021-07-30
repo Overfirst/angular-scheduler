@@ -41,6 +41,11 @@ table {
     position: relative;
     padding: 8px;
     vertical-align: top;
+    width: 100%;
+  }
+
+  tr {
+    position: relative;
   }
 }
 
@@ -90,4 +95,53 @@ table {
   &:active {
     background: rgba(102, 219, 255, 1);
   }
+}
+
+.events-box {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  width: 100%;
+  height: 75%;
+}
+
+.event-box-wrapper {
+  width: inherit;
+  position: absolute;
+  height: 20%;
+
+  display: flex;
+  justify-content: center;
+}
+
+.event-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: #5dff78;
+  border: 1px solid #000;
+  cursor: pointer;
+  height: 98%;
+
+  span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    margin-left: 12px;
+    user-select: none;
+    font-size: 14px;
+  }
+}
+
+.event-box-margin-left {
+  margin-left: 8px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.event-box-margin-right {
+  margin-right: 8px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }

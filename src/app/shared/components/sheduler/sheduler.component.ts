@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ShedulerEvent } from '../../interfaces';
 
 @Component({
   selector: 'sheduler',
@@ -8,6 +9,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 })
 export class ShedulerComponent {
   public selectedViewDate = new Date();
+  @Input() public events: ShedulerEvent[] = [];
 
   public viewDateChanged(date: Date): void {
     this.selectedViewDate = date;
