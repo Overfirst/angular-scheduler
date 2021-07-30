@@ -40,8 +40,6 @@
                 [attr.event-id]="event.id"
                 [style.left]="getEventWeekDaysOffset(event, week[0])"
                 [style.width]="getEventDurationForTargetWeek(event, week[0])"
-                (mouseover)="eventBoxMouseOver(eventBoxWrapper)"
-                (mouseleave)="eventBoxMouseLeave(eventBoxWrapper)"
               >
                 <div
                   #eventBox
@@ -49,6 +47,8 @@
                   [attr.event-id]="event.id"
                   [class.event-box-margin-left]="eventStartedOnTargetWeek(event, week[0])"
                   [class.event-box-margin-right]="eventEndedOnTargetWeek(event, week[0])"
+                  (mouseover)="eventBoxMouseOver(eventBoxWrapper)"
+                  (mouseleave)="eventBoxMouseLeave(eventBoxWrapper)"
                 >
                   <span>({{ event.start | date:'hh:mm' }}) {{ event.name }}</span>
                   <div *ngIf="collectEventBox(eventBox)"></div>
