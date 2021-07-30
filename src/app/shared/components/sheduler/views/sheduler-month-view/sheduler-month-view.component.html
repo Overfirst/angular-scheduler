@@ -34,7 +34,6 @@
           <div class="events-box">
             <ng-container *ngFor="let event of events">
               <div
-                #eventBoxWrapper
                 *ngIf="eventOnTargetWeek(event, week[0])"
                 class="event-box-wrapper"
                 [attr.event-id]="event.id"
@@ -47,8 +46,8 @@
                   [attr.event-id]="event.id"
                   [class.event-box-margin-left]="eventStartedOnTargetWeek(event, week[0])"
                   [class.event-box-margin-right]="eventEndedOnTargetWeek(event, week[0])"
-                  (mouseover)="eventBoxMouseOver(eventBoxWrapper)"
-                  (mouseleave)="eventBoxMouseLeave(eventBoxWrapper)"
+                  (mouseover)="eventBoxMouseOver(eventBox)"
+                  (mouseleave)="eventBoxMouseLeave(eventBox)"
                 >
                   <span>({{ event.start | date:'hh:mm' }}) {{ event.name }}</span>
                   <div *ngIf="collectEventBox(eventBox)"></div>

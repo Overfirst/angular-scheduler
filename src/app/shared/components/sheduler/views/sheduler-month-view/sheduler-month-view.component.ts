@@ -71,18 +71,18 @@ export class ShedulerMonthViewComponent implements OnChanges {
     return this.service.eventEndedOnTargetWeek(event, monday);
   }
 
-  public eventBoxMouseOver(wrapper: HTMLDivElement): void {
-    this.eventBoxes.forEach(eventBox => {
-      if (wrapper.children[0].getAttribute('event-id') === eventBox.getAttribute('event-id')) {
-        eventBox.style.border = '1px solid #000';
+  public eventBoxMouseOver(eventBox: HTMLDivElement): void {
+    this.eventBoxes.forEach(box => {
+      if (eventBox.getAttribute('event-id') === box.getAttribute('event-id')) {
+        box.style.border = '1px solid #000';
       }
     });
   }
 
-  public eventBoxMouseLeave(wrapper: HTMLDivElement): void {
-    this.eventBoxes.forEach(eventBox => {
-      if (wrapper.children[0].getAttribute('event-id') === eventBox.getAttribute('event-id')) {
-        eventBox.style.border = '1px solid #bbaacf';
+  public eventBoxMouseLeave(eventBox: HTMLDivElement): void {
+    this.eventBoxes.forEach(box => {
+      if (eventBox.getAttribute('event-id') === box.getAttribute('event-id')) {
+        box.style.border = '1px solid #bbaacf';
       }
     });
   }
