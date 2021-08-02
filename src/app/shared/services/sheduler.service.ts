@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { addDays, addWeeks, startOfWeek, startOfMonth, isToday, isSameWeek, differenceInCalendarDays, getDay } from "date-fns";
+import { addDays, addWeeks, startOfWeek, startOfMonth, isToday, isSameWeek, differenceInCalendarDays, getDay, isFirstDayOfMonth } from "date-fns";
 import { ShedulerEvent, ViewDetalization } from "../interfaces";
 
 @Injectable({ providedIn: 'root' })
@@ -35,6 +35,11 @@ export class ShedulerService {
 
   public isToday(date: Date): boolean {
     return isToday(date);
+  }
+
+  public isFullDate(date: Date, weeks: Array<Date[]>): boolean {
+    const isFirstDayOfFirstWeek = date == weeks[0][0];
+    return isFirstDayOfFirstWeek || (!isFirstDayOfFirstWeek && isFirstDayOfMonth(date));
   }
 
   public getEventDurationForTargetWeek(event: ShedulerEvent, monday: Date, view: ViewDetalization): number {

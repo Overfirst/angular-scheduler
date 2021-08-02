@@ -11,8 +11,14 @@ export class AppComponent {
     {
       id: 1,
       name: 'Create sheduler application',
-      start: new Date('2021-7-8 12:00'),
-      end: new Date('2021-7-30 13:00'),
-    }
+      start: new Date('2021-08-06 12:00'),
+      end: new Date('2021-08-12 13:00'),
+    },
+    {
+      id: 2,
+      name: 'Test task',
+      start: new Date('2021-08-05 04:00'),
+      end: new Date('2021-08-05 13:00'),
+    },
   ];
 }

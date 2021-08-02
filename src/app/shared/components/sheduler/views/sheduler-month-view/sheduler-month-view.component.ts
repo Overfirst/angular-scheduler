@@ -44,6 +44,10 @@ export class ShedulerMonthViewComponent implements OnChanges {
     return this.service.isToday(date);
   }
 
+  public isFullDate(date: Date): boolean {
+    return this.service.isFullDate(date, this.weeks);
+  }
+
   public getEventDurationForTargetWeek(event: ShedulerEvent, monday: Date): string {
     if (!this.service.eventStartedOnTargetWeek(event, monday) && !this.service.eventEndedOnTargetWeek(event, monday)) {
       return this.row.nativeElement.clientWidth + 'px';
