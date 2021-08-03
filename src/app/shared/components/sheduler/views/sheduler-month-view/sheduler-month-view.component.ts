@@ -104,4 +104,12 @@ export class ShedulerMonthViewComponent implements OnChanges {
 
     return event.color;
   }
+
+  public eventsCountOnDay(day: Date): number {
+    return this.service.eventsCountOnDay(day, this.events);
+  }
+
+  public eventBoxOverflowContainer(wrapper: HTMLDivElement, box: HTMLDivElement): boolean {
+    return parseInt(wrapper.style.top) / box.clientHeight >= 0.75;
+  }
 }

@@ -123,6 +123,7 @@ table {
   cursor: pointer;
   height: 90%;
   transition: border 0.2s;
+  z-index: 2000;
 
   span {
     overflow: hidden;
@@ -145,4 +146,31 @@ table {
   margin-right: 8px;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
+}
+
+.show-more-events-wrapper {
+  display: flex;
+  height: 100%;
+  z-index: 1000;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 6px 0;
+}
+
+.show-more-events {
+  width: 32px;
+  font-size: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  padding: 0 4px;
+  transition: all 0.2s;
+  border-radius: 2px;
+
+  &:hover {
+    border: 1px dotted #00000000;
+    background: rgba(95, 203, 253, 0.5);
+  }
 }

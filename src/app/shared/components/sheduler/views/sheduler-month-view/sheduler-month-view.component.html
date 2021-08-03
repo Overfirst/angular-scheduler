@@ -32,9 +32,12 @@
                 <ng-template #default>
                   <span>{{ day | date:'d' }}</span>
                 </ng-template>
+                <div *ngIf="eventsCountOnDay(day) > 4" class="show-more-events-wrapper">
+                  <span class="show-more-events">...</span>
+                </div>
               </div>
             </td>
-            <div class="events-box">
+            <div class="events-box" #eventsBox>
               <ng-container *ngFor="let event of events">
                 <div
                   #eventBoxWrapper
@@ -46,6 +49,7 @@
                   [style.top]="getEventTopOffset(event, eventBoxWrapper)"
                 >
                   <div
+                    *ngIf="!eventBoxOverflowContainer(eventBoxWrapper, eventsBox)"
                     #eventBox
                     collectEventBox
                     class="event-box"

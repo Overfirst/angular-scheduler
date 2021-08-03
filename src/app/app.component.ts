@@ -70,6 +70,13 @@ export class AppComponent {
       start: new Date('2021-08-26 19:00'),
       end: new Date('2021-08-27 22:00'),
       color: '#655bff'
+    },
+    {
+      id: 10,
+      name: 'Test task 9',
+      start: new Date('2021-08-26 21:00'),
+      end: new Date('2021-08-27 16:00'),
+      color: '#c3bcff'
     }
   ];
 }

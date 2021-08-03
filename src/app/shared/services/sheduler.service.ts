@@ -1,5 +1,16 @@
 import { Injectable } from "@angular/core";
-import { addDays, addWeeks, startOfWeek, startOfMonth, isToday, isSameWeek, differenceInCalendarDays, getDay, isFirstDayOfMonth } from "date-fns";
+import {
+  addDays,
+  addWeeks,
+  startOfWeek,
+  startOfMonth,
+  isToday,
+  isSameWeek,
+  differenceInCalendarDays,
+  getDay,
+  isFirstDayOfMonth,
+  startOfDay
+} from "date-fns";
 import { ShedulerEvent, ViewDetalization } from "../interfaces";
 
 @Injectable({ providedIn: 'root' })
@@ -124,5 +135,21 @@ export class ShedulerService {
     });
 
     return topOffset;
+  }
+
+  public eventsCountOnDay(day: Date, events: ShedulerEvent[]): number {
+    let totalDays = 0;
+
+    events.forEach(event => {
+      const startTime = startOfDay(event.start).getTime();
+      const endTime = startOfDay(event.end).getTime();
+      const dayTime = day.getTime();
+
+      if (dayTime >= startTime && dayTime <= endTime) {
+        totalDays++;
+      }
+    });
+
+    return totalDays;
   }
 }
