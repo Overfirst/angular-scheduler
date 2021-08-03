@@ -118,11 +118,12 @@ export class ShedulerService {
       return (firstStartX > secondStartX - 1 && firstStartX < secondEndX - 1) || (firstEndX - 1 > secondStartX && firstEndX < secondEndX - 1)
     }
 
-    needToCheckWrappers.forEach(boxWrapper => topOffset += isCrossX(wrapper, boxWrapper)
-      ? parseInt(boxWrapper.style.top) + boxWrapper.clientHeight
-      : 0
-    );
-    
+    needToCheckWrappers.forEach(boxWrapper => {
+      if (isCrossX(wrapper, boxWrapper)) {
+        topOffset = parseInt(boxWrapper.style.top) + boxWrapper.clientHeight
+      }
+    });
+
     return topOffset;
   }
 }
