@@ -31,7 +31,7 @@ export class ShedulerMonthViewComponent implements OnChanges {
     this.service.eventBoxes.clear();
   }
 
-  public dayInCurrentMonth(day: Date): boolean {    
+  public dayInCurrentMonth(day: Date): boolean {
     return this.service.dayInCurrentMonth(day, this.currentDate);
   }
 
@@ -95,5 +95,13 @@ export class ShedulerMonthViewComponent implements OnChanges {
 
   @HostListener('window:resize') public onResize(): void {
     setTimeout(() => this.cdRef.detectChanges(), 0)
+  }
+
+  public getEventColor(event: ShedulerEvent): string {
+    if (!event.color) {
+      event.color = '#93ff86';
+    }
+
+    return event.color;
   }
 }

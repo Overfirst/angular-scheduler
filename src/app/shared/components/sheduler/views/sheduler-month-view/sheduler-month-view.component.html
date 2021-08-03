@@ -52,6 +52,7 @@
                     [attr.event-id]="event.id"
                     [class.event-box-margin-left]="eventStartedOnTargetWeek(event, week[0])"
                     [class.event-box-margin-right]="eventEndedOnTargetWeek(event, week[0])"
+                    [style.background-color]="getEventColor(event)"
                     (mouseover)="eventBoxMouseOver(eventBox)"
                     (mouseleave)="eventBoxMouseLeave(eventBox)"
                   >
