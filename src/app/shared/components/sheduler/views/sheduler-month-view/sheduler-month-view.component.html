@@ -1,7 +1,12 @@
 <div class="month-view-box">
-  <div class="header-table">
-    <table>
-      <thead>
+  <div class="panel-box">
+
+  </div>
+
+  <div class="main-content-box">
+    <div class="header-table">
+      <table>
+        <thead>
         <tr #row>
           <td #column>Monday</td>
           <td>Tuesday</td>
@@ -11,62 +16,70 @@
           <td>Saturday</td>
           <td>Sunday</td>
         </tr>
-      </thead>
-    </table>
-  </div>
-
-  <div class="content-table">
+        </thead>
+      </table>
+    </div>
+    <div class="content-table">
       <table>
         <tbody>
-          <tr *ngFor="let week of weeks">
-            <td
-              [style.height]="getHeightStyle()"
-              *ngFor="let day of week"
+        <tr *ngFor="let week of weeks">
+          <td
+            [style.height]="getHeightStyle()"
+            *ngFor="let day of week"
+          >
+            <div
+              class="column-content"
+              [class.pale-date]="!dayInCurrentMonth(day)"
+              [class.today-date]="isToday(day)"
+              (click)="selectDay(day)"
             >
+              <span *ngIf="isFullDate(day); else default">{{ day | date:'MMM, d' }}</span>
+              <ng-template #default>
+                <span>{{ day | date:'d' }}</span>
+              </ng-template>
+              <div class="show-more-events-wrapper">
+                <span *ngIf="eventsCountOnDay(day) > 4" class="show-more-events">...</span>
+              </div>
+            </div>
+          </td>
+          <div class="events-box" #eventsBox>
+            <ng-container *ngFor="let event of events">
               <div
-                class="column-content"
-                [class.pale-date]="!dayInCurrentMonth(day)"
-                [class.today-date]="isToday(day)"
+                #eventBoxWrapper
+                *ngIf="eventOnTargetWeek(event, week[0])"
+                class="event-box-wrapper"
+                [attr.event-id]="event.id"
+                [style.left]="getEventWeekDaysOffset(event, week[0])"
+                [style.width]="getEventDurationForTargetWeek(event, week[0])"
+                [style.top]="getEventTopOffset(event, eventBoxWrapper)"
               >
-                <span *ngIf="isFullDate(day); else default">{{ day | date:'MMM, d' }}</span>
-                <ng-template #default>
-                  <span>{{ day | date:'d' }}</span>
-                </ng-template>
-                <div class="show-more-events-wrapper">
-                  <span *ngIf="eventsCountOnDay(day) > 4" class="show-more-events">...</span>
+                <div
+                  *ngIf="!eventBoxOverflowContainer(eventBoxWrapper, eventsBox)"
+                  #eventBox
+                  collectEventBox
+                  class="event-box"
+                  [attr.event-id]="event.id"
+                  [class.event-box-margin-left]="eventStartedOnTargetWeek(event, week[0])"
+                  [class.event-box-margin-right]="eventEndedOnTargetWeek(event, week[0])"
+                  [style.background-color]="getEventColor(event)"
+                  (mouseover)="eventBoxMouseOver(eventBox)"
+                  (mouseleave)="eventBoxMouseLeave(eventBox)"
+                >
+                  <span>({{ event.start | date:'HH:mm' }}) {{ event.name }}</span>
                 </div>
               </div>
-            </td>
-            <div class="events-box" #eventsBox>
-              <ng-container *ngFor="let event of events">
-                <div
-                  #eventBoxWrapper
-                  *ngIf="eventOnTargetWeek(event, week[0])"
-                  class="event-box-wrapper"
-                  [attr.event-id]="event.id"
-                  [style.left]="getEventWeekDaysOffset(event, week[0])"
-                  [style.width]="getEventDurationForTargetWeek(event, week[0])"
-                  [style.top]="getEventTopOffset(event, eventBoxWrapper)"
-                >
-                  <div
-                    *ngIf="!eventBoxOverflowContainer(eventBoxWrapper, eventsBox)"
-                    #eventBox
-                    collectEventBox
-                    class="event-box"
-                    [attr.event-id]="event.id"
-                    [class.event-box-margin-left]="eventStartedOnTargetWeek(event, week[0])"
-                    [class.event-box-margin-right]="eventEndedOnTargetWeek(event, week[0])"
-                    [style.background-color]="getEventColor(event)"
-                    (mouseover)="eventBoxMouseOver(eventBox)"
-                    (mouseleave)="eventBoxMouseLeave(eventBox)"
-                  >
-                    <span>({{ event.start | date:'HH:mm' }}) {{ event.name }}</span>
-                  </div>
-                </div>
-              </ng-container>
-            </div>
-          </tr>
+            </ng-container>
+          </div>
+        </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <div class="panel-box">
+    <sheduler-month-view-day-detalization
+      [day]="selectedDay"
+      [dayEvents]="eventsForSelectedDay"
+    ></sheduler-month-view-day-detalization>
   </div>
 </div>

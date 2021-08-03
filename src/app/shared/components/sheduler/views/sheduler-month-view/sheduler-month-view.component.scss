@@ -2,6 +2,7 @@
 
 .month-view-box {
   padding: $default-padding;
+  display: flex;
 }
 
 table {
@@ -173,4 +174,23 @@ table {
     border: 1px dotted #00000000;
     background: rgba(95, 203, 253, 0.5);
   }
+}
+
+.main-content-box {
+  width: 70%;
+}
+
+.panel-box {
+  &:first-child {
+    border-right: none;
+    width: 10%;
+  }
+
+  &:last-child {
+    border-left: none;
+    width: 20%;
+  }
+
+  border: 1px solid $border-color;
+  background: $default-table-color;
 }

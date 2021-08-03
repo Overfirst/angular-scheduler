@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input, ViewChild, ElementRef, HostListener, ChangeDetectorRef, DoCheck, OnChanges, SimpleChanges } from '@angular/core';
 import { ShedulerEvent, ViewDetalization } from 'src/app/shared/interfaces';
 import { ShedulerService } from 'src/app/shared/services/sheduler.service';
+import { startOfMonth } from "date-fns";
 
 @Component({
   selector: 'sheduler-month-view',
@@ -14,7 +15,10 @@ export class ShedulerMonthViewComponent implements OnChanges {
 
   public weeks: Array<Date[]> = [];
 
-  private currentDate: Date = new Date();
+  public _selectedDay: Date;
+  public eventsForSelectedDay: ShedulerEvent[];
+
+  private currentDate: Date;
   private readonly headerRowHeight = 48;
   private readonly defaultPadding = 24;
 
@@ -24,7 +28,17 @@ export class ShedulerMonthViewComponent implements OnChanges {
 
   @Input() public set date(date: Date) {
     this.currentDate = date;
+    this.selectedDay = startOfMonth(date);
     this.weeks = this.service.getWeeksForMonthView(date, this.currentDate);
+  }
+
+  public set selectedDay(day: Date) {
+    this._selectedDay = day;
+    this.eventsForSelectedDay = this.service.getEventsForSelectedDay(this.selectedDay, this.events);
+  }
+
+  public get selectedDay() {
+    return this._selectedDay;
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -111,5 +125,9 @@ export class ShedulerMonthViewComponent implements OnChanges {
 
   public eventBoxOverflowContainer(wrapper: HTMLDivElement, box: HTMLDivElement): boolean {
     return parseInt(wrapper.style.top) / box.clientHeight >= 0.75;
+  }
+
+  public selectDay(day: Date): void {
+    this.selectedDay = day;
   }
 }

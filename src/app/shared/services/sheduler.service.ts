@@ -141,15 +141,31 @@ export class ShedulerService {
     let totalDays = 0;
 
     events.forEach(event => {
-      const startTime = startOfDay(event.start).getTime();
-      const endTime = startOfDay(event.end).getTime();
-      const dayTime = day.getTime();
-
-      if (dayTime >= startTime && dayTime <= endTime) {
+      if (this.eventFallsOnDay(event, day)) {
         totalDays++;
       }
     });
 
     return totalDays;
+  }
+
+  getEventsForSelectedDay(day: Date, events: ShedulerEvent[]): ShedulerEvent[] {
+    const suitableEvents: ShedulerEvent[] = [];
+
+    events.forEach(event => {
+      if (this.eventFallsOnDay(event, day)) {
+        suitableEvents.push(event);
+      }
+    });
+
+    return suitableEvents;
+  }
+
+  private eventFallsOnDay(event: ShedulerEvent, day: Date): boolean {
+    const startTime = startOfDay(event.start).getTime();
+    const endTime = startOfDay(event.end).getTime();
+    const dayTime = day.getTime();
+
+    return dayTime >= startTime && dayTime <= endTime;
   }
 }
