@@ -56,6 +56,10 @@ export class ShedulerMonthViewComponent implements OnChanges {
     return this.service.getEventDurationForTargetWeek(event, monday, ViewDetalization.Month) * this.row.nativeElement.clientWidth / 7 + 'px';
   }
 
+  public getEventTopOffset(event: ShedulerEvent, wrapper: HTMLDivElement): string {
+    return this.service.getEventTopOffset(event, wrapper) + 'px';
+  }
+
   public getEventWeekDaysOffset(event: ShedulerEvent, monday: Date): string {
     const offset = this.service.getEventDaysOffsetForTargetWeek(event, monday);
     return offset * this.column.nativeElement.clientWidth + offset + 'px';

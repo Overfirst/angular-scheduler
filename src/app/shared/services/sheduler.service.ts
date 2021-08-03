@@ -89,4 +89,40 @@ export class ShedulerService {
 
     return 0;
   }
+
+  public getEventTopOffset(event: ShedulerEvent, wrapper: HTMLDivElement): number {
+    const needToCheckWrappers: HTMLDivElement[] = [];
+    const wrappers = Array.from(this.eventBoxes).map(box => box.parentElement!);
+    
+    for (let i = 0; i < wrappers.length; i++) {
+      const boxWrapper = wrappers[i];
+
+      if (boxWrapper === wrapper) {
+        break;
+      }
+      
+      if (boxWrapper.parentElement === wrapper.parentElement) {
+        needToCheckWrappers.push(boxWrapper as HTMLDivElement);
+      }
+    }
+
+    let topOffset = 0;
+
+    const isCrossX = (first: HTMLDivElement, second: HTMLDivElement) => {
+      const firstStartX = parseInt(first.style.left);
+      const firstEndX = firstStartX + first.clientWidth;
+
+      const secondStartX = parseInt(second.style.left);
+      const secondEndX = secondStartX + second.clientWidth;
+
+      return (firstStartX > secondStartX - 1 && firstStartX < secondEndX - 1) || (firstEndX - 1 > secondStartX && firstEndX < secondEndX - 1)
+    }
+
+    needToCheckWrappers.forEach(boxWrapper => topOffset += isCrossX(wrapper, boxWrapper)
+      ? parseInt(boxWrapper.style.top) + boxWrapper.clientHeight
+      : 0
+    );
+    
+    return topOffset;
+  }
 }
