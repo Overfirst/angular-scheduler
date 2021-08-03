@@ -184,13 +184,13 @@ table {
 }
 
 .main-content-box {
-  width: 70%;
+  width: 80%;
 }
 
 .panel-box {
   &:first-child {
     border-right: none;
-    width: 10%;
+    width: 0%;
   }
 
   &:last-child {
