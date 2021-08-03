@@ -7,18 +7,16 @@
 
     <div *ngFor="let event of dayEvents" class="event-box">
       <div class="event-name">
-        <strong>{{ event.name }}</strong>
+        <strong [style.color]="event.color">{{ event.name }}</strong>
       </div>
       <div class="event-duration">
         <div class="event-duration-section">
-          <p>{{ event.start | date:'dd.mm.yy' }}</p>
+          <p>{{ event.start | date:'dd.MM.yy' }}</p>
           <p>{{ event.start | date:'HH:mm' }}</p>
         </div>
 
-        <span class="event-duration-delimiter">—</span>
-
         <div class="event-duration-section">
-          <p>{{ event.end | date:'dd.mm.yy' }}</p>
+          <p>{{ event.end | date:'dd.MM.yy' }}</p>
           <p>{{ event.end | date:'HH:mm' }}</p>
         </div>
       </div>

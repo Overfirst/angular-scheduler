@@ -33,6 +33,7 @@
               [class.today-date]="isToday(day)"
               (click)="selectDay(day)"
             >
+              <div *ngIf="isSelectedDay(day)" class="selected-day"></div>
               <span *ngIf="isFullDate(day); else default">{{ day | date:'MMM, d' }}</span>
               <ng-template #default>
                 <span>{{ day | date:'d' }}</span>

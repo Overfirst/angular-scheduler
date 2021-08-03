@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input, ViewChild, ElementRef, HostListener, ChangeDetectorRef, DoCheck, OnChanges, SimpleChanges } from '@angular/core';
 import { ShedulerEvent, ViewDetalization } from 'src/app/shared/interfaces';
 import { ShedulerService } from 'src/app/shared/services/sheduler.service';
-import { startOfMonth } from "date-fns";
+import { isSameDay, startOfMonth } from "date-fns";
 
 @Component({
   selector: 'sheduler-month-view',
@@ -129,5 +129,9 @@ export class ShedulerMonthViewComponent implements OnChanges {
 
   public selectDay(day: Date): void {
     this.selectedDay = day;
+  }
+
+  public isSelectedDay(day: Date): boolean {
+    return isSameDay(day, this.selectedDay);
   }
 }

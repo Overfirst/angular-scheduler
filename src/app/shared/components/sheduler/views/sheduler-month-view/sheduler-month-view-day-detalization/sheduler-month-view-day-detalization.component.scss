@@ -45,7 +45,7 @@ $default-margin: 12px;
 
 .event-duration {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   margin: $default-margin;
 }
 
@@ -65,17 +65,15 @@ $default-margin: 12px;
   }
 }
 
-.event-duration-delimiter {
-  margin: $default-margin;
-  transform: scale(1.5, 1);
-}
-
 .event-name {
   text-align: center;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  margin-right: $default-margin;
   font-size: 18px;
-  color: #4c4949
+  border-radius: 2px;
+  text-shadow: -1px 0 3px #000;
+  background: rgba(0, 0, 0, 0.2);
+  margin: $default-margin;
+  width: max-content + calc(50px);
 }

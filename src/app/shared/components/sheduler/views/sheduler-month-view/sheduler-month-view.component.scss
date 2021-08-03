@@ -98,6 +98,13 @@ table {
   }
 }
 
+.selected-day {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border: 2px solid rgba(0, 156, 108, 0.5);
+}
+
 .events-box {
   position: absolute;
   top: 25%;
