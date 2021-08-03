@@ -14,8 +14,7 @@ export class ShedulerService {
       const days: Date[] = [];
       const date = addWeeks(startDate, i);
 
-      // fix this block
-      if (i === 5 && !this.dayInCurrentMonth(addDays(date, 7), dateMonth)) {
+      if (i === 5 && !this.dayInCurrentMonth(addDays(date, 1), dateMonth)) {
         break;
       }
 
@@ -63,13 +62,13 @@ export class ShedulerService {
 
   public eventOnTargetWeek(event: ShedulerEvent, monday: Date): boolean {
     const totalDaysDifferent = Math.abs(differenceInCalendarDays(event.start, event.end));
-  
+
     for (let i = 0; i <= totalDaysDifferent; i++) {
       if (isSameWeek(addDays(event.start, i), monday, { weekStartsOn: 1 })) {
         return true;
       }
     }
-    
+
     return false;
   }
 
@@ -93,14 +92,14 @@ export class ShedulerService {
   public getEventTopOffset(event: ShedulerEvent, wrapper: HTMLDivElement): number {
     const needToCheckWrappers: HTMLDivElement[] = [];
     const wrappers = Array.from(this.eventBoxes).map(box => box.parentElement!);
-    
+
     for (let i = 0; i < wrappers.length; i++) {
       const boxWrapper = wrappers[i];
 
       if (boxWrapper === wrapper) {
         break;
       }
-      
+
       if (boxWrapper.parentElement === wrapper.parentElement) {
         needToCheckWrappers.push(boxWrapper as HTMLDivElement);
       }
