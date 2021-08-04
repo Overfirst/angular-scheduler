@@ -1,5 +1,7 @@
-import {Component, ChangeDetectionStrategy, Output, EventEmitter, Input} from '@angular/core';
-import {ShedulerEvent} from "../../../interfaces";
+import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
+import { ShedulerEvent } from "../../../interfaces";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {ShedulerService} from "../../../services/sheduler.service";
 
 @Component({
   selector: 'sheduler-event-modal',
@@ -8,7 +10,10 @@ import {ShedulerEvent} from "../../../interfaces";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShedulerEventModalComponent {
+  public form: FormGroup;
   private event: ShedulerEvent;
+
+  constructor(private service: ShedulerService) { }
 
   @Input() public editMode = true;
 
@@ -16,6 +21,15 @@ export class ShedulerEventModalComponent {
     if (!this.editMode) {
       return;
     }
+
+    this.event = {...event};
+
+    this.form = new FormGroup({
+      name: new FormControl(event.name, Validators.required),
+      start: new FormControl(this.service.transformDateForModalInput(event.start), Validators.required),
+      end: new FormControl(this.service.transformDateForModalInput(event.end), Validators.required),
+      color: new FormControl(event.color),
+    })
   }
 
   @Output() public closeClicked = new EventEmitter<void>();
@@ -26,6 +40,16 @@ export class ShedulerEventModalComponent {
   }
 
   public applyClick(): void {
-    this.applyClicked.emit(this.event);
+    const { value } = this.form;
+
+    const event: ShedulerEvent = {
+      id: value.id,
+      name: value.name,
+      start: new Date(value.start),
+      end: new Date(value.end),
+      color: value.color
+    };
+
+    this.applyClicked.emit(event);
   }
 }

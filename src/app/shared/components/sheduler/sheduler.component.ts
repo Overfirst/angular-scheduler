@@ -1,5 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import {Component, ChangeDetectionStrategy, Input, ViewChild} from '@angular/core';
 import { ShedulerEvent } from '../../interfaces';
+import {ShedulerMonthViewComponent} from "./views/sheduler-month-view/sheduler-month-view.component";
 
 @Component({
   selector: 'sheduler',
@@ -31,7 +32,12 @@ export class ShedulerComponent {
     this.modalOpened = true;
   }
 
-  public modalApplyClicked(): void {
+  public modalApplyClicked(event: ShedulerEvent): void {
+    this.modalEditableEvent.name = event.name;
+    this.modalEditableEvent.start = new Date(event.start);
+    this.modalEditableEvent.end = new Date(event.end);
+    this.modalEditableEvent.color = event.color;
+
     this.modalOpened = false;
   }
 

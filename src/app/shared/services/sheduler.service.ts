@@ -149,7 +149,7 @@ export class ShedulerService {
     return totalDays;
   }
 
-  getEventsForSelectedDay(day: Date, events: ShedulerEvent[]): ShedulerEvent[] {
+  public getEventsForSelectedDay(day: Date, events: ShedulerEvent[]): ShedulerEvent[] {
     const suitableEvents: ShedulerEvent[] = [];
 
     events.forEach(event => {
@@ -159,6 +159,27 @@ export class ShedulerService {
     });
 
     return suitableEvents;
+  }
+
+  public transformDateForModalInput(date: Date): string {
+    const year = this.resolveSeveralDigits(date.getFullYear(), 4);
+    const month = this.resolveSeveralDigits(date.getMonth() + 1, 2);
+    const day = this.resolveSeveralDigits(date.getDate(), 2);
+
+    const hours = this.resolveSeveralDigits(date.getHours(), 2);
+    const minutes = this.resolveSeveralDigits(date.getMinutes(), 2);
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
+  private resolveSeveralDigits(value: number, digitsCount: number = 1): string {
+    let stringValue = value.toString();
+
+    while (stringValue.length < digitsCount) {
+      stringValue = "0" + stringValue;
+    }
+
+    return stringValue;
   }
 
   private eventFallsOnDay(event: ShedulerEvent, day: Date): boolean {
