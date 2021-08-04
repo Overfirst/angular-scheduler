@@ -41,6 +41,10 @@ $default-margin: 12px;
   &:hover {
     background: #d7d7d7;
   }
+
+  &:active {
+    background: #bfbfbf;
+  }
 }
 
 .event-duration {
