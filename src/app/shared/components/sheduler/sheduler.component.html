@@ -5,6 +5,26 @@
     <sheduler-month-view
       [events]="events"
       [date]="selectedViewDate"
+      (eventDoubleClicked)="eventDoubleClicked($event)"
+      (dayDoubleClicked)="dayDoubleClicked($event)"
     ></sheduler-month-view>
+
+    <div
+      *ngIf="modalOpened"
+      class="modal-overlay"
+      (click)="modalCloseClicked()"
+    >
+      <div
+        class="modal-container"
+        (click)="$event.stopPropagation()"
+      >
+        <sheduler-event-modal
+          [editMode]="modalEditMode"
+          [editableEvent]="modalEditableEvent"
+          (applyClicked)="modalApplyClicked()"
+          (closeClicked)="modalCloseClicked()"
+        ></sheduler-event-modal>
+      </div>
+    </div>
   </div>
 </div>
