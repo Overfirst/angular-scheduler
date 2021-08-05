@@ -125,7 +125,7 @@ export class ShedulerService {
       const secondStartX = parseInt(second.style.left);
       const secondEndX = secondStartX + second.clientWidth;
 
-      return (firstStartX > secondStartX - 1 && firstStartX < secondEndX - 1) || (firstEndX - 1 > secondStartX && firstEndX < secondEndX - 1)
+      return (firstStartX <= secondStartX && firstEndX > secondStartX) || (firstStartX > secondStartX && firstStartX < secondEndX);
     }
 
     needToCheckWrappers.forEach(boxWrapper => {
