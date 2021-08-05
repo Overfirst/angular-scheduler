@@ -33,6 +33,15 @@ export class ShedulerEventModalComponent {
     this.form = new FormGroup(controls);
   }
 
+  @Input() public set defaultDate(date: Date) {
+    if (this.editMode) {
+      return;
+    }
+
+    this.form.controls.start.patchValue(this.service.transformDateForModalInput(date));
+    this.form.controls.end.patchValue(this.service.transformDateForModalInput(date));
+  }
+
   @Input() public editMode = true;
 
   @Input() public set editableEvent(event: ShedulerEvent) {
