@@ -72,7 +72,7 @@ export class ShedulerEventModalComponent {
 
     const event: ShedulerEvent = {
       id: this.editMode ? value.id : new Date().getTime(),
-      name: value.name,
+      name: value.name.trim(),
       start: new Date(value.start),
       end: new Date(value.end),
       color: value.color
