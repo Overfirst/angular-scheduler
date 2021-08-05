@@ -2,13 +2,19 @@
   <div class="view-box">
     <sheduler-date-switcher (viewDateChanged)="viewDateChanged($event)"></sheduler-date-switcher>
 
-    <sheduler-month-view
-      [events]="events"
-      [date]="selectedViewDate"
-      (eventDoubleClicked)="eventDoubleClicked($event)"
-      (dayDoubleClicked)="dayDoubleClicked($event)"
-    ></sheduler-month-view>
+    <ng-template #view>
+      <sheduler-month-view
+        [events]="events"
+        [month]="selectedViewDate"
+        [day]="selectedDay"
+        (eventDoubleClicked)="eventDoubleClicked($event)"
+        (dayDoubleClicked)="dayDoubleClicked($event)"
+        (dayChanged)="dayChanged($event)"
+      ></sheduler-month-view>
+    </ng-template>
 
+    <ng-container #outlet>
+    </ng-container>
     <div
       *ngIf="modalOpened"
       class="modal-overlay"

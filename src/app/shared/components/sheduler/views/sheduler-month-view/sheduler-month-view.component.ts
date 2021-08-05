@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ViewChild, ElementRef, HostListener, ChangeDetectorRef, DoCheck, OnChanges, SimpleChanges, Output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ViewChild, ElementRef, HostListener, ChangeDetectorRef, Output } from '@angular/core';
 import { ShedulerEvent, ViewDetalization } from 'src/app/shared/interfaces';
 import { ShedulerService } from 'src/app/shared/services/sheduler.service';
 import { isSameDay, startOfMonth } from "date-fns";
@@ -11,16 +11,18 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./sheduler-month-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShedulerMonthViewComponent implements OnChanges {
+export class ShedulerMonthViewComponent  {
   @ViewChild('column', { static: true }) private column: ElementRef<HTMLTableCellElement>;
   @ViewChild('row', { static: true }) private row: ElementRef<HTMLTableRowElement>;
 
   public weeks: Array<Date[]> = [];
 
-  public _selectedDay: Date;
+  public selectedDay: Date;
   public eventsForSelectedDay: ShedulerEvent[];
 
-  private currentDate: Date;
+  private selectedMonth: Date;
+  private dayFirstSetted = false;
+
   private readonly headerRowHeight = 48;
   private readonly defaultPadding = 24;
 
@@ -32,30 +34,34 @@ export class ShedulerMonthViewComponent implements OnChanges {
 
   @Input() public events: ShedulerEvent[] = [];
 
-  @Input() public set date(date: Date) {
-    this.currentDate = date;
-    this.selectedDay = startOfMonth(date);
-    this.weeks = this.service.getWeeksForMonthView(date, this.currentDate);
+  @Input() public set month(date: Date) {
+    this.selectedMonth = date;
+    this.day = startOfMonth(date);
+    this.weeks = this.service.getWeeksForMonthView(date, this.selectedMonth);
   }
 
-  @Output() public eventDoubleClicked = new EventEmitter<ShedulerEvent>()
-  @Output() public dayDoubleClicked = new EventEmitter<Date>()
+  @Input() public set day(day: Date) {
+    this.selectedDay = day;
+    this.eventsForSelectedDay = this.service.getEventsForSelectedDay(this.day, this.events);
 
-  public set selectedDay(day: Date) {
-    this._selectedDay = day;
-    this.eventsForSelectedDay = this.service.getEventsForSelectedDay(this.selectedDay, this.events);
+    if (!this.dayFirstSetted) {
+      this.dayFirstSetted = true;
+      return;
+    }
+
+    this.dayChanged.emit(this.selectedDay);
   }
 
-  public get selectedDay() {
-    return this._selectedDay;
-  }
+  @Output() public eventDoubleClicked = new EventEmitter<ShedulerEvent>();
+  @Output() public dayDoubleClicked = new EventEmitter<Date>();
+  @Output() public dayChanged = new EventEmitter<Date>();
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    this.service.eventBoxes.clear();
+  public get day() {
+    return this.selectedDay;
   }
 
   public dayInCurrentMonth(day: Date): boolean {
-    return this.service.dayInCurrentMonth(day, this.currentDate);
+    return this.service.dayInCurrentMonth(day, this.selectedMonth);
   }
 
   // todo: use display: flex for table
@@ -137,11 +143,11 @@ export class ShedulerMonthViewComponent implements OnChanges {
   }
 
   public selectDay(day: Date): void {
-    this.selectedDay = day;
+    this.day = day;
   }
 
   public isSelectedDay(day: Date): boolean {
-    return isSameDay(day, this.selectedDay);
+    return isSameDay(day, this.day);
   }
 
   public eventBoxDoubleClick(event: ShedulerEvent): void {
