@@ -7,10 +7,10 @@ import {
   ViewContainerRef,
   AfterContentInit
 } from '@angular/core';
+
 import { ShedulerEvent } from '../../interfaces';
-import {ShedulerMonthViewComponent} from "./views/sheduler-month-view/sheduler-month-view.component";
-import {ShedulerService} from "../../services/sheduler.service";
-import {startOfMonth} from "date-fns";
+import { ShedulerService } from "../../services/sheduler.service";
+import { startOfMonth } from "date-fns";
 import { TemplateRef } from '@angular/core';
 
 @Component({
@@ -35,7 +35,7 @@ export class ShedulerComponent implements AfterContentInit {
   constructor(private service: ShedulerService, private cdRef: ChangeDetectorRef) {}
 
   public ngAfterContentInit(): void {
-    this.outletRef.createEmbeddedView(this.viewRef);
+    this.redrawView();
   }
 
   public viewDateChanged(date: Date): void {
@@ -60,14 +60,15 @@ export class ShedulerComponent implements AfterContentInit {
     this.modalEditableEvent.color = event.color;
 
     this.modalOpened = false;
-    this.redraw();
+    this.redrawView();
   }
 
   public modalCloseClicked(): void {
     this.modalOpened = false;
   }
 
-  public redraw(): void {
+  public redrawView(): void {
+    this.service.eventBoxes.clear();
     this.outletRef.clear();
     this.outletRef.createEmbeddedView(this.viewRef);
   }
