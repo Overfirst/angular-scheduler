@@ -63,7 +63,7 @@
 
   <div class="modal-footer">
     <div class="btn-container">
-      <button class="modal-btn modal-btn-red">Delete</button>
+      <button *ngIf="editMode" class="modal-btn modal-btn-red">Delete</button>
     </div>
 
     <div class="btn-container">
