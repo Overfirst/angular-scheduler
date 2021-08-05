@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+
 import {
   addDays,
   addWeeks,
@@ -11,6 +12,7 @@ import {
   isFirstDayOfMonth,
   startOfDay
 } from "date-fns";
+
 import { ShedulerEvent, ViewDetalization } from "../interfaces";
 
 @Injectable({ providedIn: 'root' })

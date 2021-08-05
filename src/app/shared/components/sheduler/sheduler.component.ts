@@ -5,7 +5,8 @@ import {
   ViewChild,
   ChangeDetectorRef,
   ViewContainerRef,
-  AfterContentInit, HostListener
+  AfterContentInit,
+  HostListener
 } from '@angular/core';
 
 import { ShedulerEvent } from '../../interfaces';

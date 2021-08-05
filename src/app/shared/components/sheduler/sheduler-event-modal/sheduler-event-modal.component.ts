@@ -1,9 +1,8 @@
 import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
 import { ShedulerEvent } from "../../../interfaces";
-import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ShedulerService} from "../../../services/sheduler.service";
-import { OnInit } from '@angular/core';
-import {ShedulerValidators} from "../../../utils/sheduler-validators";
+import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
+import { ShedulerService } from "../../../services/sheduler.service";
+import { ShedulerValidators } from "../../../utils/sheduler-validators";
 
 @Component({
   selector: 'sheduler-event-modal',

@@ -1,5 +1,5 @@
-import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter} from '@angular/core';
-import {ShedulerEvent} from "../../../../../interfaces";
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { ShedulerEvent } from "../../../../../interfaces";
 
 @Component({
   selector: 'sheduler-month-view-day-detalization',

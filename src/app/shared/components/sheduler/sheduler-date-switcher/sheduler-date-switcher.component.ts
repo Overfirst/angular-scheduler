@@ -1,5 +1,5 @@
 import { EventEmitter } from '@angular/core';
-import { Component, OnInit, ChangeDetectionStrategy, Output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Output } from '@angular/core';
 import { addMonths } from 'date-fns';
 import { ViewDetalization } from 'src/app/shared/interfaces';
 
@@ -9,15 +9,11 @@ import { ViewDetalization } from 'src/app/shared/interfaces';
   styleUrls: ['./sheduler-date-switcher.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShedulerDateSwitcherComponent implements OnInit {
+export class ShedulerDateSwitcherComponent {
   public view = ViewDetalization.Month;
   public selectedDate = new Date();
 
   @Output() viewDateChanged = new EventEmitter<Date>();
-
-  public ngOnInit(): void {
-
-  }
 
   public subDate(): void {
     this.selectedDate = addMonths(this.selectedDate, -1);
