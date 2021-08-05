@@ -112,15 +112,15 @@ input {
   cursor: pointer;
   border: none;
   background: #bababa;
-  transition: all 0.2s;
+  transition: all 0.2s, opacity 0.4s;
   color: #303030;
   box-shadow: -2px 3px 6px 0px rgb(34 60 80 / 20%);
 
-  &:hover {
+  &:hover:not(.modal-btn-disabled) {
     background: #aeaeae;
   }
 
-  &:active {
+  &:active:not(.modal-btn-disabled) {
     background: #9d9d9d;
   }
 }
@@ -129,11 +129,11 @@ input {
   background: #ff8686;
   color: #fff;
 
-  &:hover {
+  &:hover:not(.modal-btn-disabled) {
     background: #ff5e5e;
   }
 
-  &:active {
+  &:active:not(.modal-btn-disabled) {
     background: #ff3b3b;
   }
 }
@@ -141,11 +141,16 @@ input {
 .modal-btn-green {
   background: #69e347;
 
-  &:hover {
+  &:hover:not(.modal-btn-disabled) {
     background: #53f622;
   }
 
-  &:active {
+  &:active:not(.modal-btn-disabled) {
     background: #36ff00;
   }
+}
+
+.modal-btn-disabled {
+  cursor: default;
+  opacity: 0.5;
 }

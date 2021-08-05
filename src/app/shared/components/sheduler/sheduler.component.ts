@@ -54,10 +54,12 @@ export class ShedulerComponent implements AfterContentInit {
   }
 
   public modalApplyClicked(event: ShedulerEvent): void {
-    this.modalEditableEvent.name = event.name;
-    this.modalEditableEvent.start = new Date(event.start);
-    this.modalEditableEvent.end = new Date(event.end);
-    this.modalEditableEvent.color = event.color;
+    if (this.modalEditMode) {
+      const idx = this.events.findIndex(currentEvent => currentEvent.id === event.id);
+      this.events[idx] = event;
+    } else {
+      this.events.push(event);
+    }
 
     this.modalOpened = false;
     this.redrawView();

@@ -15,7 +15,7 @@
           <div class="input-box">
             <input formControlName="name" type="text">
             <div class="form-control-invalid">
-              <span>Fill in this field!</span>
+              <span *ngIf="form.controls.name.touched && form.controls.name.errors">Fill in this field!</span>
             </div>
           </div>
         </div>
@@ -28,7 +28,7 @@
           <div class="input-box">
             <input formControlName="start" type="datetime-local">
             <div class="form-control-invalid">
-              <span>Fill in this field!</span>
+              <span *ngIf="form.controls.start.touched && form.controls.start.errors">Fill in this field!</span>
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@
           <div class="input-box">
             <input formControlName="end" type="datetime-local">
             <div class="form-control-invalid">
-              <span>Fill in this field!</span>
+              <span *ngIf="form.controls.end.touched && form.controls.end.errors">Fill in this field!</span>
             </div>
           </div>
         </div>
@@ -67,6 +67,7 @@
     <div class="btn-container">
       <button
         class="modal-btn modal-btn-green"
+        [class.modal-btn-disabled]="form.invalid"
         (click)="applyClick()"
       >{{ editMode ? 'Save' : 'Create' }}</button>
 
