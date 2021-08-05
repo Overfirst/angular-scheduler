@@ -60,6 +60,7 @@
                   #eventBox
                   collectEventBox
                   class="event-box"
+                  [title]="getEventTitle(event)"
                   [attr.event-id]="event.id"
                   [class.event-box-margin-left]="eventStartedOnTargetWeek(event, week[0])"
                   [class.event-box-margin-right]="eventEndedOnTargetWeek(event, week[0])"
@@ -68,7 +69,9 @@
                   (mouseleave)="eventBoxMouseLeave(eventBox)"
                   (dblclick)="eventBoxDoubleClick(event)"
                 >
-                  <span>({{ event.start | date:'HH:mm' }}) {{ event.name }}</span>
+                  <span
+                    [style.width]="getWidthForTextEventText()"
+                  >({{ event.start | date:'HH:mm' }}) {{ event.name }}</span>
                 </div>
               </div>
             </ng-container>

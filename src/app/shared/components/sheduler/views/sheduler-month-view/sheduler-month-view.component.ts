@@ -3,6 +3,7 @@ import { ShedulerEvent, ViewDetalization } from 'src/app/shared/interfaces';
 import { ShedulerService } from 'src/app/shared/services/sheduler.service';
 import { isSameDay, startOfMonth } from "date-fns";
 import { EventEmitter } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'sheduler-month-view',
@@ -23,7 +24,11 @@ export class ShedulerMonthViewComponent implements OnChanges {
   private readonly headerRowHeight = 48;
   private readonly defaultPadding = 24;
 
-  constructor(private service: ShedulerService, private cdRef: ChangeDetectorRef) { }
+  constructor(
+    private service: ShedulerService,
+    private cdRef: ChangeDetectorRef,
+    private datePipe: DatePipe
+  ) { }
 
   @Input() public events: ShedulerEvent[] = [];
 
@@ -145,5 +150,15 @@ export class ShedulerMonthViewComponent implements OnChanges {
 
   public dayDoubleClick(day: Date): void {
     this.dayDoubleClicked.emit(day);
+  }
+
+  public getWidthForTextEventText(): string {
+    return `calc(${this.column.nativeElement.clientWidth}px * 0.8)`;
+  }
+
+  public getEventTitle(event: ShedulerEvent): string {
+    return event.name + '\n\n' +
+           'Start date: ' + this.datePipe.transform(event.start, 'yyyy.MM.dd') + '\n' +
+           'End date: ' + this.datePipe.transform(event.end, 'yyyy.MM.dd')
   }
 }
