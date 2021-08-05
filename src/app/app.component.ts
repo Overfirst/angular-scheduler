@@ -10,7 +10,7 @@ export class AppComponent {
   public events: ShedulerEvent[] = [
     {
       id: 1,
-      name: 'Create sheduler application',
+      name: 'Creating a scheduler',
       start: new Date('2021-08-06 12:00'),
       end: new Date('2021-08-13 13:00'),
       color: '#b3c3ff'
