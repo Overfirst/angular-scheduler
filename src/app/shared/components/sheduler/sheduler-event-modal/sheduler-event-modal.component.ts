@@ -13,6 +13,7 @@ import {ShedulerValidators} from "../../../utils/sheduler-validators";
 })
 export class ShedulerEventModalComponent {
   public form: FormGroup;
+  public confirmOpened = false;
 
   constructor(private service: ShedulerService) {
     const startDateControl = new FormControl(null, Validators.required);
@@ -58,6 +59,7 @@ export class ShedulerEventModalComponent {
 
   @Output() public closeClicked = new EventEmitter<void>();
   @Output() public applyClicked = new EventEmitter<ShedulerEvent>();
+  @Output() public deleteClicked = new EventEmitter<ShedulerEvent>();
 
   public closeClick(): void {
     this.closeClicked.emit();
@@ -83,5 +85,18 @@ export class ShedulerEventModalComponent {
 
   public updateEndDateValidation(): void {
     this.form.controls.end.updateValueAndValidity();
+  }
+
+  public deleteClick(): void {
+    this.confirmOpened = true;
+  }
+
+  public confirmModalYesClicked(): void {
+    this.deleteClicked.emit(this.form.value as ShedulerEvent);
+    this.confirmOpened = false;
+  }
+
+  public confirmModalNoClicked(): void {
+    this.confirmOpened = false;
   }
 }

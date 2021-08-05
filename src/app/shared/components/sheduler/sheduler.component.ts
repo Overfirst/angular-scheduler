@@ -65,6 +65,14 @@ export class ShedulerComponent implements AfterContentInit {
     this.redrawView();
   }
 
+  public modalDeleteClicked(event: ShedulerEvent) {
+    const idx = this.events.findIndex(currentEvent => currentEvent.id === event.id);
+    this.events.splice(idx, 1);
+
+    this.modalOpened = false;
+    this.redrawView();
+  }
+
   public modalCloseClicked(): void {
     this.modalOpened = false;
   }

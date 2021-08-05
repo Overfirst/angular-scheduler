@@ -63,7 +63,11 @@
 
   <div class="modal-footer">
     <div class="btn-container">
-      <button *ngIf="editMode" class="modal-btn modal-btn-red">Delete</button>
+      <button
+        *ngIf="editMode"
+        class="modal-btn modal-btn-red"
+        (click)="deleteClick()"
+      >Delete</button>
     </div>
 
     <div class="btn-container">
@@ -74,6 +78,15 @@
       >{{ editMode ? 'Save' : 'Create' }}</button>
 
       <button class="modal-btn" (click)="closeClick()">Cancel</button>
+    </div>
+  </div>
+
+  <div *ngIf="confirmOpened" class="modal-confirm-overlay">
+    <div class="modal-confirm-container">
+      <sheduler-confirm-modal
+        (yesClicked)="confirmModalYesClicked()"
+        (noClicked)="confirmModalNoClicked()"
+      ></sheduler-confirm-modal>
     </div>
   </div>
 </div>

@@ -6,6 +6,7 @@ import { ShedulerDateSwitcherComponent } from '../components/sheduler/sheduler-d
 import { ShedulerMonthViewDayDetalizationComponent } from '../components/sheduler/views/sheduler-month-view/sheduler-month-view-day-detalization/sheduler-month-view-day-detalization.component';
 import { ShedulerEventModalComponent } from '../components/sheduler/sheduler-event-modal/sheduler-event-modal.component';
 import { ShedulerCollectEventBoxDirective } from '../directives/collect-event-box.directive';
+import { ShedulerConfirmModalComponent } from '../components/sheduler/sheduler-event-modal/sheduler-confirm-modal/sheduler-confirm-modal.component';
 import { DatePipe } from "@angular/common";
 
 @NgModule({
@@ -16,6 +17,7 @@ import { DatePipe } from "@angular/common";
     ShedulerDateSwitcherComponent,
     ShedulerMonthViewDayDetalizationComponent,
     ShedulerEventModalComponent,
+    ShedulerConfirmModalComponent,
     ShedulerCollectEventBoxDirective
   ],
   exports: [
@@ -23,6 +25,7 @@ import { DatePipe } from "@angular/common";
     ShedulerMonthViewComponent,
     ShedulerDateSwitcherComponent,
     ShedulerEventModalComponent,
+    ShedulerConfirmModalComponent,
     ShedulerMonthViewDayDetalizationComponent
   ],
   providers: [DatePipe]
