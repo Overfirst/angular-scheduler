@@ -5,7 +5,11 @@
   <div class="content">
     <div *ngIf="dayEvents.length === 0" class="events-empty">There are no events on this day!</div>
 
-    <div *ngFor="let event of dayEvents" class="event-box">
+    <div
+      *ngFor="let event of dayEvents"
+      (click)="eventClick(event)"
+      class="event-box"
+    >
       <div class="event-name">
         <strong [style.color]="event.color">{{ event.name }}</strong>
       </div>

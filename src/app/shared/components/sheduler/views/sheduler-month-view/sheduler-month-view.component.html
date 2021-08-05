@@ -86,6 +86,7 @@
     <sheduler-month-view-day-detalization
       [day]="day"
       [dayEvents]="eventsForSelectedDay"
+      (eventClicked)="eventBoxDoubleClick($event)"
     ></sheduler-month-view-day-detalization>
   </div>
 </div>

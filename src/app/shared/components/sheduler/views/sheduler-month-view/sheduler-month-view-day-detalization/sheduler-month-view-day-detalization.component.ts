@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
+import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter} from '@angular/core';
 import {ShedulerEvent} from "../../../../../interfaces";
 
 @Component({
@@ -10,4 +10,10 @@ import {ShedulerEvent} from "../../../../../interfaces";
 export class ShedulerMonthViewDayDetalizationComponent {
   @Input() dayEvents: ShedulerEvent[];
   @Input() day: Date;
+
+  @Output() public eventClicked = new EventEmitter<ShedulerEvent>();
+
+  public eventClick(event: ShedulerEvent) {
+    this.eventClicked.emit(event);
+  }
 }
