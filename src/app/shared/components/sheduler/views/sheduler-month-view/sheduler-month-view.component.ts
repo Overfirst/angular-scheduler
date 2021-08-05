@@ -28,7 +28,6 @@ export class ShedulerMonthViewComponent  {
 
   constructor(
     private service: ShedulerService,
-    private cdRef: ChangeDetectorRef,
     private datePipe: DatePipe
   ) { }
 
@@ -120,10 +119,6 @@ export class ShedulerMonthViewComponent  {
         box.style.border = '1px solid #bbaacf';
       }
     });
-  }
-
-  @HostListener('window:resize') public onResize(): void {
-    setTimeout(() => this.cdRef.detectChanges(), 0)
   }
 
   public getEventColor(event: ShedulerEvent): string {

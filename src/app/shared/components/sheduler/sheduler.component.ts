@@ -5,7 +5,7 @@ import {
   ViewChild,
   ChangeDetectorRef,
   ViewContainerRef,
-  AfterContentInit
+  AfterContentInit, HostListener
 } from '@angular/core';
 
 import { ShedulerEvent } from '../../interfaces';
@@ -77,5 +77,9 @@ export class ShedulerComponent implements AfterContentInit {
 
   public dayChanged(day: Date): void {
     this.selectedDay = day;
+  }
+
+  @HostListener('window:resize') public onResize(): void {
+    this.redrawView();
   }
 }
