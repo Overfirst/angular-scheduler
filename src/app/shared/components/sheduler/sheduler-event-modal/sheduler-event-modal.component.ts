@@ -3,6 +3,7 @@ import { ShedulerEvent } from "../../../interfaces";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ShedulerService} from "../../../services/sheduler.service";
 import { OnInit } from '@angular/core';
+import {ShedulerValidators} from "../../../utils/sheduler-validators";
 
 @Component({
   selector: 'sheduler-event-modal',
@@ -14,11 +15,18 @@ export class ShedulerEventModalComponent {
   public form: FormGroup;
 
   constructor(private service: ShedulerService) {
+    const startDateControl = new FormControl(null, Validators.required);
+
+    const endDateControl = new FormControl(null, [
+      Validators.required,
+      ShedulerValidators.endDateBeforeStartDate(startDateControl)
+    ]);
+
     const controls: { [name: string]: AbstractControl } = {
       id: new FormControl(null),
       name: new FormControl('', Validators.required),
-      start: new FormControl(null, Validators.required),
-      end: new FormControl(null, Validators.required),
+      start: startDateControl,
+      end: endDateControl,
       color: new FormControl('#ffffff')
     };
 
@@ -62,5 +70,9 @@ export class ShedulerEventModalComponent {
     };
 
     this.applyClicked.emit(event);
+  }
+
+  public updateEndDateValidation(): void {
+    this.form.controls.end.updateValueAndValidity();
   }
 }
