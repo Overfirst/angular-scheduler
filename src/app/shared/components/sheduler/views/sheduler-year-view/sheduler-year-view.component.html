@@ -29,7 +29,11 @@
                 <span>{{ month | date: "MMMM" }}</span>
 
                 <div class="show-more-events-wrapper">
-                  <span *ngIf="eventsCountOnMonth(month) > 4" class="show-more-events">...</span>
+                  <span
+                    *ngIf="eventsCountOnMonth(month) > 4"
+                    class="show-more-events"
+                    (click)="showMoreEventsClick()"
+                  >...</span>
                 </div>
               </div>
             </td>

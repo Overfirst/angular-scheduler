@@ -45,6 +45,7 @@ export class ShedulerYearViewComponent {
   @Output() public eventDoubleClicked = new EventEmitter<ShedulerEvent>();
   @Output() public monthDoubleClicked = new EventEmitter<Date>();
   @Output() public monthChanged = new EventEmitter<Date>();
+  @Output() public showMoreEventsClicked = new EventEmitter<ViewDetalization>();
 
   public get month() {
     return this.selectedMonth;
@@ -133,5 +134,9 @@ export class ShedulerYearViewComponent {
 
   public getView(): ViewDetalization {
     return ViewDetalization.Year;
+  }
+
+  public showMoreEventsClick(): void {
+    this.showMoreEventsClicked.emit(ViewDetalization.Month);
   }
 }

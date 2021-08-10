@@ -100,4 +100,8 @@ export class ShedulerComponent implements AfterContentInit {
   @HostListener('window:resize') public onResize(): void {
     this.redrawView();
   }
+
+  public showMoreEventsClicked(view: any): void {
+    this.selectedView = view;
+  }
 }
