@@ -79,10 +79,11 @@
   </div>
 
   <div class="panel-box">
-    <sheduler-month-view-day-detalization
-      [day]="day"
-      [dayEvents]="eventsForSelectedDay"
+    <sheduler-view-detalization
+      [view]="getView()"
+      [date]="day"
+      [dateEvents]="eventsForSelectedDay"
       (eventClicked)="eventBoxDoubleClick($event)"
-    ></sheduler-month-view-day-detalization>
+    ></sheduler-view-detalization>
   </div>
 </div>

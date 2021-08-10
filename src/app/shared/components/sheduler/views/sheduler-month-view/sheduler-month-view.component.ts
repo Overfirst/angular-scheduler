@@ -141,4 +141,8 @@ export class ShedulerMonthViewComponent  {
   public getEventTitle(event: ShedulerEvent): string {
     return this.service.getEventTitle(event);
   }
+
+  public getView(): ViewDetalization {
+    return ViewDetalization.Month;
+  }
 }

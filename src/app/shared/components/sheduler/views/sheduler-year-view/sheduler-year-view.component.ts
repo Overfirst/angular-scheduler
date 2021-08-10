@@ -21,6 +21,8 @@ export class ShedulerYearViewComponent {
   private monthFirstSetted = false;
   private selectedYear: Date;
 
+  public eventsForSelectedMonth: ShedulerEvent[];
+
   @Input() public events: ShedulerEvent[];
 
   @Input() public set year(year: Date) {
@@ -30,6 +32,7 @@ export class ShedulerYearViewComponent {
 
   @Input() public set month(month: Date) {
     this.selectedMonth = month;
+    this.eventsForSelectedMonth = this.service.getEventsForSelectedMonth(this.selectedMonth, this.events);
 
     if (!this.monthFirstSetted) {
       this.monthFirstSetted = true;
@@ -126,5 +129,9 @@ export class ShedulerYearViewComponent {
     }
 
     return this.service.getEventDuration(event, quarter, ViewDetalization.Year) * this.row.nativeElement.clientWidth / 3 + 'px';
+  }
+
+  public getView(): ViewDetalization {
+    return ViewDetalization.Year;
   }
 }

@@ -3,7 +3,7 @@ import { SharedModule } from './shared.module';
 import { ShedulerComponent } from '../components/sheduler/sheduler.component';
 import { ShedulerMonthViewComponent } from '../components/sheduler/views/sheduler-month-view/sheduler-month-view.component';
 import { ShedulerDateSwitcherComponent } from '../components/sheduler/sheduler-date-switcher/sheduler-date-switcher.component';
-import { ShedulerMonthViewDayDetalizationComponent } from '../components/sheduler/views/sheduler-month-view/sheduler-month-view-day-detalization/sheduler-month-view-day-detalization.component';
+import { ShedulerViewDetalizationComponent } from '../components/sheduler/sheduler-view-detalization/sheduler-view-detalization.component';
 import { ShedulerEventModalComponent } from '../components/sheduler/sheduler-event-modal/sheduler-event-modal.component';
 import { ShedulerCollectEventBoxDirective } from '../directives/collect-event-box.directive';
 import { ShedulerConfirmModalComponent } from '../components/sheduler/sheduler-event-modal/sheduler-confirm-modal/sheduler-confirm-modal.component';
@@ -17,7 +17,7 @@ import { DatePipe } from "@angular/common";
     ShedulerMonthViewComponent,
     ShedulerYearViewComponent,
     ShedulerDateSwitcherComponent,
-    ShedulerMonthViewDayDetalizationComponent,
+    ShedulerViewDetalizationComponent,
     ShedulerEventModalComponent,
     ShedulerConfirmModalComponent,
     ShedulerCollectEventBoxDirective
@@ -29,7 +29,7 @@ import { DatePipe } from "@angular/common";
     ShedulerDateSwitcherComponent,
     ShedulerEventModalComponent,
     ShedulerConfirmModalComponent,
-    ShedulerMonthViewDayDetalizationComponent
+    ShedulerViewDetalizationComponent
   ],
   providers: [DatePipe]
 })

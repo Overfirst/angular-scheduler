@@ -1,12 +1,16 @@
 <div class="wrapper">
   <div class="selected-day-detalization">
-    <span>{{ day | date:'MMM, d' }}</span>
+    <ng-container [ngSwitch]="view">
+      <span *ngSwitchCase="'Month'">{{ date | date:'MMM, d' }}</span>
+      <span *ngSwitchCase="'Year'">{{ date | date:'MMMM' }}</span>
+    </ng-container>
+
   </div>
   <div class="content">
-    <div *ngIf="dayEvents.length === 0" class="events-empty">There are no events on this day!</div>
+    <div *ngIf="dateEvents.length === 0" class="events-empty">There are no events on this day!</div>
 
     <div
-      *ngFor="let event of dayEvents"
+      *ngFor="let event of dateEvents"
       (click)="eventClick(event)"
       class="event-box-detalization"
     >

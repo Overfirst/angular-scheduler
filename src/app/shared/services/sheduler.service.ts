@@ -264,6 +264,18 @@ export class ShedulerService {
     return suitableEvents;
   }
 
+  public getEventsForSelectedMonth(month: Date, events: ShedulerEvent[]): ShedulerEvent[] {
+    const suitableEvents: ShedulerEvent[] = [];
+
+    events.forEach(event => {
+      if (this.eventFallsOnMonth(event, month)) {
+        suitableEvents.push(event);
+      }
+    });
+
+    return suitableEvents;
+  }
+
   public transformDateForModalInput(date: Date): string {
     const year = this.resolveSeveralDigits(date.getFullYear(), 4);
     const month = this.resolveSeveralDigits(date.getMonth() + 1, 2);
