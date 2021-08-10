@@ -1,16 +1,31 @@
 <div class="date-switcher-wrapper">
   <div class="date-switcher">
     <div class="date-group">
-      <span
-        width="24px"
+      <div
         (click)="subDate()"
         class="switch-btn"
-      ></span>
-      <span
+      ></div>
+      <div
         (click)="addDate()"
         class="switch-btn"
-      ></span>
-      <span>{{ selectedDate | date:'MMMM, YYYY' }}</span>
+      ></div>
+
+      <ng-container [ngSwitch]="selectedView">
+        <span *ngSwitchCase="'Month'">{{ selectedDate | date:'MMMM, YYYY' }}</span>
+        <span *ngSwitchDefault>{{ selectedDate | date:'YYYY' }}</span>
+      </ng-container>
+    </div>
+
+    <div class="date-group">
+      <div class="calendar-icon"></div>
+      <div>
+        <select
+          (change)="viewChange()"
+          [(ngModel)]="selectedView"
+        >
+          <option *ngFor="let view of views">{{ view.toString() }}</option>
+        </select>
+      </div>
     </div>
   </div>
 </div>

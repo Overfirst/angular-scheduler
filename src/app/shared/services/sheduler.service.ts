@@ -1,3 +1,4 @@
+import { DatePipe } from "@angular/common";
 import { Injectable } from "@angular/core";
 
 import {
@@ -10,7 +11,10 @@ import {
   differenceInCalendarDays,
   getDay,
   isFirstDayOfMonth,
-  startOfDay
+  startOfDay,
+  startOfYear,
+  addMonths,
+  isThisMonth
 } from "date-fns";
 
 import { ShedulerEvent, ViewDetalization } from "../interfaces";
@@ -18,6 +22,11 @@ import { ShedulerEvent, ViewDetalization } from "../interfaces";
 @Injectable({ providedIn: 'root' })
 export class ShedulerService {
   public eventBoxes = new Set<HTMLDivElement>();
+
+  public readonly headerRowHeight = 48;
+  public readonly defaultPadding = 24;
+
+  constructor(private datePipe: DatePipe) {}
 
   public getWeeksForMonthView(date: Date, dateMonth: Date): Array<Date[]> {
     const weeks: Array<Date[]> = [];
@@ -41,12 +50,35 @@ export class ShedulerService {
     return weeks;
   }
 
+  public getQuartersForYearView(): Array<Date[]> {
+    const quarters: Array<Date[]> = [];
+
+    const startDate = startOfYear(new Date());
+
+    for (let i = 0; i < 4; i++) {
+      const quarter: Date[] = [];
+      const date = addMonths(startDate, 3 * i);
+
+      for (let j = 0; j < 3; j++) {
+        quarter.push(addMonths(date, j));
+      }
+
+      quarters.push(quarter);
+    }
+
+    return quarters;
+  }
+
   public dayInCurrentMonth(day: Date, monthDate: Date): boolean {
     return day.getFullYear() === monthDate.getFullYear() && day.getMonth() === monthDate.getMonth();
   }
 
   public isToday(date: Date): boolean {
     return isToday(date);
+  }
+
+  public isThisMonth(date: Date): boolean {
+    return isThisMonth(date);
   }
 
   public isFullDate(date: Date, weeks: Array<Date[]>): boolean {
@@ -190,5 +222,35 @@ export class ShedulerService {
     const dayTime = day.getTime();
 
     return dayTime >= startTime && dayTime <= endTime;
+  }
+
+  public getEventTitle(event: ShedulerEvent): string {
+    return event.name + '\n\n' +
+           'Start date: ' + this.datePipe.transform(event.start, 'yyyy.MM.dd') + '\n' +
+           'End date: ' + this.datePipe.transform(event.end, 'yyyy.MM.dd')
+  }
+
+  public eventBoxMouseOver(eventBox: HTMLDivElement): void {
+    this.eventBoxes.forEach(box => {
+      if (eventBox.getAttribute('event-id') === box.getAttribute('event-id')) {
+        box.style.border = '1px solid #000';
+      }
+    });
+  }
+
+  public eventBoxMouseLeave(eventBox: HTMLDivElement): void {
+    this.eventBoxes.forEach(box => {
+      if (eventBox.getAttribute('event-id') === box.getAttribute('event-id')) {
+        box.style.border = '1px solid #bbaacf';
+      }
+    });
+  }
+
+  public getEventColor(event: ShedulerEvent): string {
+    if (!event.color) {
+      event.color = '#93ff86';
+    }
+
+    return event.color;
   }
 }

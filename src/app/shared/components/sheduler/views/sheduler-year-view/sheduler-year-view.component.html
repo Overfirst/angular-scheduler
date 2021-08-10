@@ -1,0 +1,43 @@
+<div class="view-box">
+  <div class="main-content-box">
+    <div class="header-table">
+      <table>
+        <thead>
+          <tr #row>
+            <td></td>
+            <td #column>Months</td>
+            <td></td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="content-table">
+      <table>
+        <tbody>
+          <tr *ngFor="let quarter of quarters">
+            <td
+              *ngFor="let month of quarter"
+              [style.height]="getHeightStyle()"
+              (dblclick)="monthDoubleClick(month)"
+            >
+              <div
+                class="column-content"
+                [class.current-date]="isThisMonth(month)"
+                (click)="selectMonth(month)"
+              >
+                <div *ngIf="isSelectedMonth(month)" class="selected-date"></div>
+                <span>{{ month | date: "MMMM" }}</span>
+
+                <!-- <div class="show-more-events-wrapper">
+                  <span *ngIf="eventsCountOnDay(day) > 4" class="show-more-events">...</span>
+                </div> -->
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel-box"></div>
+</div>

@@ -5,7 +5,7 @@
   position: relative;
 }
 
-.selected-day {
+.selected-day-detalization {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,7 +31,7 @@ $default-margin: 12px;
   margin-top: $default-margin;
 }
 
-.event-box {
+.event-box-detalization {
   padding: 16px;
   transition: all 0.2s;
   cursor: pointer;

@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="selected-day">
+  <div class="selected-day-detalization">
     <span>{{ day | date:'MMM, d' }}</span>
   </div>
   <div class="content">
@@ -8,7 +8,7 @@
     <div
       *ngFor="let event of dayEvents"
       (click)="eventClick(event)"
-      class="event-box"
+      class="event-box-detalization"
     >
       <div class="event-name">
         <strong [style.color]="event.color">{{ event.name }}</strong>

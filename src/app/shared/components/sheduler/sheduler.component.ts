@@ -9,7 +9,7 @@ import {
   HostListener
 } from '@angular/core';
 
-import { ShedulerEvent } from '../../interfaces';
+import { ShedulerEvent, ViewDetalization } from '../../interfaces';
 import { ShedulerService } from "../../services/sheduler.service";
 import { startOfMonth } from "date-fns";
 import { TemplateRef } from '@angular/core';
@@ -29,11 +29,15 @@ export class ShedulerComponent implements AfterContentInit {
   public modalEditableEvent: ShedulerEvent;
 
   public selectedViewDate = new Date();
+
   public selectedDay = startOfMonth(this.selectedViewDate);
+  public selectedMonth = this.selectedDay;
+
+  public selectedView: ViewDetalization;
 
   @Input() public events: ShedulerEvent[] = [];
 
-  constructor(private service: ShedulerService, private cdRef: ChangeDetectorRef) {}
+  constructor(private service: ShedulerService) {}
 
   public ngAfterContentInit(): void {
     this.redrawView();
@@ -43,13 +47,18 @@ export class ShedulerComponent implements AfterContentInit {
     this.selectedViewDate = date;
   }
 
+  public viewChanged(view: ViewDetalization): void {
+    this.selectedView = view;
+    this.redrawView();
+  }
+
   public eventDoubleClicked(event: ShedulerEvent): void {
     this.modalEditMode = true;
     this.modalEditableEvent = event;
     this.modalOpened = true;
   }
 
-  public dayDoubleClicked(day: Date): void {
+  public openCreateModal(): void {
     this.modalEditMode = false;
     this.modalOpened = true;
   }
@@ -86,6 +95,10 @@ export class ShedulerComponent implements AfterContentInit {
 
   public dayChanged(day: Date): void {
     this.selectedDay = day;
+  }
+
+  public monthChanged(month: Date): void {
+    this.selectedMonth = month;
   }
 
   @HostListener('window:resize') public onResize(): void {

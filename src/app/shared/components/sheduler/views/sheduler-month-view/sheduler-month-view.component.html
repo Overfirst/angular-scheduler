@@ -1,21 +1,17 @@
-<div class="month-view-box">
-  <div class="panel-box">
-
-  </div>
-
+<div class="view-box">
   <div class="main-content-box">
     <div class="header-table">
       <table>
         <thead>
-        <tr #row>
-          <td #column>Monday</td>
-          <td>Tuesday</td>
-          <td>Wednesday</td>
-          <td>Thursday</td>
-          <td>Friday</td>
-          <td>Saturday</td>
-          <td>Sunday</td>
-        </tr>
+          <tr #row>
+            <td #column>Monday</td>
+            <td>Tuesday</td>
+            <td>Wednesday</td>
+            <td>Thursday</td>
+            <td>Friday</td>
+            <td>Saturday</td>
+            <td>Sunday</td>
+          </tr>
         </thead>
       </table>
     </div>
@@ -34,7 +30,7 @@
               [class.today-date]="isToday(day)"
               (click)="selectDay(day)"
             >
-              <div *ngIf="isSelectedDay(day)" class="selected-day"></div>
+              <div *ngIf="isSelectedDay(day)" class="selected-date"></div>
               <span *ngIf="isFullDate(day); else default">{{ day | date:'MMM, d' }}</span>
               <ng-template #default>
                 <span>{{ day | date:'d' }}</span>

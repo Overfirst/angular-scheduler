@@ -3,7 +3,6 @@ import { ShedulerEvent, ViewDetalization } from 'src/app/shared/interfaces';
 import { ShedulerService } from 'src/app/shared/services/sheduler.service';
 import { isSameDay, startOfMonth } from "date-fns";
 import { EventEmitter } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'sheduler-month-view',
@@ -23,13 +22,7 @@ export class ShedulerMonthViewComponent  {
   private selectedMonth: Date;
   private dayFirstSetted = false;
 
-  private readonly headerRowHeight = 48;
-  private readonly defaultPadding = 24;
-
-  constructor(
-    private service: ShedulerService,
-    private datePipe: DatePipe
-  ) { }
+  constructor(private service: ShedulerService) {}
 
   @Input() public events: ShedulerEvent[] = [];
 
@@ -65,7 +58,7 @@ export class ShedulerMonthViewComponent  {
 
   // todo: use display: flex for table
   public getHeightStyle(): string {
-    return `calc((100vh - (2 * ${this.headerRowHeight}px + 3 * ${this.defaultPadding}px) - 2px) / ${this.weeks.length})`
+    return `calc((100vh - (2 * ${this.service.headerRowHeight}px + 3 * ${this.service.defaultPadding}px) - 2px) / ${this.weeks.length})`
   }
 
   public isToday(date: Date): boolean {
@@ -106,27 +99,15 @@ export class ShedulerMonthViewComponent  {
   }
 
   public eventBoxMouseOver(eventBox: HTMLDivElement): void {
-    this.service.eventBoxes.forEach(box => {
-      if (eventBox.getAttribute('event-id') === box.getAttribute('event-id')) {
-        box.style.border = '1px solid #000';
-      }
-    });
+    this.service.eventBoxMouseOver(eventBox);
   }
 
   public eventBoxMouseLeave(eventBox: HTMLDivElement): void {
-    this.service.eventBoxes.forEach(box => {
-      if (eventBox.getAttribute('event-id') === box.getAttribute('event-id')) {
-        box.style.border = '1px solid #bbaacf';
-      }
-    });
+    this.service.eventBoxMouseLeave(eventBox);
   }
 
   public getEventColor(event: ShedulerEvent): string {
-    if (!event.color) {
-      event.color = '#93ff86';
-    }
-
-    return event.color;
+    return this.service.getEventColor(event);
   }
 
   public eventsCountOnDay(day: Date): number {
@@ -158,8 +139,6 @@ export class ShedulerMonthViewComponent  {
   }
 
   public getEventTitle(event: ShedulerEvent): string {
-    return event.name + '\n\n' +
-           'Start date: ' + this.datePipe.transform(event.start, 'yyyy.MM.dd') + '\n' +
-           'End date: ' + this.datePipe.transform(event.end, 'yyyy.MM.dd')
+    return this.service.getEventTitle(event);
   }
 }
