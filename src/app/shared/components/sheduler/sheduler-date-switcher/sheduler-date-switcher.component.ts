@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Input } from '@angular/core';
 import { Component, ChangeDetectionStrategy, Output } from '@angular/core';
 import { addMonths, addYears } from 'date-fns';
 import { ViewDetalization } from 'src/app/shared/interfaces';
@@ -10,12 +10,13 @@ import { ViewDetalization } from 'src/app/shared/interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShedulerDateSwitcherComponent {
-  public selectedDate = new Date();
-  public selectedView = ViewDetalization.Year;
-  public views: ViewDetalization[] = Object.values(ViewDetalization);
+  @Input() view: ViewDetalization;
+  @Input() date: Date;
 
   @Output() viewDateChanged = new EventEmitter<Date>();
   @Output() viewChanged = new EventEmitter<ViewDetalization>();
+
+  public views: ViewDetalization[] = Object.values(ViewDetalization);
 
   public subDate(): void {
     this.changeDate(false);
@@ -26,22 +27,22 @@ export class ShedulerDateSwitcherComponent {
   }
 
   public viewChange(): void {
-    this.viewChanged.emit(this.selectedView);
+    this.viewChanged.emit(this.view);
   }
 
   private changeDate(inc: boolean): void {
     const value = inc ? 1 : -1;
 
-    switch (this.selectedView) {
+    switch (this.view) {
       case ViewDetalization.Day:
       case ViewDetalization.Week:
       case ViewDetalization.Month:
-        this.selectedDate = addMonths(this.selectedDate, value);
+        this.date = addMonths(this.date, value);
         break;
       case ViewDetalization.Year:
-        this.selectedDate = addYears(this.selectedDate, value);
+        this.date = addYears(this.date, value);
     }
 
-    this.viewDateChanged.emit(this.selectedDate);
+    this.viewDateChanged.emit(this.date);
   }
 }

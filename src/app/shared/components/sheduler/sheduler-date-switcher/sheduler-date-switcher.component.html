@@ -10,9 +10,9 @@
         class="switch-btn"
       ></div>
 
-      <ng-container [ngSwitch]="selectedView">
-        <span *ngSwitchCase="'Month'">{{ selectedDate | date:'MMMM, YYYY' }}</span>
-        <span *ngSwitchDefault>{{ selectedDate | date:'YYYY' }}</span>
+      <ng-container [ngSwitch]="view">
+        <span *ngSwitchCase="'Month'">{{ date | date:'MMMM, YYYY' }}</span>
+        <span *ngSwitchDefault>{{ date | date:'YYYY' }}</span>
       </ng-container>
     </div>
 
@@ -21,7 +21,7 @@
       <div>
         <select
           (change)="viewChange()"
-          [(ngModel)]="selectedView"
+          [(ngModel)]="view"
         >
           <option *ngFor="let view of views">{{ view.toString() }}</option>
         </select>

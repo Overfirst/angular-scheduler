@@ -1,6 +1,8 @@
 <div class="sheduler-box">
   <div class="view-box">
     <sheduler-date-switcher
+      [view]="selectedView"
+      [date]="selectedViewDate"
       (viewDateChanged)="viewDateChanged($event)"
       (viewChanged)="viewChanged($event)"
     ></sheduler-date-switcher>
