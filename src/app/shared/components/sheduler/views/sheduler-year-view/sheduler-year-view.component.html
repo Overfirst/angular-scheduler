@@ -28,11 +28,43 @@
                 <div *ngIf="isSelectedMonth(month)" class="selected-date"></div>
                 <span>{{ month | date: "MMMM" }}</span>
 
-                <!-- <div class="show-more-events-wrapper">
-                  <span *ngIf="eventsCountOnDay(day) > 4" class="show-more-events">...</span>
-                </div> -->
+                <div class="show-more-events-wrapper">
+                  <span *ngIf="eventsCountOnMonth(month) > 4" class="show-more-events">...</span>
+                </div>
               </div>
             </td>
+            <div class="events-box" #eventsBox>
+              <ng-container *ngFor="let event of events">
+                <div
+                  #eventBoxWrapper
+                  *ngIf="eventOnTargetQuarter(event, quarter[0])"
+                  class="event-box-wrapper"
+                  [attr.event-id]="event.id"
+                  [style.left]="getEventQuarterOffset(event, quarter[0])"
+                  [style.width]="getEventDurationForTargetQuarter(event, quarter[0])"
+                  [style.top]="getEventTopOffset(event, eventBoxWrapper)"
+                >
+                  <div
+                    *ngIf="!eventBoxOverflowContainer(eventBoxWrapper, eventsBox)"
+                    #eventBox
+                    collectEventBox
+                    class="event-box"
+                    [title]="getEventTitle(event)"
+                    [attr.event-id]="event.id"
+                    [class.event-box-margin-left]="eventStartedOnTargetQuarter(event, quarter[0])"
+                    [class.event-box-margin-right]="eventEndedOnTargetQuarter(event, quarter[0])"
+                    [style.background-color]="getEventColor(event)"
+                    (mouseover)="eventBoxMouseOver(eventBox)"
+                    (mouseleave)="eventBoxMouseLeave(eventBox)"
+                    (dblclick)="eventBoxDoubleClick(event)"
+                  >
+                    <span
+                      [style.width]="getWidthForTextEventText()"
+                    >({{ event.start | date:'HH:mm' }}) {{ event.name }}</span>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
           </tr>
         </tbody>
       </table>

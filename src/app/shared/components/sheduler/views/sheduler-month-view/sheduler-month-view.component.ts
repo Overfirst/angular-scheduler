@@ -74,7 +74,7 @@ export class ShedulerMonthViewComponent  {
       return this.row.nativeElement.clientWidth + 'px';
     }
 
-    return this.service.getEventDurationForTargetWeek(event, monday, ViewDetalization.Month) * this.row.nativeElement.clientWidth / 7 + 'px';
+    return this.service.getEventDuration(event, monday, ViewDetalization.Month) * this.row.nativeElement.clientWidth / 7 + 'px';
   }
 
   public getEventTopOffset(event: ShedulerEvent, wrapper: HTMLDivElement): string {

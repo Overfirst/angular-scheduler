@@ -14,7 +14,14 @@ import {
   startOfDay,
   startOfYear,
   addMonths,
-  isThisMonth
+  isThisMonth,
+  isSameMonth,
+  getQuarter,
+  monthsToQuarters,
+  quartersToMonths,
+  startOfQuarter,
+  isSameQuarter,
+  differenceInCalendarMonths
 } from "date-fns";
 
 import { ShedulerEvent, ViewDetalization } from "../interfaces";
@@ -50,10 +57,10 @@ export class ShedulerService {
     return weeks;
   }
 
-  public getQuartersForYearView(): Array<Date[]> {
+  public getQuartersForYearView(year: Date): Array<Date[]> {
     const quarters: Array<Date[]> = [];
 
-    const startDate = startOfYear(new Date());
+    const startDate = startOfYear(year);
 
     for (let i = 0; i < 4; i++) {
       const quarter: Date[] = [];
@@ -86,23 +93,35 @@ export class ShedulerService {
     return isFirstDayOfFirstWeek || (!isFirstDayOfFirstWeek && isFirstDayOfMonth(date));
   }
 
-  public getEventDurationForTargetWeek(event: ShedulerEvent, monday: Date, view: ViewDetalization): number {
+  public getEventDuration(event: ShedulerEvent, date: Date, view: ViewDetalization): number {
+    let total = 0;
+    let diff;
+
     switch (view) {
       case ViewDetalization.Month:
-        const diff = Math.abs(differenceInCalendarDays(event.start, event.end));
-        let total = 0;
+        diff = Math.abs(differenceInCalendarDays(event.start, event.end));
 
         for (let i = 0; i <= diff; i++) {
-          if (isSameWeek(addDays(event.start, i), monday, { weekStartsOn: 1 })) {
+          if (isSameWeek(addDays(event.start, i), date, { weekStartsOn: 1 })) {
             total++;
           }
         }
 
-        return total;
+        break;
 
-      default:
-        return 1;
+      case ViewDetalization.Year:
+        diff = Math.abs(differenceInCalendarMonths(event.start, event.end));
+
+        for (let i = 0; i <= diff; i++) {
+          if (isSameQuarter(addMonths(event.start, i), date)) {
+            total++;
+          }
+        }
+
+        break;
     }
+
+    return total;
   }
 
   public eventOnTargetWeek(event: ShedulerEvent, monday: Date): boolean {
@@ -110,6 +129,16 @@ export class ShedulerService {
 
     for (let i = 0; i <= totalDaysDifferent; i++) {
       if (isSameWeek(addDays(event.start, i), monday, { weekStartsOn: 1 })) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public eventOnTargetQuarter(event: ShedulerEvent, quarter: Date): boolean {
+    for (let i = 0; i < 3; i++) {
+      if (this.eventFallsOnMonth(event, addMonths(quarter, i))) {
         return true;
       }
     }
@@ -125,10 +154,38 @@ export class ShedulerService {
     return isSameWeek(event.end, monday, { weekStartsOn: 1 });
   }
 
+  public eventStartedOnTargetQuarter(event: ShedulerEvent, quarter: Date): boolean {
+    for (let i = 0; i < 3; i++) {
+      if (isSameMonth(addMonths(quarter, i), event.start)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public eventEndedOnTargetQuarter(event: ShedulerEvent, quarter: Date): boolean {
+    for (let i = 0; i < 3; i++) {
+      if (isSameMonth(addMonths(quarter, i), event.end)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   public getEventDaysOffsetForTargetWeek(event: ShedulerEvent, monday: Date): number {
     if (this.eventStartedOnTargetWeek(event, monday)) {
       const day = getDay(event.start);
       return day === 0 ? 6 : day - 1;
+    }
+
+    return 0;
+  }
+
+  public getEventMonthsOffsetForTargetQuarter(event: ShedulerEvent, quarter: Date): number {
+    if (this.eventStartedOnTargetQuarter(event, quarter)) {
+      return Math.abs(startOfQuarter(quarter).getMonth() - event.start.getMonth());
     }
 
     return 0;
@@ -172,15 +229,27 @@ export class ShedulerService {
   }
 
   public eventsCountOnDay(day: Date, events: ShedulerEvent[]): number {
-    let totalDays = 0;
+    let totalEvents = 0;
 
     events.forEach(event => {
       if (this.eventFallsOnDay(event, day)) {
-        totalDays++;
+        totalEvents++;
       }
     });
 
-    return totalDays;
+    return totalEvents;
+  }
+
+  public eventsCountOnMonth(month: Date, events: ShedulerEvent[]): number {
+    let totalEvents = 0;
+
+    events.forEach(event => {
+      if (this.eventFallsOnMonth(event, month)) {
+        totalEvents++;
+      }
+    });
+
+    return totalEvents;
   }
 
   public getEventsForSelectedDay(day: Date, events: ShedulerEvent[]): ShedulerEvent[] {
@@ -216,12 +285,20 @@ export class ShedulerService {
     return stringValue;
   }
 
-  private eventFallsOnDay(event: ShedulerEvent, day: Date): boolean {
+  private eventFallsOnDay(event: ShedulerEvent, date: Date): boolean {
     const startTime = startOfDay(event.start).getTime();
     const endTime = startOfDay(event.end).getTime();
-    const dayTime = day.getTime();
+    const dayTime = date.getTime();
 
     return dayTime >= startTime && dayTime <= endTime;
+  }
+
+  private eventFallsOnMonth(event: ShedulerEvent, month: Date): boolean {
+    const startTime = startOfMonth(event.start).getTime();
+    const endTime = startOfMonth(event.end).getTime();
+    const monthTime = month.getTime();
+
+    return monthTime >= startTime && monthTime <= endTime;
   }
 
   public getEventTitle(event: ShedulerEvent): string {

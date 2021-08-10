@@ -11,20 +11,20 @@
           *ngSwitchCase="'Month'"
           [events]="events"
           [month]="selectedViewDate"
-          [day]="selectedDay"
+          [day]="selectedDate"
           (eventDoubleClicked)="eventDoubleClicked($event)"
           (dayDoubleClicked)="openCreateModal()"
-          (dayChanged)="dayChanged($event)"
+          (dayChanged)="dateChanged($event)"
         ></sheduler-month-view>
 
         <sheduler-year-view
           *ngSwitchDefault
           [events]="events"
           [year]="selectedViewDate"
-          [month]="selectedMonth"
+          [month]="selectedDate"
           (eventDoubleClicked)="eventDoubleClicked($event)"
           (monthDoubleClicked)="openCreateModal()"
-          (monthChanged)="monthChanged($event)"
+          (monthChanged)="dateChanged($event)"
         ></sheduler-year-view>
       </ng-container>
     </ng-template>
@@ -43,7 +43,7 @@
         <sheduler-event-modal
           [editMode]="modalEditMode"
           [editableEvent]="modalEditableEvent"
-          [defaultDate]="selectedDay"
+          [defaultDate]="selectedDate"
           (applyClicked)="modalApplyClicked($event)"
           (deleteClicked)="modalDeleteClicked($event)"
           (closeClicked)="modalCloseClicked()"

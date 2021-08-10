@@ -30,8 +30,8 @@ export class ShedulerComponent implements AfterContentInit {
 
   public selectedViewDate = new Date();
 
-  public selectedDay = startOfMonth(this.selectedViewDate);
-  public selectedMonth = this.selectedDay;
+  public selectedDate = startOfMonth(this.selectedViewDate);
+  public selectedMonth = this.selectedDate;
 
   public selectedView: ViewDetalization;
 
@@ -93,12 +93,8 @@ export class ShedulerComponent implements AfterContentInit {
     this.outletRef.createEmbeddedView(this.viewRef);
   }
 
-  public dayChanged(day: Date): void {
-    this.selectedDay = day;
-  }
-
-  public monthChanged(month: Date): void {
-    this.selectedMonth = month;
+  public dateChanged(date: Date): void {
+    this.selectedDate = date;
   }
 
   @HostListener('window:resize') public onResize(): void {
