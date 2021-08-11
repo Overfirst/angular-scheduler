@@ -136,7 +136,8 @@ export class ShedulerYearViewComponent {
     return ViewDetalization.Year;
   }
 
-  public showMoreEventsClick(): void {
+  public showMoreEventsClick(parent: HTMLDivElement): void {
+    parent.click();
     this.showMoreEventsClicked.emit(ViewDetalization.Month);
   }
 }

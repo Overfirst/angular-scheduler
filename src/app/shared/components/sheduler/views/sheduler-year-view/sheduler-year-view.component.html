@@ -21,6 +21,7 @@
               (dblclick)="monthDoubleClick(month)"
             >
               <div
+                #parent
                 class="column-content"
                 [class.current-date]="isThisMonth(month)"
                 (click)="selectMonth(month)"
@@ -32,7 +33,7 @@
                   <span
                     *ngIf="eventsCountOnMonth(month) > 4"
                     class="show-more-events"
-                    (click)="showMoreEventsClick()"
+                    (click)="showMoreEventsClick(parent)"
                   >...</span>
                 </div>
               </div>

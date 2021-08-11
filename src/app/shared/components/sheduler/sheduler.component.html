@@ -16,7 +16,7 @@
           [day]="selectedDate"
           (eventDoubleClicked)="eventDoubleClicked($event)"
           (dayDoubleClicked)="openCreateModal()"
-          (dayChanged)="dateChanged($event)"
+          (dayChanged)="dayChanged($event)"
         ></sheduler-month-view>
 
         <sheduler-year-view
@@ -26,7 +26,7 @@
           [month]="selectedDate"
           (eventDoubleClicked)="eventDoubleClicked($event)"
           (monthDoubleClicked)="openCreateModal()"
-          (monthChanged)="dateChanged($event)"
+          (monthChanged)="monthChanged($event)"
           (showMoreEventsClicked)="showMoreEventsClicked($event)"
         ></sheduler-year-view>
       </ng-container>
