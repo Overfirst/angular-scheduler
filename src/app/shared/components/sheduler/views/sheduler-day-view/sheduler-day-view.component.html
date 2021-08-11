@@ -12,9 +12,9 @@
     <div class="content-table content-table-day">
       <table>
         <tbody>
-          <tr *ngFor="let hour of hours">
+          <tr *ngFor="let hour of hours; index as idx">
             <td>
-              <span class="time-text">
+              <span *ngIf="idx !== 0 && idx % 2 === 0" class="time-text">
                 {{ hour | date:'HH:mm' }}
               </span>
             </td>
