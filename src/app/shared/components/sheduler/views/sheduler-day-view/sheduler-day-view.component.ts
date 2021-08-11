@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import {addHours, addMinutes} from "date-fns";
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { addHours, addMinutes, startOfMonth } from "date-fns";
+import { ShedulerEvent} from "../../../../interfaces";
 
 @Component({
   selector: 'sheduler-day-view',
@@ -8,6 +9,17 @@ import {addHours, addMinutes} from "date-fns";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShedulerDayViewComponent {
+  @Input() public events: ShedulerEvent[];
+
+  @Input() public set day(date: Date) {}
+
+  @Input() public set hour(day: Date) {}
+
+  @Output() public eventDoubleClicked = new EventEmitter<ShedulerEvent>();
+  @Output() public dayDoubleClicked = new EventEmitter<Date>();
+  @Output() public dayChanged = new EventEmitter<Date>();
+
+
   public hours: Date[] = (() => {
     const startDate = new Date();
 
