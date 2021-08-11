@@ -16,9 +16,6 @@ import {
   addMonths,
   isThisMonth,
   isSameMonth,
-  getQuarter,
-  monthsToQuarters,
-  quartersToMonths,
   startOfQuarter,
   isSameQuarter,
   differenceInCalendarMonths

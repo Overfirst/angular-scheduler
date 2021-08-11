@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Input,
   ViewChild,
-  ChangeDetectorRef,
   ViewContainerRef,
   AfterContentInit,
   HostListener
