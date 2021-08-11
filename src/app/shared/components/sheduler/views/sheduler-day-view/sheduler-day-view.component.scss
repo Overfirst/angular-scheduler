@@ -1,0 +1,25 @@
+@import "../../../../common_styles.scss";
+
+.main-content-box-day {
+  width: 100%;
+}
+
+.header-table-day {
+  td {
+    border-bottom: 1px solid $border-color;
+  }
+}
+
+.content-table-day {
+  td {
+    vertical-align: middle;
+    border-top: none;
+    height: $header-row-height;
+  }
+}
+
+.time-text {
+  border-radius: 2px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.1);
+}

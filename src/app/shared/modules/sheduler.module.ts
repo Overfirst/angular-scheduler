@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from './shared.module';
 import { ShedulerComponent } from '../components/sheduler/sheduler.component';
+import { ShedulerDayViewComponent } from '../components/sheduler/views/sheduler-day-view/sheduler-day-view.component';
 import { ShedulerMonthViewComponent } from '../components/sheduler/views/sheduler-month-view/sheduler-month-view.component';
 import { ShedulerDateSwitcherComponent } from '../components/sheduler/sheduler-date-switcher/sheduler-date-switcher.component';
 import { ShedulerViewDetalizationComponent } from '../components/sheduler/sheduler-view-detalization/sheduler-view-detalization.component';
@@ -14,6 +15,7 @@ import { DatePipe } from "@angular/common";
   imports: [SharedModule],
   declarations: [
     ShedulerComponent,
+    ShedulerDayViewComponent,
     ShedulerMonthViewComponent,
     ShedulerYearViewComponent,
     ShedulerDateSwitcherComponent,
@@ -24,6 +26,7 @@ import { DatePipe } from "@angular/common";
   ],
   exports: [
     ShedulerComponent,
+    ShedulerDayViewComponent,
     ShedulerMonthViewComponent,
     ShedulerYearViewComponent,
     ShedulerDateSwitcherComponent,

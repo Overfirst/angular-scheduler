@@ -9,6 +9,10 @@
 
     <ng-template #view>
       <ng-container [ngSwitch]="selectedView">
+        <sheduler-day-view
+          *ngSwitchDefault
+        ></sheduler-day-view>
+
         <sheduler-month-view
           *ngSwitchCase="'Month'"
           [events]="events"
@@ -20,7 +24,7 @@
         ></sheduler-month-view>
 
         <sheduler-year-view
-          *ngSwitchDefault
+          *ngSwitchCase="'Year'"
           [events]="events"
           [year]="selectedViewDate"
           [month]="selectedDate"

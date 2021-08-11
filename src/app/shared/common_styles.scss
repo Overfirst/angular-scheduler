@@ -26,7 +26,6 @@ table {
   }
 }
 
-
 .header-table {
   td {
     border: none;
@@ -55,6 +54,9 @@ table {
   tr {
     position: relative;
   }
+
+  max-height: calc(100vh - #{3 * $default-padding + 2 * $header-row-height} - 1px);
+  overflow-y: auto;
 }
 
 .column-content {
@@ -197,7 +199,7 @@ table {
 .panel-box {
   &:first-child {
     border-right: none;
-    width: 0%;
+    width: 0;
   }
 
   &:last-child {

@@ -32,7 +32,7 @@ export class ShedulerComponent implements AfterContentInit {
   public selectedDate = startOfMonth(this.selectedViewDate);
   public selectedMonth = this.selectedDate;
 
-  public selectedView = ViewDetalization.Year;
+  public selectedView = ViewDetalization.Day;
 
   @Input() public events: ShedulerEvent[] = [];
 

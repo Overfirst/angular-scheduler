@@ -1,0 +1,26 @@
+<div class="view-box">
+  <div class="main-content-box-day">
+    <div class="header-table header-table-day">
+      <table>
+        <thead>
+        <tr #row>
+          <td #column>Monday</td>
+        </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="content-table content-table-day">
+      <table>
+        <tbody>
+          <tr *ngFor="let hour of hours">
+            <td>
+              <span class="time-text">
+                {{ hour | date:'HH:mm' }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
