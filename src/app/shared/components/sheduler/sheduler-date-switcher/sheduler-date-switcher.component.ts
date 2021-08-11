@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {addMonths, addYears, isSameMonth, isSameYear} from 'date-fns';
+import {addDays, addMonths, addYears, isSameDay, isSameMonth, isSameYear} from 'date-fns';
 import {ViewDetalization} from 'src/app/shared/interfaces';
 
 @Component({
@@ -34,6 +34,9 @@ export class ShedulerDateSwitcherComponent {
 
     switch (this.view) {
       case ViewDetalization.Day:
+        this.date = addDays(this.date, value);
+        break;
+
       case ViewDetalization.Week:
       case ViewDetalization.Month:
         this.date = addMonths(this.date, value);
@@ -50,6 +53,11 @@ export class ShedulerDateSwitcherComponent {
 
     switch (this.view) {
       case ViewDetalization.Day:
+        this.date.setFullYear(currentDate.getFullYear());
+        this.date.setMonth(currentDate.getMonth());
+        this.date.setDate(currentDate.getDate());
+        break;
+
       case ViewDetalization.Week:
         break;
 
@@ -71,8 +79,10 @@ export class ShedulerDateSwitcherComponent {
 
     switch (this.view) {
       case ViewDetalization.Day:
+        return isSameDay(this.date, currentDate);
+
       case ViewDetalization.Week:
-        break;
+        return false;
 
       case ViewDetalization.Month:
         return isSameMonth(this.date, currentDate);
@@ -80,7 +90,5 @@ export class ShedulerDateSwitcherComponent {
       case ViewDetalization.Year:
         return isSameYear(this.date, currentDate);
     }
-
-    return false;
   }
 }
