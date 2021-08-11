@@ -1,7 +1,6 @@
-import { EventEmitter, Input } from '@angular/core';
-import { Component, ChangeDetectionStrategy, Output } from '@angular/core';
-import { addMonths, addYears } from 'date-fns';
-import { ViewDetalization } from 'src/app/shared/interfaces';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {addMonths, addYears, isSameMonth, isSameYear} from 'date-fns';
+import {ViewDetalization} from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'sheduler-date-switcher',
@@ -44,5 +43,44 @@ export class ShedulerDateSwitcherComponent {
     }
 
     this.viewDateChanged.emit(this.date);
+  }
+
+  public selectCurrentDate(): void {
+    const currentDate = new Date();
+
+    switch (this.view) {
+      case ViewDetalization.Day:
+      case ViewDetalization.Week:
+        break;
+
+      case ViewDetalization.Month:
+        this.date.setFullYear(currentDate.getFullYear());
+        this.date.setMonth(currentDate.getMonth());
+        break;
+
+      case ViewDetalization.Year:
+        this.date.setFullYear(currentDate.getFullYear());
+    }
+
+    this.date = new Date(this.date);
+    this.viewDateChanged.emit(this.date);
+  }
+
+  public selectCurrentDateIsHidden(): boolean {
+    const currentDate = new Date();
+
+    switch (this.view) {
+      case ViewDetalization.Day:
+      case ViewDetalization.Week:
+        break;
+
+      case ViewDetalization.Month:
+        return isSameMonth(this.date, currentDate);
+
+      case ViewDetalization.Year:
+        return isSameYear(this.date, currentDate);
+    }
+
+    return false;
   }
 }

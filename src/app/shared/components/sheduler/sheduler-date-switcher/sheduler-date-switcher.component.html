@@ -16,6 +16,12 @@
       </ng-container>
     </div>
 
+    <button
+      class="select-current-date"
+      [class.select-current-date-hidden]="selectCurrentDateIsHidden()"
+      (click)="selectCurrentDate()"
+    >Current {{ view.toLowerCase() }}</button>
+
     <div class="date-group">
       <div class="calendar-icon"></div>
       <div>
