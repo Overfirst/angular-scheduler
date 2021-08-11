@@ -14,18 +14,18 @@
   td {
     vertical-align: middle;
     border-top: none;
-    height: $header-row-height / 2;
+    height: $header-row-height;
     overflow: visible;
   }
 }
 
 .time-text {
-  top: -10px;
+  top: -11px;
   left: 10px;
-  font-size: 12px;
+  font-size: 14px;
   position: absolute;
   border-radius: 2px;
   padding: 2px;
   color: #fff;
-  background: rgb(95, 95, 95);
+  background: rgb(124, 124, 124);
 }
