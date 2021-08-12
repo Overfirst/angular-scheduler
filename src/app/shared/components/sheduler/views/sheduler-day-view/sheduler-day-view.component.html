@@ -15,7 +15,7 @@
           <tr *ngFor="let hour of hours; index as idx">
             <td [ngStyle]="{'border-bottom': idx % 2 === 0 ? '1px solid #bbb' : '1px solid $border-color'}">
               <span *ngIf="idx !== 0 && idx % 2 === 0" class="time-text">
-                {{ hour | date:'dd MMM YYYY HH:mm' }}
+                {{ hour | date:'HH:mm' }}
               </span>
 
               <div class="events-box-day">
