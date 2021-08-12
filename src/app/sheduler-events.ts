@@ -70,5 +70,19 @@ export const shedulerEvents: ShedulerEvent[] = [
     start: new Date('2021-08-26 21:00'),
     end: new Date('2021-08-27 16:00'),
     color: '#c3bcff'
+  },
+  {
+    id: 11,
+    name: 'Test task 10',
+    start: new Date('2021-08-12 01:00'),
+    end: new Date('2021-08-12 02:30'),
+    color: '#c3bcff'
+  },
+  {
+    id: 12,
+    name: 'Test task 11',
+    start: new Date('2021-08-12 4:00'),
+    end: new Date('2021-08-12 07:30'),
+    color: '#4730ff'
   }
 ];
