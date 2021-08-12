@@ -34,9 +34,18 @@ export class ShedulerComponent implements AfterContentInit {
 
   public selectedView = ViewDetalization.Day;
 
-  @Input() public events: ShedulerEvent[] = [];
+  private shedulerEvents: ShedulerEvent[];
+
+  @Input() public set events(events: ShedulerEvent[]) {
+    this.shedulerEvents = events.map(event => ({...event}));
+    this.sortEvents();
+  }
 
   constructor(private service: ShedulerService) {}
+
+  public get events() {
+    return this.shedulerEvents;
+  }
 
   public ngAfterContentInit(): void {
     this.redrawView();
@@ -69,6 +78,8 @@ export class ShedulerComponent implements AfterContentInit {
     } else {
       this.events.push(event);
     }
+
+    this.sortEvents();
 
     this.modalOpened = false;
     this.redrawView();
@@ -107,5 +118,9 @@ export class ShedulerComponent implements AfterContentInit {
 
   public showMoreEventsClicked(view: any): void {
     this.selectedView = view;
+  }
+
+  private sortEvents(): void {
+    this.shedulerEvents.sort((first, second) => first.start.getTime() - second.start.getTime());
   }
 }
