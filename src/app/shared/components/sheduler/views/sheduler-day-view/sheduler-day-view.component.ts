@@ -70,6 +70,6 @@ export class ShedulerDayViewComponent {
   }
 
   public getEventHoursHeight(event: ShedulerEvent): string {
-    return 2 * this.service.headerRowHeight * this.service.getEventHoursDuration(event) + 'px';
+    return 2 * this.service.headerRowHeight * this.service.getEventHoursDuration(event) - parseInt(this.getEventDayBoxTopOffset(event)) + 'px';
   }
 }
