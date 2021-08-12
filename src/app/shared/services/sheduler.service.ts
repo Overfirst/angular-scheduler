@@ -18,7 +18,8 @@ import {
   isSameMonth,
   startOfQuarter,
   isSameQuarter,
-  differenceInCalendarMonths, addHours, addMinutes
+  differenceInCalendarMonths,
+  addHours, isSameHour, differenceInHours, differenceInMinutes
 } from "date-fns";
 
 import { ShedulerEvent, ViewDetalization } from "../interfaces";
@@ -38,10 +39,7 @@ export class ShedulerService {
     const hours: Date[] = [];
 
     for (let i = 0; i < 24; i++) {
-      const hour = addHours(startDate, i);
-
-      hours.push(hour);
-      hours.push(addMinutes(hour, 30));
+      hours.push(addHours(startDate, i));
     }
 
     return hours;
@@ -353,5 +351,19 @@ export class ShedulerService {
     }
 
     return event.color;
+  }
+
+  getEventsCountOnTargetHour(events: ShedulerEvent[], hour: Date): number {
+    return events.reduce((total: number, event: ShedulerEvent) => isSameHour(event.start, hour) ? total + 1 : 0, 0);
+  }
+
+  public getEventHoursDuration(event: ShedulerEvent): number {
+    const hours = Math.abs(differenceInHours(event.start, event.end));
+
+    if (hours === 0) {
+      return 0.5 + (event.end.getMinutes() <= 30 ? 0 : 0.5);
+    }
+
+    return hours + (event.end.getMinutes() < 30 ? 0 : 0.5);
   }
 }

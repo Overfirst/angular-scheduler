@@ -1,7 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { addHours, addMinutes, startOfMonth } from "date-fns";
-import { ShedulerEvent} from "../../../../interfaces";
-import {ShedulerService} from "../../../../services/sheduler.service";
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
+
+import { addMinutes, isSameHour } from "date-fns";
+import { ShedulerEvent } from "../../../../interfaces";
+import { ShedulerService } from "../../../../services/sheduler.service";
 
 @Component({
   selector: 'sheduler-day-view',
@@ -10,6 +19,8 @@ import {ShedulerService} from "../../../../services/sheduler.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShedulerDayViewComponent {
+  @ViewChild('row', { static: true }) private row: ElementRef<HTMLTableRowElement>;
+
   public hours: Date[];
   public selectedHour: Date;
 
@@ -37,4 +48,28 @@ export class ShedulerDayViewComponent {
   @Output() public eventDoubleClicked = new EventEmitter<ShedulerEvent>();
   @Output() public hourDoubleClicked = new EventEmitter<Date>();
   @Output() public hourChanged = new EventEmitter<Date>();
+
+  public eventStartedOnTargetHour(event: ShedulerEvent, hour: Date): boolean {
+    return isSameHour(event.start, hour);
+  }
+
+  public addHalfHour(hour: Date): Date {
+    return addMinutes(hour, 30);
+  }
+
+  public getEventBoxHourWidth(hour: Date): string {
+    return this.row.nativeElement.clientWidth / this.service.getEventsCountOnTargetHour(this.events, hour) + 'px';
+  }
+
+  public getEventDayBoxTopOffset(event: ShedulerEvent): string {
+    return (event.start.getMinutes() < 30 ? 0 : this.service.headerRowHeight) + 'px';
+  }
+
+  public getEventColor(event: ShedulerEvent): string {
+    return this.service.getEventColor(event);
+  }
+
+  public getEventHoursHeight(event: ShedulerEvent): string {
+    return 2 * this.service.headerRowHeight * this.service.getEventHoursDuration(event) + 'px';
+  }
 }
