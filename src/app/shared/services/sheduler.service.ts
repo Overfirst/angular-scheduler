@@ -18,7 +18,7 @@ import {
   isSameMonth,
   startOfQuarter,
   isSameQuarter,
-  differenceInCalendarMonths
+  differenceInCalendarMonths, addHours, addMinutes
 } from "date-fns";
 
 import { ShedulerEvent, ViewDetalization } from "../interfaces";
@@ -31,6 +31,21 @@ export class ShedulerService {
   public readonly defaultPadding = 24;
 
   constructor(private datePipe: DatePipe) {}
+
+  public getHoursForDayView(date: Date): Date[] {
+    const startDate = startOfDay(date);
+
+    const hours: Date[] = [];
+
+    for (let i = 0; i < 24; i++) {
+      const hour = addHours(startDate, i);
+
+      hours.push(hour);
+      hours.push(addMinutes(hour, 30));
+    }
+
+    return hours;
+  }
 
   public getWeeksForMonthView(date: Date, dateMonth: Date): Array<Date[]> {
     const weeks: Array<Date[]> = [];

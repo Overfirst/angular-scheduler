@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { addHours, addMinutes, startOfMonth } from "date-fns";
 import { ShedulerEvent} from "../../../../interfaces";
+import {ShedulerService} from "../../../../services/sheduler.service";
 
 @Component({
   selector: 'sheduler-day-view',
@@ -9,32 +10,31 @@ import { ShedulerEvent} from "../../../../interfaces";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShedulerDayViewComponent {
+  public hours: Date[];
+  public selectedHour: Date;
+
+  private hourFirstSetted = false;
+
+  constructor(private service: ShedulerService) {}
+
   @Input() public events: ShedulerEvent[];
 
-  @Input() public set day(date: Date) {}
+  @Input() public set day(date: Date) {
+    this.hours = this.service.getHoursForDayView(date);
+  }
 
-  @Input() public set hour(day: Date) {}
+  @Input() public set hour(hour: Date) {
+    this.selectedHour = hour;
 
-  @Output() public eventDoubleClicked = new EventEmitter<ShedulerEvent>();
-  @Output() public dayDoubleClicked = new EventEmitter<Date>();
-  @Output() public dayChanged = new EventEmitter<Date>();
-
-
-  public hours: Date[] = (() => {
-    const startDate = new Date();
-
-    startDate.setHours(0);
-    startDate.setMinutes(0);
-
-    const hours: Date[] = [];
-
-    for (let i = 0; i < 24; i++) {
-      const h = addHours(startDate, i);
-
-      hours.push(h);
-      hours.push(addMinutes(h, 30));
+    if (!this.hourFirstSetted) {
+      this.hourFirstSetted = true;
+      return;
     }
 
-    return hours;
-  })();
+    this.hourChanged.emit(this.selectedHour);
+  }
+
+  @Output() public eventDoubleClicked = new EventEmitter<ShedulerEvent>();
+  @Output() public hourDoubleClicked = new EventEmitter<Date>();
+  @Output() public hourChanged = new EventEmitter<Date>();
 }

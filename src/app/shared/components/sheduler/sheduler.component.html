@@ -15,8 +15,8 @@
           [day]="selectedViewDate"
           [hour]="selectedDate"
           (eventDoubleClicked)="eventDoubleClicked($event)"
-          (dayDoubleClicked)="openCreateModal()"
-          (dayChanged)="dayChanged($event)"
+          (hourDoubleClicked)="openCreateModal()"
+          (hourChanged)="dayChanged($event)"
         ></sheduler-day-view>
 
         <sheduler-month-view

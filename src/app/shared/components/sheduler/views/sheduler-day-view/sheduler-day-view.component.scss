@@ -21,11 +21,37 @@
 
 .time-text {
   top: -11px;
-  left: 10px;
+  left: 16px;
   font-size: 14px;
   position: absolute;
   border-radius: 2px;
   padding: 2px;
   color: #fff;
   background: rgb(124, 124, 124);
+  z-index: 10000;
+}
+
+.events-box-day {
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: flex;
+  width: 100%;
+}
+
+.event-box-day-wrapper {
+  width: 100%;
+  height: $header-row-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+}
+
+.event-box-day {
+  background: #ff9393;
+  border: 1px solid #000;
+  height: 90%;
+  width: 99%;
+  border-radius: 4px;
 }
