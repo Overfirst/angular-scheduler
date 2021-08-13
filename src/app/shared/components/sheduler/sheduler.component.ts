@@ -10,7 +10,7 @@ import {
 
 import { ShedulerEvent, ViewDetalization } from '../../interfaces';
 import { ShedulerService } from "../../services/sheduler.service";
-import {addMinutes, isSameMinute, startOfMonth} from "date-fns";
+import { addMinutes, isSameMinute, startOfMonth } from "date-fns";
 import { TemplateRef } from '@angular/core';
 
 @Component({
@@ -114,6 +114,8 @@ export class ShedulerComponent implements AfterContentInit {
 
   public dayChanged(date: Date): void {
     this.selectedDate = date;
+    this.selectedViewDate.setMonth(date.getMonth());
+    this.selectedViewDate.setDate(date.getDate());
   }
 
   public monthChanged(date: Date): void {
