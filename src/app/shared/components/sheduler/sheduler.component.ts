@@ -10,7 +10,7 @@ import {
 
 import { ShedulerEvent, ViewDetalization } from '../../interfaces';
 import { ShedulerService } from "../../services/sheduler.service";
-import { startOfMonth } from "date-fns";
+import {addMinutes, isSameMinute, startOfMonth} from "date-fns";
 import { TemplateRef } from '@angular/core';
 
 @Component({
@@ -37,7 +37,16 @@ export class ShedulerComponent implements AfterContentInit {
   private shedulerEvents: ShedulerEvent[];
 
   @Input() public set events(events: ShedulerEvent[]) {
-    this.shedulerEvents = events.map(event => ({...event}));
+    this.shedulerEvents = events.map(event => {
+      const newEvent = {...event};
+
+      if (isSameMinute(event.start, event.end)) {
+        newEvent.end = addMinutes(event.end, 1);
+      }
+
+      return newEvent;
+    });
+
     this.sortEvents();
   }
 
