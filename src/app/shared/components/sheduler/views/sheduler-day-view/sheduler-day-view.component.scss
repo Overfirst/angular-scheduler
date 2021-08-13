@@ -30,6 +30,10 @@
       border-bottom: 1px solid #d9d9d9;
     }
   }
+  
+  tbody {
+    position: relative;
+  }
 }
 
 $time-text-top-offset: -11px;
@@ -65,20 +69,14 @@ $time-text-top-offset: -11px;
   height: $header-row-height;
   display: flex;
   justify-content: center;
-  z-index: 5000;
-}
-
-.event-box-day-fake {
-  width: 99%;
-  display: flex;
   align-items: center;
-  //border-radius: 4px;
+  z-index: 5000;
 }
 
 .event-box-day {
   border: 1px solid $border-color;
   height: calc(100% - 8px);
-  width: 100%;
+  width: calc(100% - 8px);
   transition: border 0.2s;
   border-radius: 4px;
 

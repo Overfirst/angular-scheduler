@@ -9,7 +9,8 @@
         </thead>
       </table>
     </div>
-    <div class="content-table content-table-day">
+
+    <div #mainContent class="content-table content-table-day">
       <table>
         <tbody>
           <tr *ngFor="let hour of hours; index as idx">
@@ -21,37 +22,29 @@
               <span class="time-text time-text-half">
                 {{ addHalfHour(hour) | date:'HH:mm' }}
               </span>
-
-              <div class="events-box-day">
-                <ng-container *ngFor="let event of events">
-                  <div
-                    #wrapper
-                    *ngIf="eventStartedOnTargetHour(event, hour)"
-                    class="event-box-day-wrapper"
-                    [style.top]="getEventDayBoxTopOffset(event)"
-                    [style.width]="getEventBoxHourWidth(hour)"
-                    [style.left]="getEventLeftOffset(event, wrapper)"
-                    [attr.event-id]="event.id"
-                  >
-                    <div
-                      class="event-box-day-fake"
-                      collectEventBox
-                      [attr.event-id]="event.id"
-                      [style.height]="getEventHoursHeight(event)"
-                    >
-                      <div
-                        #eventBox
-                        [style.background]="getEventColor(event)"
-                        class="event-box-day"
-                        [attr.event-id]="event.id"
-                        (dblclick)="eventBoxDoubleClick(event)"
-                      ></div>
-                    </div>
-                  </div>
-                </ng-container>
-              </div>
             </td>
           </tr>
+
+          <div class="events-box-day">
+            <ng-container *ngFor="let event of events">
+              <div
+                *ngIf="eventTakingOnSelectedDay(event)"
+                class="event-box-day-wrapper"
+                collectEventBox
+                #wrapper
+                [style.top]="getEventDayBoxTopHoursOffset(event)"
+                [style.height]="getEventDayBoxHoursDuration(event)"
+                [style.width]="getEventDayBoxWidth(event)"
+                [style.left]="getEventDayBoxLeftOffset(wrapper)"
+              >
+                <div
+                  class="event-box-day"
+                  [style.background]="getEventColor(event)"
+                  (dblclick)="eventBoxDoubleClick(event)"
+                ></div>
+              </div>
+            </ng-container>
+          </div>
         </tbody>
       </table>
     </div>

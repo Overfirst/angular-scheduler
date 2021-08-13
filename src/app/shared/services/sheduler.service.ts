@@ -240,44 +240,6 @@ export class ShedulerService {
     return topOffset;
   }
 
-  public getEventLeftOffset(event: ShedulerEvent, wrapper: HTMLDivElement): number {
-    const needToCheckWrappers: HTMLDivElement[] = [];
-    const wrappers = Array.from(this.eventBoxes).map(box => box.parentElement!);
-
-    for (let i = 0; i < wrappers.length; i++) {
-      const boxWrapper = wrappers[i];
-
-      if (boxWrapper === wrapper) {
-        break;
-      }
-
-        needToCheckWrappers.push(boxWrapper as HTMLDivElement);
-    }
-
-    let leftOffset = 0;
-
-    const isCrossY = (first: HTMLDivElement, second: HTMLDivElement) => {
-      const firstChild = first.childNodes[0] as HTMLDivElement;
-      const secondChild = second.childNodes[0] as HTMLDivElement;
-
-      const firstStartY = parseInt(first.style.top);
-      const firstEndY = firstStartY + firstChild.clientHeight;
-
-      const secondStartY = parseInt(second.style.top);
-      const secondEndY = secondStartY + secondChild.clientHeight;
-
-      return (firstStartY <= secondStartY && firstEndY > secondStartY) || (firstStartY > secondStartY && firstStartY < secondEndY);
-    }
-
-    needToCheckWrappers.forEach(boxWrapper => {
-      if (isCrossY(wrapper, boxWrapper)) {
-        leftOffset = parseInt(boxWrapper.style.left) + boxWrapper.clientWidth
-      }
-    });
-
-    return leftOffset;
-  }
-
   public eventsCountOnDay(day: Date, events: ShedulerEvent[]): number {
     let totalEvents = 0;
 
@@ -368,21 +330,6 @@ export class ShedulerService {
     return event.color;
   }
 
-  public getEventsCountOnTargetHour(events: ShedulerEvent[], hour: Date): number {
-    return events.reduce((total: number, event: ShedulerEvent) => total += isSameHour(event.start, hour) ? 1 : 0, 0);
-  }
-
-  public getEventHoursDuration(event: ShedulerEvent): number {
-    const hours = Math.abs(differenceInMinutes(event.start, event.end)) / 60;
-    const intHours = Math.trunc(hours);
-
-    if (intHours === hours) {
-      return intHours;
-    }
-
-    return intHours + (hours % 1 <= 0.5 ? 0.5 : 1);
-  }
-
   private resolveSeveralDigits(value: number, digitsCount: number = 1): string {
     let stringValue = value.toString();
 
@@ -407,5 +354,87 @@ export class ShedulerService {
     const monthTime = month.getTime();
 
     return monthTime >= startTime && monthTime <= endTime;
+  }
+
+  public eventLastsAllDay(event: ShedulerEvent, day: Date): boolean {
+    const startDay = startOfDay(day);
+    return event.start.getTime() <= startDay.getTime() && event.end.getTime() >= addDays(startDay, 1).getTime();
+  }
+
+  public eventTakingOnSelectedDay(event: ShedulerEvent, day: Date): boolean {
+    const startDay = startOfDay(day);
+
+    const dayStartTime = startDay.getTime();
+    const dayEndTime = addDays(startDay, 1).getTime();
+
+    const eventStartTime = event.start.getTime();
+    const eventEndTime = event.end.getTime();
+
+    return (dayStartTime <= eventStartTime && dayEndTime > eventStartTime) || (dayStartTime > eventStartTime && dayStartTime < eventEndTime);
+  }
+
+  public getEventDayBoxTopHoursOffset(event: ShedulerEvent, day: Date): number {
+    return Math.abs(differenceInHours(startOfDay(day), event.start)) + (event.start.getMinutes() < 30 ? 0 : 0.5);
+  }
+
+  public getEventHoursDuration(event: ShedulerEvent): number {
+    const hours = Math.abs(differenceInMinutes(event.start, event.end)) / 60;
+    const intHours = Math.trunc(hours);
+
+    if (intHours === hours) {
+      return intHours;
+    }
+
+    return intHours + (hours % 1 <= 0.5 ? 0.5 : 1);
+  }
+
+  public getCrossEventsCountForTargetEvent(event: ShedulerEvent, events: ShedulerEvent[]): number {
+    return events.reduce((total: number, currentEvent: ShedulerEvent) => {
+      if (event.id === currentEvent.id) {
+        return total;
+      }
+
+      const eventStartTime = event.start.getTime();
+      const eventEndTime = event.end.getTime();
+
+      const currentEventStartTime = currentEvent.start.getTime();
+      const currentEventEndTime = currentEvent.end.getTime();
+
+      if ((eventStartTime <= currentEventStartTime && eventEndTime > currentEventStartTime) || (eventStartTime > currentEventStartTime && eventStartTime < currentEventEndTime)) {
+        return total + 1;
+      }
+
+      return total;
+    }, 0);
+  }
+
+  public getEventDayBoxLeftOffset(wrapper: HTMLDivElement): number {
+    const wrappers = Array.from(this.eventBoxes);
+
+    const isCrossY = (first: HTMLDivElement, second: HTMLDivElement) => {
+      const firstStartY = parseInt(first.style.top);
+      const firstEndY = firstStartY + first.clientHeight;
+
+      const secondStartY = parseInt(second.style.top);
+      const secondEndY = secondStartY + second.clientHeight;
+
+      return (firstStartY <= secondStartY && firstEndY > secondStartY) || (firstStartY > secondStartY && firstStartY < secondEndY);
+    }
+
+    let offset = 0;
+
+    for (let i = 0; i < wrappers.length; i++) {
+      const currentWrapper = wrappers[i];
+
+      if (wrapper === currentWrapper) {
+        break;
+      }
+
+      if (isCrossY(wrapper, currentWrapper)) {
+        offset = parseInt(currentWrapper.style.left) + currentWrapper.clientWidth;
+      }
+    }
+
+    return offset;
   }
 }

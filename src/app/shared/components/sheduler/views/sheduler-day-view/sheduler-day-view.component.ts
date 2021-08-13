@@ -11,6 +11,7 @@ import {
 import { addMinutes, isSameHour } from "date-fns";
 import { ShedulerEvent } from "../../../../interfaces";
 import { ShedulerService } from "../../../../services/sheduler.service";
+import {resourceChangeTicket} from "@angular/compiler-cli/src/ngtsc/core";
 
 @Component({
   selector: 'sheduler-day-view',
@@ -30,7 +31,10 @@ export class ShedulerDayViewComponent {
 
   @Input() public events: ShedulerEvent[];
 
+  private selectedDate: Date;
+
   @Input() public set day(date: Date) {
+    this.selectedDate = date;
     this.hours = this.service.getHoursForDayView(date);
   }
 
@@ -49,6 +53,10 @@ export class ShedulerDayViewComponent {
   @Output() public hourDoubleClicked = new EventEmitter<Date>();
   @Output() public hourChanged = new EventEmitter<Date>();
 
+  public get day() {
+    return this.selectedDate;
+  }
+
   public eventStartedOnTargetHour(event: ShedulerEvent, hour: Date): boolean {
     return isSameHour(event.start, hour);
   }
@@ -57,27 +65,32 @@ export class ShedulerDayViewComponent {
     return addMinutes(hour, 30);
   }
 
-  public getEventBoxHourWidth(hour: Date): string {
-    return (this.row.nativeElement.clientWidth - 18) / this.service.getEventsCountOnTargetHour(this.events, hour) + 'px';
-  }
-
-  public getEventDayBoxTopOffset(event: ShedulerEvent): string {
-    return (event.start.getMinutes() < 30 ? 0 : this.service.headerRowHeight) + 'px';
+  public getEventDayBoxTopHoursOffset(event: ShedulerEvent): string {
+    return 2 * this.service.headerRowHeight * this.service.getEventDayBoxTopHoursOffset(event, this.selectedDate) + 'px';
   }
 
   public getEventColor(event: ShedulerEvent): string {
     return this.service.getEventColor(event);
   }
 
-  public getEventHoursHeight(event: ShedulerEvent): string {
+  public eventBoxDoubleClick(event: ShedulerEvent): void {
+    this.eventDoubleClicked.emit(event);
+  }
+
+  public eventTakingOnSelectedDay(event: ShedulerEvent): boolean {
+    return this.service.eventTakingOnSelectedDay(event, this.day);
+  }
+
+  public getEventDayBoxHoursDuration(event: ShedulerEvent): string {
     return 2 * this.service.headerRowHeight * this.service.getEventHoursDuration(event) + 'px';
   }
 
-  public getEventLeftOffset(event: ShedulerEvent, wrapper: HTMLDivElement): string {
-    return this.service.getEventLeftOffset(event, wrapper) + 'px';
+  public getEventDayBoxWidth(event: ShedulerEvent): string {
+    const scrollWidth = 18;
+    return (this.row.nativeElement.clientWidth - scrollWidth) / (this.service.getCrossEventsCountForTargetEvent(event, this.events) + 1) + 'px';
   }
 
-  public eventBoxDoubleClick(event: ShedulerEvent): void {
-    this.eventDoubleClicked.emit(event);
+  public getEventDayBoxLeftOffset(wrapper: HTMLDivElement): string {
+    return this.service.getEventDayBoxLeftOffset(wrapper) + 'px';
   }
 }
