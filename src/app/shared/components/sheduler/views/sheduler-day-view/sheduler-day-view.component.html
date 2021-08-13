@@ -41,7 +41,9 @@
                   class="event-box-day"
                   [style.background]="getEventColor(event)"
                   (dblclick)="eventBoxDoubleClick(event)"
-                ></div>
+                >
+                  <span class="event-box-day-name">{{ event.name }}</span>
+                </div>
               </div>
             </ng-container>
           </div>

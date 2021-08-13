@@ -30,7 +30,7 @@
       border-bottom: 1px solid #d9d9d9;
     }
   }
-  
+
   tbody {
     position: relative;
   }
@@ -84,4 +84,9 @@ $time-text-top-offset: -11px;
     border: 1px solid #000;
     cursor: pointer;
   }
+}
+
+.event-box-day-name {
+  display: block;
+  margin: 12px;
 }
