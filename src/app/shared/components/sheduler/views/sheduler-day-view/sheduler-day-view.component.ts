@@ -58,7 +58,7 @@ export class ShedulerDayViewComponent {
   }
 
   public getEventBoxHourWidth(hour: Date): string {
-    return this.row.nativeElement.clientWidth / this.service.getEventsCountOnTargetHour(this.events, hour) + 'px';
+    return (this.row.nativeElement.clientWidth - 18) / this.service.getEventsCountOnTargetHour(this.events, hour) + 'px';
   }
 
   public getEventDayBoxTopOffset(event: ShedulerEvent): string {
@@ -70,6 +70,14 @@ export class ShedulerDayViewComponent {
   }
 
   public getEventHoursHeight(event: ShedulerEvent): string {
-    return 2 * this.service.headerRowHeight * this.service.getEventHoursDuration(event) - parseInt(this.getEventDayBoxTopOffset(event)) + 'px';
+    return 2 * this.service.headerRowHeight * this.service.getEventHoursDuration(event) + 'px';
+  }
+
+  public getEventLeftOffset(event: ShedulerEvent, wrapper: HTMLDivElement): string {
+    return this.service.getEventLeftOffset(event, wrapper) + 'px';
+  }
+
+  public eventBoxDoubleClick(event: ShedulerEvent): void {
+    this.eventDoubleClicked.emit(event);
   }
 }

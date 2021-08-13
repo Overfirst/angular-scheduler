@@ -19,7 +19,9 @@ import {
   startOfQuarter,
   isSameQuarter,
   differenceInCalendarMonths,
-  addHours, isSameHour, differenceInHours, differenceInMinutes
+  addHours,
+  isSameHour,
+  differenceInHours, differenceInMinutes
 } from "date-fns";
 
 import { ShedulerEvent, ViewDetalization } from "../interfaces";
@@ -238,6 +240,44 @@ export class ShedulerService {
     return topOffset;
   }
 
+  public getEventLeftOffset(event: ShedulerEvent, wrapper: HTMLDivElement): number {
+    const needToCheckWrappers: HTMLDivElement[] = [];
+    const wrappers = Array.from(this.eventBoxes).map(box => box.parentElement!);
+
+    for (let i = 0; i < wrappers.length; i++) {
+      const boxWrapper = wrappers[i];
+
+      if (boxWrapper === wrapper) {
+        break;
+      }
+
+        needToCheckWrappers.push(boxWrapper as HTMLDivElement);
+    }
+
+    let leftOffset = 0;
+
+    const isCrossY = (first: HTMLDivElement, second: HTMLDivElement) => {
+      const firstChild = first.childNodes[0] as HTMLDivElement;
+      const secondChild = second.childNodes[0] as HTMLDivElement;
+
+      const firstStartY = parseInt(first.style.top);
+      const firstEndY = firstStartY + firstChild.clientHeight;
+
+      const secondStartY = parseInt(second.style.top);
+      const secondEndY = secondStartY + secondChild.clientHeight;
+
+      return (firstStartY <= secondStartY && firstEndY > secondStartY) || (firstStartY > secondStartY && firstStartY < secondEndY);
+    }
+
+    needToCheckWrappers.forEach(boxWrapper => {
+      if (isCrossY(wrapper, boxWrapper)) {
+        leftOffset = parseInt(boxWrapper.style.left) + boxWrapper.clientWidth
+      }
+    });
+
+    return leftOffset;
+  }
+
   public eventsCountOnDay(day: Date, events: ShedulerEvent[]): number {
     let totalEvents = 0;
 
@@ -297,36 +337,11 @@ export class ShedulerService {
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
 
-  private resolveSeveralDigits(value: number, digitsCount: number = 1): string {
-    let stringValue = value.toString();
-
-    while (stringValue.length < digitsCount) {
-      stringValue = "0" + stringValue;
-    }
-
-    return stringValue;
-  }
-
-  private eventFallsOnDay(event: ShedulerEvent, date: Date): boolean {
-    const startTime = startOfDay(event.start).getTime();
-    const endTime = startOfDay(event.end).getTime();
-    const dayTime = date.getTime();
-
-    return dayTime >= startTime && dayTime <= endTime;
-  }
-
-  private eventFallsOnMonth(event: ShedulerEvent, month: Date): boolean {
-    const startTime = startOfMonth(event.start).getTime();
-    const endTime = startOfMonth(event.end).getTime();
-    const monthTime = month.getTime();
-
-    return monthTime >= startTime && monthTime <= endTime;
-  }
 
   public getEventTitle(event: ShedulerEvent): string {
     return event.name + '\n\n' +
-           'Start date: ' + this.datePipe.transform(event.start, 'yyyy.MM.dd') + '\n' +
-           'End date: ' + this.datePipe.transform(event.end, 'yyyy.MM.dd')
+      'Start date: ' + this.datePipe.transform(event.start, 'yyyy.MM.dd') + '\n' +
+      'End date: ' + this.datePipe.transform(event.end, 'yyyy.MM.dd')
   }
 
   public eventBoxMouseOver(eventBox: HTMLDivElement): void {
@@ -353,17 +368,44 @@ export class ShedulerService {
     return event.color;
   }
 
-  getEventsCountOnTargetHour(events: ShedulerEvent[], hour: Date): number {
-    return events.reduce((total: number, event: ShedulerEvent) => isSameHour(event.start, hour) ? total + 1 : 0, 0);
+  public getEventsCountOnTargetHour(events: ShedulerEvent[], hour: Date): number {
+    return events.reduce((total: number, event: ShedulerEvent) => total += isSameHour(event.start, hour) ? 1 : 0, 0);
   }
 
   public getEventHoursDuration(event: ShedulerEvent): number {
-    const hours = Math.abs(differenceInHours(event.start, event.end));
+    const hours = Math.abs(differenceInMinutes(event.start, event.end)) / 60;
+    const intHours = Math.trunc(hours);
 
-    if (hours === 0) {
-      return 0.5 + (event.end.getMinutes() <= 30 ? 0 : 0.5);
+    if (intHours === hours) {
+      return intHours;
     }
 
-    return hours + (event.end.getMinutes() < 30 ? 0 : 0.5);
+    return intHours + (hours % 1 <= 0.5 ? 0.5 : 1);
+  }
+
+  private resolveSeveralDigits(value: number, digitsCount: number = 1): string {
+    let stringValue = value.toString();
+
+    while (stringValue.length < digitsCount) {
+      stringValue = "0" + stringValue;
+    }
+
+    return stringValue;
+  }
+
+  private eventFallsOnDay(event: ShedulerEvent, date: Date): boolean {
+    const startTime = startOfDay(event.start).getTime();
+    const endTime = startOfDay(event.end).getTime();
+    const dayTime = date.getTime();
+
+    return dayTime >= startTime && dayTime <= endTime;
+  }
+
+  private eventFallsOnMonth(event: ShedulerEvent, month: Date): boolean {
+    const startTime = startOfMonth(event.start).getTime();
+    const endTime = startOfMonth(event.end).getTime();
+    const monthTime = month.getTime();
+
+    return monthTime >= startTime && monthTime <= endTime;
   }
 }
