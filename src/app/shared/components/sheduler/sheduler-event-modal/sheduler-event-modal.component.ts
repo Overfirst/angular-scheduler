@@ -19,7 +19,8 @@ export class ShedulerEventModalComponent {
 
     const endDateControl = new FormControl(null, [
       Validators.required,
-      ShedulerValidators.endDateBeforeStartDate(startDateControl)
+      ShedulerValidators.endDateBeforeStartDate(startDateControl),
+      ShedulerValidators.endDateEqualStartDate(startDateControl)
     ]);
 
     const controls: { [name: string]: AbstractControl } = {
