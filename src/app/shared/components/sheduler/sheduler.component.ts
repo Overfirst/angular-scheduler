@@ -63,6 +63,7 @@ export class ShedulerComponent implements AfterContentInit {
   public viewDateChanged(date: Date): void {
     this.selectedDate = date;
     this.selectedViewDate = date;
+    this.selectedDate.setMinutes(0);
   }
 
   public viewChanged(view: ViewDetalization): void {
