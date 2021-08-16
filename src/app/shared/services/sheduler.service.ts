@@ -20,8 +20,8 @@ import {
   isSameQuarter,
   differenceInCalendarMonths,
   addHours,
-  isSameHour,
-  differenceInHours, differenceInMinutes
+  differenceInHours,
+  differenceInMinutes
 } from "date-fns";
 
 import { ShedulerEvent, ViewDetalization } from "../interfaces";
@@ -390,6 +390,8 @@ export class ShedulerService {
   }
 
   public getCrossEventsCountForTargetEvent(event: ShedulerEvent, events: ShedulerEvent[]): number {
+    const crossEvents: ShedulerEvent[] = [];
+
     return events.reduce((total: number, currentEvent: ShedulerEvent) => {
       if (event.id === currentEvent.id) {
         return total;
@@ -402,6 +404,11 @@ export class ShedulerService {
       const currentEventEndTime = currentEvent.end.getTime();
 
       if ((eventStartTime <= currentEventStartTime && eventEndTime > currentEventStartTime) || (eventStartTime > currentEventStartTime && eventStartTime < currentEventEndTime)) {
+        if (crossEvents.find(potentialCrossEvent => potentialCrossEvent.end.getTime() <= currentEvent.start.getTime())) {
+          return total;
+        }
+
+        crossEvents.push(currentEvent);
         return total + 1;
       }
 
