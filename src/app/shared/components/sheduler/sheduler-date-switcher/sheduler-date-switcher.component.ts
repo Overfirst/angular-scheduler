@@ -14,6 +14,7 @@ export class ShedulerDateSwitcherComponent {
 
   @Output() viewDateChanged = new EventEmitter<Date>();
   @Output() viewChanged = new EventEmitter<ViewDetalization>();
+  @Output() createEventClicked = new EventEmitter<void>();
 
   public views: ViewDetalization[] = Object.values(ViewDetalization);
 
@@ -49,6 +50,10 @@ export class ShedulerDateSwitcherComponent {
   }
 
   public selectCurrentDate(): void {
+    if (this.selectCurrentDateIsLocked()) {
+      return;
+    }
+
     const currentDate = new Date();
 
     switch (this.view) {
@@ -74,7 +79,7 @@ export class ShedulerDateSwitcherComponent {
     this.viewDateChanged.emit(this.date);
   }
 
-  public selectCurrentDateIsHidden(): boolean {
+  public selectCurrentDateIsLocked(): boolean {
     const currentDate = new Date();
 
     switch (this.view) {
@@ -90,5 +95,9 @@ export class ShedulerDateSwitcherComponent {
       case ViewDetalization.Year:
         return isSameYear(this.date, currentDate);
     }
+  }
+
+  public createEventClick(): void {
+    this.createEventClicked.emit();
   }
 }

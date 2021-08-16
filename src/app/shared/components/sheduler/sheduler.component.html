@@ -5,6 +5,7 @@
       [date]="selectedViewDate"
       (viewDateChanged)="viewDateChanged($event)"
       (viewChanged)="viewChanged($event)"
+      (createEventClicked)="openCreateModal()"
     ></sheduler-date-switcher>
 
     <ng-template #view>

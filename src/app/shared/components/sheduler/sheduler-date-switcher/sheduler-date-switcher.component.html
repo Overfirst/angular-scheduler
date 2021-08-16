@@ -17,11 +17,18 @@
       </ng-container>
     </div>
 
-    <button
-      class="select-current-date"
-      [class.select-current-date-hidden]="selectCurrentDateIsHidden()"
-      (click)="selectCurrentDate()"
-    >Current {{ view.toLowerCase() }}</button>
+    <div class="center-box">
+      <button
+        class="center-panel-btn"
+        [class.select-current-date-locked]="selectCurrentDateIsLocked()"
+        (click)="selectCurrentDate()"
+      >Current {{ view.toLowerCase() }}</button>
+
+      <button
+        class="center-panel-btn"
+        (click)="createEventClick()"
+      >Create event</button>
+    </div>
 
     <div class="date-group">
       <div class="calendar-icon"></div>

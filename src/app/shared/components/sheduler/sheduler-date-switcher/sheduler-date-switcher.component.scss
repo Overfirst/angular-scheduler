@@ -59,7 +59,7 @@ select {
   background: $default-table-color;
 }
 
-.select-current-date {
+.center-panel-btn {
   cursor: pointer;
 
   width: 120px;
@@ -69,20 +69,26 @@ select {
   border-radius: 2px;
   transition: all 0.2s;
 
-  &:hover {
-    background: #a7a7a7;
-    color: #fff;
-    border-color: rgba(0, 0, 0, 0);
+  &:first-child {
+    margin-right: 12px;
   }
 
-  &:active {
-    background: #8a8a8a;
-    color: #fff;
-    border-color: rgba(0, 0, 0, 0);
+  &:not(.select-current-date-locked) {
+    &:hover {
+      background: #a7a7a7;
+      color: #fff;
+      border-color: rgba(0, 0, 0, 0);
+    }
+
+    &:active {
+      background: #8a8a8a;
+      color: #fff;
+      border-color: rgba(0, 0, 0, 0);
+    }
   }
 }
 
-.select-current-date-hidden {
-  opacity: 0;
+.select-current-date-locked {
+  opacity: 0.4;
   cursor: default;
 }
