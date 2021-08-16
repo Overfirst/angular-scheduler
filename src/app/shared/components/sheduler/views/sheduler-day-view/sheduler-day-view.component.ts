@@ -34,6 +34,7 @@ export class ShedulerDayViewComponent {
   private selectedDate: Date;
 
   @Input() public set day(date: Date) {
+    this.service.eventBoxes.clear();
     this.selectedDate = date;
     this.hours = this.service.getHoursForDayView(date);
   }
