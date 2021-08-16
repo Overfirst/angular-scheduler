@@ -28,10 +28,7 @@ export class ShedulerComponent implements AfterContentInit {
   public modalEditableEvent: ShedulerEvent;
 
   public selectedViewDate = new Date();
-
-  public selectedDate = startOfMonth(this.selectedViewDate);
-  public selectedMonth = this.selectedDate;
-
+  public selectedDate = new Date();
   public selectedView = ViewDetalization.Day;
 
   private shedulerEvents: ShedulerEvent[];
