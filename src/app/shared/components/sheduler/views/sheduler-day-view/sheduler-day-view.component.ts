@@ -94,4 +94,8 @@ export class ShedulerDayViewComponent {
   public getEventDayBoxLeftOffset(wrapper: HTMLDivElement): string {
     return this.service.getEventDayBoxLeftOffset(wrapper) + 'px';
   }
+
+  public getEventTitle(event: ShedulerEvent): string {
+    return this.service.getEventTitle(event);
+  }
 }

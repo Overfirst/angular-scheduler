@@ -39,6 +39,7 @@
               >
                 <div
                   class="event-box-day"
+                  [title]="getEventTitle(event)"
                   [style.background]="getEventColor(event)"
                   (dblclick)="eventBoxDoubleClick(event)"
                 >
