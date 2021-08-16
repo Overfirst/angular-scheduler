@@ -112,8 +112,13 @@ export class ShedulerComponent implements AfterContentInit {
     this.outletRef.createEmbeddedView(this.viewRef);
   }
 
-  public dayChanged(date: Date): void {
+  public hourChanged(date: Date): void {
     this.selectedDate = date;
+    this.selectedViewDate.setHours(date.getHours());
+  }
+
+  public dayChanged(date: Date): void {
+    this.hourChanged(date);
     this.selectedViewDate.setMonth(date.getMonth());
     this.selectedViewDate.setDate(date.getDate());
   }

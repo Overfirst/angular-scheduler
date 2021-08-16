@@ -98,4 +98,9 @@ export class ShedulerDayViewComponent {
   public getEventTitle(event: ShedulerEvent): string {
     return this.service.getEventTitle(event);
   }
+
+  public hourDoubleClick(hour: Date): void {
+    this.hour = hour;
+    this.hourDoubleClicked.emit(hour);
+  }
 }

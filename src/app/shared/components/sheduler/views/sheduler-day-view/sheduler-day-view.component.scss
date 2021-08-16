@@ -16,6 +16,16 @@
     border-top: none;
     height: 2 * $header-row-height;
     overflow: visible;
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      background: $default-table-hover-color;
+    }
+
+    &:active {
+      background: $default-table-active-color;
+    }
   }
 
   tr {
