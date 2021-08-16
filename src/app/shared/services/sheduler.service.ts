@@ -382,10 +382,11 @@ export class ShedulerService {
     const intHours = Math.trunc(hours);
 
     if (intHours === hours) {
-      return intHours;
+      return intHours <= 24 ? intHours : 24;
     }
 
-    return intHours + (hours % 1 <= 0.5 ? 0.5 : 1);
+    const result = intHours + (hours % 1 <= 0.5 ? 0.5 : 1);
+    return result <= 24 ? result : 24;
   }
 
   public getCrossEventsCountForTargetEvent(event: ShedulerEvent, events: ShedulerEvent[]): number {
