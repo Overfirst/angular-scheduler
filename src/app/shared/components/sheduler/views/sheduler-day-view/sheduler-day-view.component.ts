@@ -8,10 +8,9 @@ import {
   ElementRef
 } from '@angular/core';
 
-import { addMinutes, isSameHour } from "date-fns";
+import { addMinutes } from "date-fns";
 import { ShedulerEvent } from "../../../../interfaces";
 import { ShedulerService } from "../../../../services/sheduler.service";
-import {resourceChangeTicket} from "@angular/compiler-cli/src/ngtsc/core";
 
 @Component({
   selector: 'sheduler-day-view',
@@ -24,6 +23,8 @@ export class ShedulerDayViewComponent {
 
   public hours: Date[];
   public selectedHour: Date;
+
+  public isFullDay = false;
 
   private hourFirstSetted = false;
 
@@ -56,10 +57,6 @@ export class ShedulerDayViewComponent {
 
   public get day() {
     return this.selectedDate;
-  }
-
-  public eventStartedOnTargetHour(event: ShedulerEvent, hour: Date): boolean {
-    return isSameHour(event.start, hour);
   }
 
   public addHalfHour(hour: Date): Date {
@@ -102,5 +99,15 @@ export class ShedulerDayViewComponent {
   public hourDoubleClick(hour: Date): void {
     this.hour = hour;
     this.hourDoubleClicked.emit(hour);
+  }
+
+  // todo: use display: flex for table
+  public getHeightStyle(): string {
+    return `calc((100vh - (2 * ${this.service.headerRowHeight}px + 3 * ${this.service.defaultPadding}px) - 2px))`
+  }
+
+  public changeModeClick(): void {
+    this.service.eventBoxes.clear();
+    this.isFullDay = !this.isFullDay
   }
 }

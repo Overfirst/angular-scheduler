@@ -4,51 +4,85 @@
       <table>
         <thead>
         <tr #row>
-          <td>{{ hours[0] | date:'EEEE, dd MMM' }}</td>
+          <td>
+            <div class="center-box">
+              <div>{{ hours[0] | date:'EEEE, dd MMM' }}</div>
+              <button
+                [style.width]="'130px'"
+                class="sheduler-btn"
+                (click)="changeModeClick()"
+              >{{ isFullDay ? 'Default mode' : 'Full day mode' }}</button>
+            </div>
+          </td>
         </tr>
         </thead>
       </table>
     </div>
 
-    <div #mainContent class="content-table content-table-day">
+    <div
+      #mainContent class="content-table content-table-day"
+      [attr.is-full-day]="isFullDay"
+      [style.height]="getHeightStyle()"
+    >
       <table>
         <tbody>
-          <tr *ngFor="let hour of hours; index as idx">
-            <td
-              (dblclick)="hourDoubleClick(hour)"
-              [ngStyle]="{'border-bottom': idx % 2 === 0 ? '1px solid #bbb' : '1px solid $border-color'}"
-            >
+          <ng-container *ngIf="!isFullDay; else fullDayMode">
+            <tr *ngFor="let hour of hours; index as idx">
+              <td
+                (dblclick)="hourDoubleClick(hour)"
+                [ngStyle]="{'border-bottom': idx % 2 === 0 ? '1px solid #bbb' : '1px solid $border-color'}"
+              >
               <span *ngIf="idx !== 0" class="time-text">
                 {{ hour | date:'HH:mm' }}
               </span>
 
-              <span class="time-text time-text-half">
+                <span class="time-text time-text-half">
                 {{ addHalfHour(hour) | date:'HH:mm' }}
               </span>
-            </td>
-          </tr>
+              </td>
+            </tr>
+          </ng-container>
+
+          <ng-template #fullDayMode>
+            <tr *ngFor="let event of events">
+              <td [attr.is-full-day]="isFullDay">
+                <div class="event-box-day-full-wrapper">
+                  <div
+                    class="event-box-day-full"
+                    [style.background]="getEventColor(event)"
+                    (dblclick)="eventBoxDoubleClick(event)"
+                  >
+                    <span>{{ event.name }}</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <div *ngIf="false" class="full-day-empty-text">There are no events that last all day!</div>
+          </ng-template>
 
           <div class="events-box-day">
-            <ng-container *ngFor="let event of events">
-              <div
-                *ngIf="eventTakingOnSelectedDay(event)"
-                class="event-box-day-wrapper"
-                collectEventBox
-                #wrapper
-                [style.top]="getEventDayBoxTopHoursOffset(event)"
-                [style.height]="getEventDayBoxHoursDuration(event)"
-                [style.width]="getEventDayBoxWidth(event)"
-                [style.left]="getEventDayBoxLeftOffset(wrapper)"
-              >
+            <ng-container *ngIf="!isFullDay">
+              <ng-container *ngFor="let event of events">
                 <div
-                  class="event-box-day"
-                  [title]="getEventTitle(event)"
-                  [style.background]="getEventColor(event)"
-                  (dblclick)="eventBoxDoubleClick(event)"
+                  *ngIf="eventTakingOnSelectedDay(event)"
+                  class="event-box-day-wrapper"
+                  collectEventBox
+                  #wrapper
+                  [style.top]="getEventDayBoxTopHoursOffset(event)"
+                  [style.height]="getEventDayBoxHoursDuration(event)"
+                  [style.width]="getEventDayBoxWidth(event)"
+                  [style.left]="getEventDayBoxLeftOffset(wrapper)"
                 >
-                  <span class="event-box-day-name">{{ event.name }}</span>
+                  <div
+                    class="event-box-day"
+                    [title]="getEventTitle(event)"
+                    [style.background]="getEventColor(event)"
+                    (dblclick)="eventBoxDoubleClick(event)"
+                  >
+                    <span class="event-box-day-name">{{ event.name }}</span>
+                  </div>
                 </div>
-              </div>
+              </ng-container>
             </ng-container>
           </div>
         </tbody>
