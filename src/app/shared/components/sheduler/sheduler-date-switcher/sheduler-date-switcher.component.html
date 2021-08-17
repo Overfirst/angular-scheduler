@@ -19,13 +19,15 @@
 
     <div class="center-box">
       <button
-        class="center-panel-btn"
-        [class.select-current-date-locked]="selectCurrentDateIsLocked()"
+        [style.width]="'130px'"
+        class="sheduler-btn"
+        [disabled]="selectCurrentDateIsLocked()"
         (click)="selectCurrentDate()"
       >Current {{ view.toLowerCase() }}</button>
 
       <button
-        class="center-panel-btn"
+        [style.width]="'130px'"
+        class="sheduler-btn"
         (click)="createEventClick()"
       >Create event</button>
     </div>

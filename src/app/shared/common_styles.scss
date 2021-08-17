@@ -210,3 +210,36 @@ table {
   border: 1px solid $border-color;
   background: $default-table-color;
 }
+
+
+.sheduler-btn {
+  cursor: pointer;
+
+  padding: 4px 8px;
+  font-size: 16px;
+  border: 1px solid $border-color;
+  border-radius: 2px;
+  transition: all 0.2s;
+
+  &:first-child {
+    margin-right: 12px;
+  }
+
+  &[disabled] {
+    cursor: default;
+  }
+
+  &:not(&[disabled]) {
+    &:hover {
+      background: #a7a7a7;
+      color: #fff;
+      border-color: rgba(0, 0, 0, 0);
+    }
+
+    &:active {
+      background: #8a8a8a;
+      color: #fff;
+      border-color: rgba(0, 0, 0, 0);
+    }
+  }
+}
