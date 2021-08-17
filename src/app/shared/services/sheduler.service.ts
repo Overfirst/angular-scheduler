@@ -358,11 +358,6 @@ export class ShedulerService {
     return monthTime >= startTime && monthTime <= endTime;
   }
 
-  public eventLastsAllDay(event: ShedulerEvent, day: Date): boolean {
-    const startDay = startOfDay(day);
-    return event.start.getTime() <= startDay.getTime() && event.end.getTime() >= addDays(startDay, 1).getTime();
-  }
-
   public eventTakingOnSelectedDay(event: ShedulerEvent, day: Date): boolean {
     const startDay = startOfDay(day);
 
