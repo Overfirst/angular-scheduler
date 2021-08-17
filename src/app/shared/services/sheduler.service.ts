@@ -304,6 +304,8 @@ export class ShedulerService {
     return event.name + '\n\n' +
       'Start date: ' + this.datePipe.transform(event.start, 'yyyy.MM.dd') + '\n' +
       'End date: ' + this.datePipe.transform(event.end, 'yyyy.MM.dd')
+      'Start date: ' + this.datePipe.transform(event.start, 'yyyy.MM.dd HH:mm') + '\n' +
+      'End date: ' + this.datePipe.transform(event.end, 'yyyy.MM.dd HH:mm')
   }
 
   public eventBoxMouseOver(eventBox: HTMLDivElement): void {
