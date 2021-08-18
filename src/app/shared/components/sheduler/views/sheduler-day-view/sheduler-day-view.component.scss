@@ -7,6 +7,39 @@
 .header-table-day {
   td {
     border-bottom: 1px solid $border-color;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}
+
+.header-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid $border-color;
+}
+
+.header-date {
+  position: relative;
+  margin-top: 14px;
+  height: $header-row-height - 14px;
+}
+
+.header-open-close {
+  margin-top: 2px;
+  margin-left: 12px;
+  transition: all 0.2s;
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  img[opened=true] {
+    transform: rotate(180deg);
   }
 }
 
@@ -99,4 +132,51 @@ $time-text-top-offset: -11px;
 .event-box-day-name {
   display: block;
   margin: 12px;
+}
+
+.full-day-empty-text {
+  font-size: 36px;
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-events-box {
+  position: absolute;
+  left: 0;
+  top: $header-row-height;
+  width: 100%;
+  height: calc(100% - #{$header-row-height});
+  overflow: auto;
+}
+
+.event-box-day-full-wrapper {
+  height: $header-row-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:not(&:last-child) {
+    border-bottom: 1px solid $border-color;
+  }
+}
+
+.event-box-day-full {
+  height: calc(100% - 8px);
+  width: calc(100% - 8px);
+  border: 1px solid $border-color;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+
+  &:hover {
+    border: 1px solid #000;
+    cursor: pointer;
+  }
+
+  span {
+    margin-left: 12px;
+  }
 }

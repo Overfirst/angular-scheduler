@@ -4,13 +4,44 @@
       <table>
         <thead>
         <tr #row>
-          <td>{{ hours[0] | date:'EEEE, dd MMM' }}</td>
+          <td [style.height]="getHeaderHeight()">
+            <div class="header-box">
+              <span class="header-date">{{ hours[0] | date:'EEEE, dd MMM' }}</span>
+
+              <div class="header-open-close">
+                <img
+                  height="14px"
+                  src="assets/open-close-icon.svg"
+                  [attr.opened]="fullDayOpened"
+                  (click)="fullDayOpened = !fullDayOpened"
+                >
+              </div>
+            </div>
+
+            <div class="header-events-box" *ngIf="fullDayOpened ">
+              <ng-container *ngFor="let event of events">
+                <div class="event-box-day-full-wrapper">
+                  <div
+                    class="event-box-day-full"
+                    [style.background]="getEventColor(event)"
+                    (dblclick)="eventBoxDoubleClick(event)"
+                  >
+                    <span>{{ event.name }}</span>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </td>
         </tr>
         </thead>
       </table>
     </div>
 
-    <div #mainContent class="content-table content-table-day">
+    <div
+      #mainContent
+      class="content-table content-table-day"
+      [style.height]="getMainContentHeight()"
+    >
       <table>
         <tbody>
           <tr *ngFor="let hour of hours; index as idx">

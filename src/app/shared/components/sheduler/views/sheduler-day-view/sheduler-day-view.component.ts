@@ -22,6 +22,8 @@ import {resourceChangeTicket} from "@angular/compiler-cli/src/ngtsc/core";
 export class ShedulerDayViewComponent {
   @ViewChild('row', { static: true }) private row: ElementRef<HTMLTableRowElement>;
 
+  public fullDayOpened = false;
+
   public hours: Date[];
   public selectedHour: Date;
 
@@ -102,5 +104,17 @@ export class ShedulerDayViewComponent {
   public hourDoubleClick(hour: Date): void {
     this.hour = hour;
     this.hourDoubleClicked.emit(hour);
+  }
+
+  public getHeaderHeight(): string {
+    return `${(this.fullDayOpened ? 4 : 1) * this.service.headerRowHeight}px`
+  }
+
+  public getMainContentHeight(): string {
+    if (this.fullDayOpened) {
+      return `calc((100vh - (5 * ${this.service.headerRowHeight}px + 3 * ${this.service.defaultPadding}px) - 2px))`
+    }
+
+    return `calc((100vh - (2 * ${this.service.headerRowHeight}px + 3 * ${this.service.defaultPadding}px) - 2px))`
   }
 }
