@@ -14,26 +14,17 @@
   td {
     vertical-align: middle;
     border-top: none;
+    height: 2 * $header-row-height;
     overflow: visible;
     transition: all 0.2s;
-    height: 2 * $header-row-height;
+    cursor: pointer;
 
-    &:not(&[is-full-day]) {
-      cursor: pointer;
-    }
-
-    &:hover:not(&[is-full-day]) {
+    &:hover {
       background: $default-table-hover-color;
     }
 
-    &:active:not(&[is-full-day]) {
+    &:active {
       background: $default-table-active-color;
-    }
-
-    &[is-full-day] {
-      height: $header-row-height;
-      border-left: none;
-      border-right: none;
     }
   }
 
@@ -52,12 +43,6 @@
 
   tbody {
     position: relative;
-  }
-
-  &[is-full-day=true] {
-    border: 1px solid $border-color;
-    border-top: none;
-    background: $default-table-color;
   }
 }
 
@@ -114,52 +99,4 @@ $time-text-top-offset: -11px;
 .event-box-day-name {
   display: block;
   margin: 12px;
-}
-
-.center-box {
-  align-items: center;
-  justify-content: center;
-  display: flex;
-
-  button {
-    margin-left: 24px;
-  }
-}
-
-.full-day-empty-text {
-  font-size: 36px;
-  margin-top: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.event-box-day-full-wrapper {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.event-box-day-full {
-  height: calc(100% - 8px);
-  width: calc(100% - 8px);
-  border: 1px solid $border-color;
-  border-radius: 2px;
-  display: flex;
-  align-items: center;
-  transition: all 0.2s;
-
-  &:hover {
-    border: 1px solid #000;
-    cursor: pointer;
-  }
-
-  span {
-    margin-left: 12px;
-  }
 }
