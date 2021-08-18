@@ -1,17 +1,17 @@
 import {
-  Component,
-  ChangeDetectionStrategy,
-  Input,
-  ViewChild,
-  ViewContainerRef,
   AfterContentInit,
-  HostListener
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  Input,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
 
-import { ShedulerEvent, ViewDetalization } from '../../interfaces';
-import { ShedulerService } from "../../services/sheduler.service";
-import { addMinutes, isSameMinute, startOfMonth } from "date-fns";
-import { TemplateRef } from '@angular/core';
+import {ShedulerEvent, ViewDetalization} from '../../interfaces';
+import {ShedulerService} from "../../services/sheduler.service";
+import {addMinutes, isSameMinute} from "date-fns";
 
 @Component({
   selector: 'sheduler',
@@ -106,6 +106,10 @@ export class ShedulerComponent implements AfterContentInit {
   }
 
   public redrawView(): void {
+    if (this.selectedView === ViewDetalization.Day) {
+      return;
+    }
+
     this.service.eventBoxes.clear();
     this.outletRef.clear();
     this.outletRef.createEmbeddedView(this.viewRef);
