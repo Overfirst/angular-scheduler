@@ -19,6 +19,10 @@
         </div>
       </div>
     </ng-container>
+
+    <div *ngIf="events.length === 0">
+      <span class="day-full-empty-text">There are no events that last all day!</span>
+    </div>
   </div>
 </ng-template>
 

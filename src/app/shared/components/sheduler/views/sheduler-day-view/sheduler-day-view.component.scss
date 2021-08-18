@@ -190,3 +190,9 @@ $time-text-top-offset: -11px;
     margin-left: 12px;
   }
 }
+
+.day-full-empty-text {
+  display: inline-block;
+  margin-top: $header-row-height;
+  font-size: 32px;
+}

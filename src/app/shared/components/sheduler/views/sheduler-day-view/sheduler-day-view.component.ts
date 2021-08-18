@@ -36,7 +36,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
 
   constructor(private service: ShedulerService, private cdRef: ChangeDetectorRef) {}
 
-  @Input() public events: ShedulerEvent[];
+  @Input() public events: ShedulerEvent[] = [];
 
   private selectedDate: Date;
 
@@ -137,7 +137,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
 
   public getFullDaysBorderHeight(): string {
     if (this.events.length <= 3) {
-      return this.service.headerRowHeight * 3 + 'px';
+      return this.service.headerRowHeight * 3 - 3 + 'px';
     }
 
     return this.service.headerRowHeight * this.events.length + 'px';
