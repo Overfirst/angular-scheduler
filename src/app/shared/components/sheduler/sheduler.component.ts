@@ -33,7 +33,7 @@ export class ShedulerComponent implements AfterContentInit {
   public selectedDate = new Date();
   public selectedView = ViewDetalization.Day;
 
-  private shedulerEvents: ShedulerEvent[];
+  private shedulerEvents: ShedulerEvent[] = [];
 
   @Input() public set events(events: ShedulerEvent[]) {
     this.shedulerEvents = events.map(event => {

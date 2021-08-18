@@ -32,13 +32,25 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   public hours: Date[];
   public selectedHour: Date;
 
+  private allEvents: ShedulerEvent[];
+  public fullDayEvents: ShedulerEvent[];
+  public defaultEvents: ShedulerEvent[];
+
   private hourFirstSetted = false;
 
   constructor(private service: ShedulerService, private cdRef: ChangeDetectorRef) {}
 
-  @Input() public events: ShedulerEvent[] = [];
+  @Input() public set events(events: ShedulerEvent[]) {
+    this.allEvents = events;
+    this.fullDayEvents = this.service.getFullDayEvents(events, this.selectedDate);
+    this.defaultEvents = this.service.getDefaultDayEvents(events, this.selectedDate);
+  }
 
-  private selectedDate: Date;
+  public get events() {
+    return this.allEvents;
+  }
+
+  private selectedDate: Date = new Date();
 
   @Input() public set day(date: Date) {
     this.service.eventBoxes.clear();
@@ -126,6 +138,9 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   public redraw(): void {
     this.service.eventBoxes.clear();
 
+    this.fullDayEvents = this.service.getFullDayEvents(this.events, this.selectedDate);
+    this.defaultEvents = this.service.getDefaultDayEvents(this.events, this.selectedDate);
+
     this.fullDaysOutletRef.clear();
     this.fullDaysOutletRef.createEmbeddedView(this.fullDaysTemplateRef);
 
@@ -136,10 +151,18 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   }
 
   public getFullDaysBorderHeight(): string {
-    if (this.events.length <= 3) {
+    if (this.fullDayEvents.length <= 3) {
       return this.service.headerRowHeight * 3 - 3 + 'px';
     }
 
-    return this.service.headerRowHeight * this.events.length + 'px';
+    return this.service.headerRowHeight * this.fullDayEvents.length + 'px';
+  }
+
+  public eventFallsOnPrevDay(event: ShedulerEvent): boolean {
+    return this.service.eventFallsOnPrevDay(event, this.selectedDate);
+  }
+
+  public eventFallsOnNextDay(event: ShedulerEvent): boolean {
+    return this.service.eventFallsOnNextDay(event, this.selectedDate);
   }
 }

@@ -21,7 +21,8 @@ import {
   differenceInCalendarMonths,
   addHours,
   differenceInHours,
-  differenceInMinutes
+  differenceInMinutes,
+  addMinutes
 } from "date-fns";
 
 import { ShedulerEvent, ViewDetalization } from "../interfaces";
@@ -375,7 +376,7 @@ export class ShedulerService {
   }
 
   public getEventHoursDuration(event: ShedulerEvent): number {
-    const hours = Math.abs(differenceInMinutes(event.start, event.end)) / 60;
+    const hours = Math.abs(differenceInMinutes(event.start, addMinutes(event.end, event.start.getMinutes()))) / 60;
     const intHours = Math.trunc(hours);
 
     if (intHours === hours) {
@@ -441,5 +442,28 @@ export class ShedulerService {
     }
 
     return offset;
+  }
+
+  public eventLastsAllDay(event: ShedulerEvent, day: Date): boolean {
+    const eventDuration = event.end.getTime() - event.start.getTime();
+    return day.getTime() + eventDuration >= addDays(day, 1).getTime();
+  }
+
+  public getFullDayEvents(events: ShedulerEvent[], day: Date): ShedulerEvent[] {
+    return events.filter(event => this.eventLastsAllDay(event, day));
+  }
+
+  public getDefaultDayEvents(events: ShedulerEvent[], day: Date): ShedulerEvent[] {
+    return events.filter(event => !this.eventLastsAllDay(event, day));
+  }
+
+  public eventFallsOnPrevDay(event: ShedulerEvent, currentDate: Date): boolean {
+    const yesterday = addDays(startOfDay(currentDate), -1);
+    return this.eventFallsOnDay(event, yesterday);
+  }
+
+  public eventFallsOnNextDay(event: ShedulerEvent, currentDate: Date): boolean {
+    const tomorrow = addDays(startOfDay(currentDate), 1);
+    return this.eventFallsOnDay(event, tomorrow);
   }
 }

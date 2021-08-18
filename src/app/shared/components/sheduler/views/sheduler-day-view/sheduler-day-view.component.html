@@ -5,9 +5,9 @@
       [style.height]="getFullDaysBorderHeight()"
     ></div>
 
-    <ng-container *ngFor="let event of events; index as idx">
+    <ng-container *ngFor="let event of fullDayEvents; index as idx">
       <div
-        [attr.border-none]="idx >= 2 && idx === events.length - 1"
+        [attr.border-none]="idx >= 2 && idx === fullDayEvents.length - 1"
         class="event-box-day-full-wrapper"
       >
         <div
@@ -20,7 +20,7 @@
       </div>
     </ng-container>
 
-    <div *ngIf="events.length === 0">
+    <div *ngIf="fullDayEvents.length === 0">
       <span class="day-full-empty-text">There are no events that last all day!</span>
     </div>
   </div>
@@ -28,7 +28,7 @@
 
 <ng-template #defaultTemplate>
   <div class="events-box-day">
-    <ng-container *ngFor="let event of events">
+    <ng-container *ngFor="let event of defaultEvents">
       <div
         *ngIf="eventTakingOnSelectedDay(event)"
         class="event-box-day-wrapper"
