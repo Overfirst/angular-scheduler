@@ -23,6 +23,8 @@ export class ShedulerComponent implements AfterContentInit {
   @ViewChild('outlet', { static: true, read: ViewContainerRef }) outletRef: ViewContainerRef;
   @ViewChild('view', { static: true, read: TemplateRef }) viewRef: TemplateRef<any>;
 
+  public firstInit = false;
+
   public modalOpened = false;
   public modalEditMode = true;
   public modalEditableEvent: ShedulerEvent;
@@ -106,10 +108,11 @@ export class ShedulerComponent implements AfterContentInit {
   }
 
   public redrawView(): void {
-    if (this.selectedView === ViewDetalization.Day) {
+    if (this.selectedView === ViewDetalization.Day && this.firstInit) {
       return;
     }
 
+    this.firstInit = true;
     this.service.eventBoxes.clear();
     this.outletRef.clear();
     this.outletRef.createEmbeddedView(this.viewRef);
