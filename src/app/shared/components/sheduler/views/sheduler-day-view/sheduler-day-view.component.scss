@@ -44,6 +44,9 @@
 }
 
 .content-table-day {
+  overflow-x: hidden;
+  border-right: 1px solid $border-color;
+
   td {
     vertical-align: middle;
     border-top: none;
@@ -145,9 +148,9 @@ $time-text-top-offset: -11px;
 .header-events-box {
   position: absolute;
   left: 0;
-  top: $header-row-height;
+  top: $header-row-height + 1;
   width: 100%;
-  height: calc(100% - #{$header-row-height});
+  height: calc(100% - #{$header-row-height + 1});
   overflow: auto;
 }
 
@@ -156,6 +159,7 @@ $time-text-top-offset: -11px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-right: 1px solid $border-color;
 
   &:not(&:last-child) {
     border-bottom: 1px solid $border-color;
