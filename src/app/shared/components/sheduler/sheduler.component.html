@@ -8,20 +8,21 @@
       (createEventClicked)="openCreateModal()"
     ></sheduler-date-switcher>
 
+    <sheduler-day-view
+      #dayViewComponent
+      *ngIf="selectedView === 'Day'"
+      [events]="events"
+      [day]="selectedViewDate"
+      [hour]="selectedDate"
+      (eventDoubleClicked)="eventDoubleClicked($event)"
+      (hourDoubleClicked)="openCreateModal()"
+      (hourChanged)="hourChanged($event)"
+    ></sheduler-day-view>
+
     <ng-template #view>
       <ng-container [ngSwitch]="selectedView">
-        <sheduler-day-view
-          *ngSwitchDefault
-          [events]="events"
-          [day]="selectedViewDate"
-          [hour]="selectedDate"
-          (eventDoubleClicked)="eventDoubleClicked($event)"
-          (hourDoubleClicked)="openCreateModal()"
-          (hourChanged)="hourChanged($event)"
-        ></sheduler-day-view>
-
         <sheduler-month-view
-          *ngSwitchCase="'Month'"
+          *ngSwitchDefault
           [events]="events"
           [month]="selectedViewDate"
           [day]="selectedDate"

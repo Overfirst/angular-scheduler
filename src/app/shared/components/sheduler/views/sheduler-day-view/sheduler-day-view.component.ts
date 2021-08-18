@@ -5,13 +5,12 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  ElementRef
+  ElementRef, ViewContainerRef, TemplateRef, AfterContentInit, ChangeDetectorRef
 } from '@angular/core';
 
-import { addMinutes, isSameHour } from "date-fns";
+import { addMinutes } from "date-fns";
 import { ShedulerEvent } from "../../../../interfaces";
 import { ShedulerService } from "../../../../services/sheduler.service";
-import {resourceChangeTicket} from "@angular/compiler-cli/src/ngtsc/core";
 
 @Component({
   selector: 'sheduler-day-view',
@@ -19,8 +18,14 @@ import {resourceChangeTicket} from "@angular/compiler-cli/src/ngtsc/core";
   styleUrls: ['./sheduler-day-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShedulerDayViewComponent {
+export class ShedulerDayViewComponent implements AfterContentInit {
   @ViewChild('row', { static: true }) private row: ElementRef<HTMLTableRowElement>;
+
+  @ViewChild('defaultOutlet', { static: true, read: ViewContainerRef }) defaultOutletRef: ViewContainerRef;
+  @ViewChild('defaultTemplate', { static: true, read: TemplateRef }) defaultTemplateRef: TemplateRef<any>;
+
+  @ViewChild('fullDaysOutlet', { static: true, read: ViewContainerRef }) fullDaysOutletRef: ViewContainerRef;
+  @ViewChild('fullDaysTemplate', { static: true, read: TemplateRef }) fullDaysTemplateRef: TemplateRef<any>;
 
   public fullDayOpened = false;
 
@@ -29,7 +34,7 @@ export class ShedulerDayViewComponent {
 
   private hourFirstSetted = false;
 
-  constructor(private service: ShedulerService) {}
+  constructor(private service: ShedulerService, private cdRef: ChangeDetectorRef) {}
 
   @Input() public events: ShedulerEvent[];
 
@@ -56,12 +61,12 @@ export class ShedulerDayViewComponent {
   @Output() public hourDoubleClicked = new EventEmitter<Date>();
   @Output() public hourChanged = new EventEmitter<Date>();
 
-  public get day() {
-    return this.selectedDate;
+  public ngAfterContentInit(): void {
+    this.redraw();
   }
 
-  public eventStartedOnTargetHour(event: ShedulerEvent, hour: Date): boolean {
-    return isSameHour(event.start, hour);
+  public get day() {
+    return this.selectedDate;
   }
 
   public addHalfHour(hour: Date): Date {
@@ -116,5 +121,25 @@ export class ShedulerDayViewComponent {
     }
 
     return `calc((100vh - (2 * ${this.service.headerRowHeight}px + 3 * ${this.service.defaultPadding}px) - 2px))`
+  }
+
+  public redraw(): void {
+    this.service.eventBoxes.clear();
+
+    this.fullDaysOutletRef.clear();
+    this.fullDaysOutletRef.createEmbeddedView(this.fullDaysTemplateRef);
+
+    this.defaultOutletRef.clear();
+    this.defaultOutletRef.createEmbeddedView(this.defaultTemplateRef);
+
+    this.cdRef.detectChanges();
+  }
+
+  public getFullDaysBorderHeight(): string {
+    if (this.events.length <= 3) {
+      return this.service.headerRowHeight * 3 + 'px';
+    }
+
+    return this.service.headerRowHeight * this.events.length + 'px';
   }
 }

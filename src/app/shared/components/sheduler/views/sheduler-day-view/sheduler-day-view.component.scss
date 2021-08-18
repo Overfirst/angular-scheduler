@@ -151,7 +151,13 @@ $time-text-top-offset: -11px;
   top: $header-row-height + 1;
   width: 100%;
   height: calc(100% - #{$header-row-height + 1});
-  overflow: auto;
+  overflow-y: scroll;
+}
+
+.header-events-box-border {
+  position: absolute;
+  width: 100%;
+  border-right: 1px solid $border-color;
 }
 
 .event-box-day-full-wrapper {
@@ -159,14 +165,14 @@ $time-text-top-offset: -11px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-right: 1px solid $border-color;
 
-  &:not(&:last-child) {
+  &[border-none=false] {
     border-bottom: 1px solid $border-color;
   }
 }
 
 .event-box-day-full {
+  z-index: 20;
   height: calc(100% - 8px);
   width: calc(100% - 8px);
   border: 1px solid $border-color;

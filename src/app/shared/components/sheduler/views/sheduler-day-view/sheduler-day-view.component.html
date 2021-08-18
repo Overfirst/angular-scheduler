@@ -1,3 +1,53 @@
+<ng-template #fullDaysTemplate>
+  <div class="header-events-box" *ngIf="fullDayOpened">
+    <div
+      class="header-events-box-border"
+      [style.height]="getFullDaysBorderHeight()"
+    ></div>
+
+    <ng-container *ngFor="let event of events; index as idx">
+      <div
+        [attr.border-none]="idx >= 2 && idx === events.length - 1"
+        class="event-box-day-full-wrapper"
+      >
+        <div
+          class="event-box-day-full"
+          [style.background]="getEventColor(event)"
+          (dblclick)="eventBoxDoubleClick(event)"
+        >
+          <span>{{ event.name }}</span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #defaultTemplate>
+  <div class="events-box-day">
+    <ng-container *ngFor="let event of events">
+      <div
+        *ngIf="eventTakingOnSelectedDay(event)"
+        class="event-box-day-wrapper"
+        collectEventBox
+        #wrapper
+        [style.top]="getEventDayBoxTopHoursOffset(event)"
+        [style.height]="getEventDayBoxHoursDuration(event)"
+        [style.width]="getEventDayBoxWidth(event)"
+        [style.left]="getEventDayBoxLeftOffset(wrapper)"
+      >
+        <div
+          class="event-box-day"
+          [title]="getEventTitle(event)"
+          [style.background]="getEventColor(event)"
+          (dblclick)="eventBoxDoubleClick(event)"
+        >
+          <span class="event-box-day-name">{{ event.name }}</span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>
+
 <div class="view-box">
   <div class="main-content-box-day">
     <div class="header-table header-table-day">
@@ -18,19 +68,7 @@
               </div>
             </div>
 
-            <div class="header-events-box" *ngIf="fullDayOpened ">
-              <ng-container *ngFor="let event of events">
-                <div class="event-box-day-full-wrapper">
-                  <div
-                    class="event-box-day-full"
-                    [style.background]="getEventColor(event)"
-                    (dblclick)="eventBoxDoubleClick(event)"
-                  >
-                    <span>{{ event.name }}</span>
-                  </div>
-                </div>
-              </ng-container>
-            </div>
+            <ng-container #fullDaysOutlet></ng-container>
           </td>
         </tr>
         </thead>
@@ -59,29 +97,7 @@
             </td>
           </tr>
 
-          <div class="events-box-day">
-            <ng-container *ngFor="let event of events">
-              <div
-                *ngIf="eventTakingOnSelectedDay(event)"
-                class="event-box-day-wrapper"
-                collectEventBox
-                #wrapper
-                [style.top]="getEventDayBoxTopHoursOffset(event)"
-                [style.height]="getEventDayBoxHoursDuration(event)"
-                [style.width]="getEventDayBoxWidth(event)"
-                [style.left]="getEventDayBoxLeftOffset(wrapper)"
-              >
-                <div
-                  class="event-box-day"
-                  [title]="getEventTitle(event)"
-                  [style.background]="getEventColor(event)"
-                  (dblclick)="eventBoxDoubleClick(event)"
-                >
-                  <span class="event-box-day-name">{{ event.name }}</span>
-                </div>
-              </div>
-            </ng-container>
-          </div>
+          <ng-container #defaultOutlet></ng-container>
         </tbody>
       </table>
     </div>

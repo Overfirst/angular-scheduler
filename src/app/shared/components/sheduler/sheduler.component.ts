@@ -12,6 +12,7 @@ import {
 import {ShedulerEvent, ViewDetalization} from '../../interfaces';
 import {ShedulerService} from "../../services/sheduler.service";
 import {addMinutes, isSameMinute} from "date-fns";
+import {ShedulerDayViewComponent} from "./views/sheduler-day-view/sheduler-day-view.component";
 
 @Component({
   selector: 'sheduler',
@@ -22,8 +23,7 @@ import {addMinutes, isSameMinute} from "date-fns";
 export class ShedulerComponent implements AfterContentInit {
   @ViewChild('outlet', { static: true, read: ViewContainerRef }) outletRef: ViewContainerRef;
   @ViewChild('view', { static: true, read: TemplateRef }) viewRef: TemplateRef<any>;
-
-  public firstInit = false;
+  @ViewChild('dayViewComponent') dayViewComponent: ShedulerDayViewComponent;
 
   public modalOpened = false;
   public modalEditMode = true;
@@ -108,11 +108,11 @@ export class ShedulerComponent implements AfterContentInit {
   }
 
   public redrawView(): void {
-    if (this.selectedView === ViewDetalization.Day && this.firstInit) {
+    if (this.selectedView === ViewDetalization.Day) {
+      this.dayViewComponent?.redraw();
       return;
     }
 
-    this.firstInit = true;
     this.service.eventBoxes.clear();
     this.outletRef.clear();
     this.outletRef.createEmbeddedView(this.viewRef);
