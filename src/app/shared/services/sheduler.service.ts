@@ -22,7 +22,7 @@ import {
   addHours,
   differenceInHours,
   differenceInMinutes,
-  addMinutes
+  addMinutes, isSameDay
 } from "date-fns";
 
 import { ShedulerEvent, ViewDetalization } from "../interfaces";
@@ -344,11 +344,19 @@ export class ShedulerService {
   }
 
   private eventFallsOnDay(event: ShedulerEvent, date: Date): boolean {
-    const startTime = startOfDay(event.start).getTime();
-    const endTime = startOfDay(event.end).getTime();
-    const dayTime = date.getTime();
+    if (isSameDay(event.end, date) && event.end.getHours() === 0 && event.end.getMinutes() === 0) {
+      return false;
+    }
 
-    return dayTime >= startTime && dayTime <= endTime;
+    const eventStartTime = event.start.getTime();
+    const eventEndTime = event.end.getTime();
+
+    const inRange = (value: number) => value >= eventStartTime && value <= eventEndTime;
+
+    const dayStart = startOfDay(date);
+    const dayEnd = addMinutes(addHours(dayStart, 23), 59);
+
+    return inRange(dayStart.getTime()) || inRange(dayEnd.getTime()) || dayStart.getTime() <= eventStartTime && dayEnd.getTime() >= eventEndTime;
   }
 
   private eventFallsOnMonth(event: ShedulerEvent, month: Date): boolean {
@@ -445,8 +453,8 @@ export class ShedulerService {
   }
 
   public eventLastsAllDay(event: ShedulerEvent, day: Date): boolean {
-    const startDay = startOfDay(day);
-    const endDay = addDays(startDay, 1);
+    const startDay = addMinutes(startOfDay(day), 30);
+    const endDay = addHours(startDay, 23);
 
     return event.start.getTime() <= startDay.getTime() && event.end.getTime() >= endDay.getTime();
   }
