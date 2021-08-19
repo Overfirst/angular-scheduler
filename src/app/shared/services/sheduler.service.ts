@@ -445,8 +445,10 @@ export class ShedulerService {
   }
 
   public eventLastsAllDay(event: ShedulerEvent, day: Date): boolean {
-    const eventDuration = event.end.getTime() - event.start.getTime();
-    return day.getTime() + eventDuration >= addDays(day, 1).getTime();
+    const startDay = startOfDay(day);
+    const endDay = addDays(startDay, 1);
+
+    return event.start.getTime() <= startDay.getTime() && event.end.getTime() >= endDay.getTime();
   }
 
   public getFullDayEvents(events: ShedulerEvent[], day: Date): ShedulerEvent[] {
