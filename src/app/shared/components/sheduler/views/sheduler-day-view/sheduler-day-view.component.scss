@@ -125,6 +125,10 @@ $time-text-top-offset: -11px;
   width: calc(100% - 8px);
   transition: border 0.2s;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
 
   &:hover {
     border: 1px solid #000;
@@ -134,7 +138,6 @@ $time-text-top-offset: -11px;
 
 .event-box-day-name {
   display: block;
-  margin: 12px;
 }
 
 .full-day-empty-text {
