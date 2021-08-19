@@ -380,6 +380,10 @@ export class ShedulerService {
   }
 
   public getEventDayBoxTopHoursOffset(event: ShedulerEvent, day: Date): number {
+    if (!isSameDay(event.start, day)) {
+       return 0;
+    }
+
     return Math.abs(differenceInHours(startOfDay(day), event.start)) + (event.start.getMinutes() < 30 ? 0 : 0.5);
   }
 
