@@ -8,7 +8,7 @@ import {
   ElementRef, ViewContainerRef, TemplateRef, AfterContentInit, ChangeDetectorRef
 } from '@angular/core';
 
-import { addMinutes } from "date-fns";
+import {addDays, addMinutes} from "date-fns";
 import { ShedulerEvent } from "../../../../interfaces";
 import { ShedulerService } from "../../../../services/sheduler.service";
 
@@ -74,6 +74,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   @Output() public eventDoubleClicked = new EventEmitter<ShedulerEvent>();
   @Output() public hourDoubleClicked = new EventEmitter<Date>();
   @Output() public hourChanged = new EventEmitter<Date>();
+  @Output() public dayChangeClicked = new EventEmitter<Date>();
 
   public ngAfterContentInit(): void {
     this.redraw();
@@ -145,9 +146,9 @@ export class ShedulerDayViewComponent implements AfterContentInit {
 
     this.fullDaysOutletRef.clear();
     this.fullDaysOutletRef.createEmbeddedView(this.fullDaysTemplateRef);
-
-    this.defaultOutletRef.clear();
-    this.defaultOutletRef.createEmbeddedView(this.defaultTemplateRef);
+    //
+    // this.defaultOutletRef.clear();
+    // this.defaultOutletRef.createEmbeddedView(this.defaultTemplateRef);
 
     this.cdRef.detectChanges();
   }
@@ -166,5 +167,13 @@ export class ShedulerDayViewComponent implements AfterContentInit {
 
   public eventFallsOnNextDay(event: ShedulerEvent): boolean {
     return this.service.eventFallsOnNextDay(event, this.selectedDate);
+  }
+
+  public clickToPrevDay(event: MouseEvent): void {
+    this.dayChangeClicked.emit(addDays(this.selectedDate, -1))
+  }
+
+  public clickToNextDay(event: MouseEvent): void {
+    this.dayChangeClicked.emit(addDays(this.selectedDate, 1))
   }
 }

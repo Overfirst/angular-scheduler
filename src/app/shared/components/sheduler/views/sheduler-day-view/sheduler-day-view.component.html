@@ -16,6 +16,24 @@
           (dblclick)="eventBoxDoubleClick(event)"
         >
           <span>{{ event.name }}</span>
+
+          <div
+            *ngIf="eventFallsOnPrevDay(event)"
+            (click)="clickToPrevDay($event)"
+            (dblclick)="$event.stopPropagation()"
+            class="event-box-arrow event-box-arrow-left"
+          >
+            <img src="assets/event-arrow-icon.svg">
+          </div>
+
+          <div
+            *ngIf="eventFallsOnNextDay(event)"
+            (click)="clickToNextDay($event)"
+            (dblclick)="$event.stopPropagation()"
+            class="event-box-arrow event-box-arrow-right"
+          >
+            <img src="assets/event-arrow-icon.svg">
+          </div>
         </div>
       </div>
     </ng-container>

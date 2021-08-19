@@ -199,3 +199,26 @@ $time-text-top-offset: -11px;
   margin-top: $header-row-height;
   font-size: 32px;
 }
+
+.event-box-arrow {
+  position: absolute;
+
+  img {
+    height: 14px;
+    opacity: 0.5;
+    transition: all 0.2s;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+.event-box-arrow-left {
+  left: 8px;
+  transform: rotate(180deg);
+}
+
+.event-box-arrow-right {
+  right: 8px;
+}
