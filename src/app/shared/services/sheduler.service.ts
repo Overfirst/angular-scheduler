@@ -472,12 +472,10 @@ export class ShedulerService {
   }
 
   public eventFallsOnPrevDay(event: ShedulerEvent, currentDate: Date): boolean {
-    const yesterday = addDays(startOfDay(currentDate), -1);
-    return this.eventFallsOnDay(event, yesterday);
+    return this.eventFallsOnDay(event, addDays(startOfDay(currentDate), -1));
   }
 
   public eventFallsOnNextDay(event: ShedulerEvent, currentDate: Date): boolean {
-    const tomorrow = addDays(startOfDay(currentDate), 1);
-    return this.eventFallsOnDay(event, tomorrow);
+    return this.eventFallsOnDay(event, addDays(startOfDay(currentDate), 1));
   }
 }
