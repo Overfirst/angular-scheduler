@@ -110,7 +110,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
 
   public getEventDayBoxWidth(event: ShedulerEvent): string {
     const scrollWidth = 18;
-    return (this.row.nativeElement.clientWidth - scrollWidth) / (this.service.getCrossEventsCountForTargetEvent(event, this.events) + 1) + 'px';
+    return (this.row.nativeElement.clientWidth - scrollWidth) / (this.service.getCrossEventsCountForTargetEvent(event, this.defaultEvents) + 1) + 'px';
   }
 
   public getEventDayBoxLeftOffset(wrapper: HTMLDivElement): string {
@@ -146,9 +146,9 @@ export class ShedulerDayViewComponent implements AfterContentInit {
 
     this.fullDaysOutletRef.clear();
     this.fullDaysOutletRef.createEmbeddedView(this.fullDaysTemplateRef);
-    //
-    // this.defaultOutletRef.clear();
-    // this.defaultOutletRef.createEmbeddedView(this.defaultTemplateRef);
+
+    this.defaultOutletRef.clear();
+    this.defaultOutletRef.createEmbeddedView(this.defaultTemplateRef);
 
     this.cdRef.detectChanges();
   }
