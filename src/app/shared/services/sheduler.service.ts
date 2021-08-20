@@ -387,16 +387,54 @@ export class ShedulerService {
     return Math.abs(differenceInHours(startOfDay(day), event.start)) + (event.start.getMinutes() < 30 ? 0 : 0.5);
   }
 
-  public getEventHoursDuration(event: ShedulerEvent): number {
-    const hours = Math.abs(differenceInMinutes(event.start, addMinutes(event.end, event.start.getMinutes()))) / 60;
-    const intHours = Math.trunc(hours);
+  public getEventHoursDuration(event: ShedulerEvent, day: Date): number {
+    if (!isSameDay(event.start, day)) {
+      const durationHours = (event.end.getTime() - startOfDay(day).getTime()) / 1000 / 3600;
+      const intHours = Math.trunc(durationHours);
 
-    if (intHours === hours) {
-      return intHours <= 24 ? intHours : 24;
+      const delta = durationHours - intHours;
+      let addition = 0;
+
+      if (delta > 0) {
+        addition = delta <= 0.5 ? 0.5 : 1;
+      }
+
+      return intHours + addition;
     }
 
-    const result = intHours + (hours % 1 <= 0.5 ? 0.5 : 1);
-    return result <= 24 ? result : 24;
+    const transformDateMinutes = (date: Date): Date => {
+        const newDate = new Date(date);
+        const minutes = date.getMinutes();
+
+        if (minutes === 0) {
+          return newDate;
+        }
+
+        if (minutes <= 30) {
+          newDate.setMinutes(30);
+        } else {
+          newDate.setHours(newDate.getHours() + 1);
+          newDate.setMinutes(0);
+        }
+
+        return newDate;
+    };
+
+    const transformStart = transformDateMinutes(event.start);
+    const transformEnd = transformDateMinutes(event.end);
+
+    const result = Math.abs(differenceInMinutes(transformStart, transformEnd)) / 60;
+    const maxHours = 24 - transformStart.getHours() - transformStart.getMinutes() / 60;
+
+    if (result > maxHours) {
+      return maxHours;
+    }
+
+    if (result < 0.5) {
+      return 0.5;
+    }
+
+    return result;
   }
 
   public getCrossEventsCountForTargetEvent(event: ShedulerEvent, events: ShedulerEvent[]): number {

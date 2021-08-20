@@ -105,7 +105,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   }
 
   public getEventDayBoxHoursDuration(event: ShedulerEvent): string {
-    return 2 * this.service.headerRowHeight * this.service.getEventHoursDuration(event) + 'px';
+    return 2 * this.service.headerRowHeight * this.service.getEventHoursDuration(event, this.selectedDate) + 'px';
   }
 
   public getEventDayBoxWidth(event: ShedulerEvent): string {
