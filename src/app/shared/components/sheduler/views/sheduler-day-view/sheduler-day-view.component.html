@@ -64,6 +64,26 @@
           (dblclick)="eventBoxDoubleClick(event)"
         >
           <span class="event-box-day-name">{{ event.name }}</span>
+
+          <div
+            *ngIf="eventFallsOnPrevDay(event)"
+            (click)="clickToPrevDay($event)"
+            (dblclick)="$event.stopPropagation()"
+            class="event-box-arrow event-box-arrow-left"
+            [attr.default-day]="wrapper.clientHeight >= service.headerRowHeight"
+          >
+            <img src="assets/event-arrow-icon.svg">
+          </div>
+
+          <div
+            *ngIf="eventFallsOnNextDay(event)"
+            (click)="clickToNextDay($event)"
+            (dblclick)="$event.stopPropagation()"
+            class="event-box-arrow event-box-arrow-right"
+            [attr.default-day]="wrapper.clientHeight >= service.headerRowHeight"
+          >
+            <img src="assets/event-arrow-icon.svg">
+          </div>
         </div>
       </div>
     </ng-container>

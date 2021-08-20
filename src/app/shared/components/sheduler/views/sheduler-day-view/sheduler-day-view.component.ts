@@ -27,7 +27,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   @ViewChild('fullDaysOutlet', { static: true, read: ViewContainerRef }) fullDaysOutletRef: ViewContainerRef;
   @ViewChild('fullDaysTemplate', { static: true, read: TemplateRef }) fullDaysTemplateRef: TemplateRef<any>;
 
-  public fullDayOpened = false;
+  public fullDayOpened = true;
 
   public hours: Date[];
   public selectedHour: Date;
@@ -38,7 +38,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
 
   private hourFirstSetted = false;
 
-  constructor(private service: ShedulerService, private cdRef: ChangeDetectorRef) {}
+  constructor(public service: ShedulerService, private cdRef: ChangeDetectorRef) {}
 
   @Input() public set events(events: ShedulerEvent[]) {
     this.allEvents = events;

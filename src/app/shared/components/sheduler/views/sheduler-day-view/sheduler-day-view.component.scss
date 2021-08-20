@@ -129,6 +129,7 @@ $time-text-top-offset: -11px;
   align-items: center;
   justify-content: center;
   font-size: 18px;
+  position: relative;
 
   &:hover {
     border: 1px solid #000;
@@ -220,8 +221,16 @@ $time-text-top-offset: -11px;
 .event-box-arrow-left {
   left: 8px;
   transform: rotate(180deg);
+
+  &[default-day=true] {
+    top: 8px;
+  }
 }
 
 .event-box-arrow-right {
   right: 8px;
+
+  &[default-day=true] {
+    bottom: 8px;
+  }
 }
