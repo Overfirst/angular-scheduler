@@ -468,7 +468,7 @@ export class ShedulerService {
   }
 
   public getDefaultDayEvents(events: ShedulerEvent[], day: Date): ShedulerEvent[] {
-    return events.filter(event => !this.eventLastsAllDay(event, day));
+    return events.filter(event => this.eventFallsOnDay(event, day) && !this.eventLastsAllDay(event, day));
   }
 
   public eventFallsOnPrevDay(event: ShedulerEvent, currentDate: Date): boolean {
