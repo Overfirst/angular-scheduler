@@ -143,6 +143,6 @@ export class ShedulerComponent implements AfterContentInit {
   }
 
   private sortEvents(): void {
-    this.shedulerEvents.sort((first, second) => first.start.getTime() - second.start.getTime());
+    this.shedulerEvents.sort((first, second) => (second.end.getTime() - second.start.getTime()) - (first.end.getTime() - first.start.getTime()));
   }
 }
