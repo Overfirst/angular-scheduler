@@ -437,10 +437,17 @@ export class ShedulerService {
     return result;
   }
 
-  public getCrossEventsCountForTargetEvent(event: ShedulerEvent, events: ShedulerEvent[]): number {
+  public getCrossEventsCountForTargetEvent(event: ShedulerEvent, events: ShedulerEvent[], boxWidth: number): number {
     const crossEvents: ShedulerEvent[] = [];
+    const allBoxes = Array.from(this.eventBoxes);
 
-    return events.reduce((total: number, currentEvent: ShedulerEvent) => {
+    const needBoxes: HTMLDivElement[] = [];
+
+    if (event.id === 777) {
+      debugger
+    }
+
+    const crossEventsCount = events.reduce((total: number, currentEvent: ShedulerEvent) => {
       if (event.id === currentEvent.id) {
         return total;
       }
@@ -457,11 +464,23 @@ export class ShedulerService {
         }
 
         crossEvents.push(currentEvent);
+        const needBox = allBoxes.find(box => box.getAttribute('event-id') === currentEvent.id.toString());
+
+        if (needBox) {
+          needBoxes.push(needBox);
+        }
+
         return total + 1;
       }
 
       return total;
     }, 0);
+
+    if (needBoxes.length !== crossEventsCount) {
+      return boxWidth / (crossEventsCount + 1);
+    }
+
+    return needBoxes.reduce((total: number, box: HTMLDivElement) => total - box.clientWidth, boxWidth);
   }
 
   public getEventDayBoxLeftOffset(wrapper: HTMLDivElement): number {

@@ -27,7 +27,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   @ViewChild('fullDaysOutlet', { static: true, read: ViewContainerRef }) fullDaysOutletRef: ViewContainerRef;
   @ViewChild('fullDaysTemplate', { static: true, read: TemplateRef }) fullDaysTemplateRef: TemplateRef<any>;
 
-  public fullDayOpened = true;
+  public fullDayOpened = false;
 
   public hours: Date[];
   public selectedHour: Date;
@@ -110,7 +110,8 @@ export class ShedulerDayViewComponent implements AfterContentInit {
 
   public getEventDayBoxWidth(event: ShedulerEvent): string {
     const scrollWidth = 18;
-    return (this.row.nativeElement.clientWidth - scrollWidth) / (this.service.getCrossEventsCountForTargetEvent(event, this.defaultEvents) + 1) + 'px';
+    const boxWidth = this.row.nativeElement.clientWidth - scrollWidth;
+    return this.service.getCrossEventsCountForTargetEvent(event, this.defaultEvents, boxWidth) + 'px';
   }
 
   public getEventDayBoxLeftOffset(wrapper: HTMLDivElement): string {

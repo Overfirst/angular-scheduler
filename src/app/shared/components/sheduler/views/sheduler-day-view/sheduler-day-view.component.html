@@ -50,6 +50,7 @@
       <div
         *ngIf="eventTakingOnSelectedDay(event)"
         class="event-box-day-wrapper"
+        [attr.event-id]="event.id"
         collectEventBox
         #wrapper
         [style.top]="getEventDayBoxTopHoursOffset(event)"
