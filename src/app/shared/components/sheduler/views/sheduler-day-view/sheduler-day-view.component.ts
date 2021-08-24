@@ -111,7 +111,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   public getEventDayBoxWidth(event: ShedulerEvent): string {
     const scrollWidth = 18;
     const boxWidth = this.row.nativeElement.clientWidth - scrollWidth;
-    return this.service.getCrossEventsCountForTargetEvent(event, this.defaultEvents, boxWidth) + 'px';
+    return this.service.getEventWidthForDayView(event, this.defaultEvents, boxWidth) + 'px';
   }
 
   public getEventDayBoxLeftOffset(wrapper: HTMLDivElement): string {
