@@ -536,4 +536,24 @@ export class ShedulerService {
   public eventFallsOnNextDay(event: ShedulerEvent, currentDate: Date): boolean {
     return this.eventFallsOnDay(event, addDays(startOfDay(currentDate), 1));
   }
+
+  public getWeekDays(date: Date): Date[] {
+    const weekDays: Date[] = [];
+
+    const startDay = startOfWeek(date, { weekStartsOn: 1 });
+
+    for (let i = 0; i < 7; i++) {
+      weekDays.push(addDays(startDay, i));
+    }
+
+    console.log(weekDays)
+    return weekDays;
+  }
+
+  public getEventsForWeekDays(events: ShedulerEvent[], weekDays: Date[]): Array<ShedulerEvent[]> {
+    const weekEvents: Array<ShedulerEvent[]> = [];
+    weekDays.forEach(day => weekEvents.push(this.getDefaultDayEvents(events, day)));
+
+    return weekEvents;
+  }
 }

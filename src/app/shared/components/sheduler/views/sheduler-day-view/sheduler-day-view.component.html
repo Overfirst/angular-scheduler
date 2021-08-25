@@ -1,5 +1,8 @@
 <ng-template #fullDaysTemplate>
-  <div class="header-events-box" *ngIf="fullDayOpened">
+  <div
+    *ngIf="fullDayOpened"
+    class="header-events-box"
+  >
     <div
       class="header-events-box-border"
       [style.height]="getFullDaysBorderHeight()"
@@ -67,7 +70,7 @@
           <span class="event-box-day-name">{{ event.name }}</span>
 
           <div
-            *ngIf="eventFallsOnPrevDay(event)"
+            *ngIf="(!weekMode || dayIdx === 0) && eventFallsOnPrevDay(event)"
             (click)="clickToPrevDay($event)"
             (dblclick)="$event.stopPropagation()"
             class="event-box-arrow event-box-arrow-left"
@@ -77,7 +80,7 @@
           </div>
 
           <div
-            *ngIf="eventFallsOnNextDay(event)"
+            *ngIf="(!weekMode || dayIdx === 6) &&eventFallsOnNextDay(event)"
             (click)="clickToNextDay($event)"
             (dblclick)="$event.stopPropagation()"
             class="event-box-arrow event-box-arrow-right"
@@ -91,17 +94,22 @@
   </div>
 </ng-template>
 
-<div class="view-box">
+<div
+  [attr.padding-left]="dayIdx === 0"
+  [attr.padding-right]="dayIdx === 6"
+  [class.view-box]="!weekMode"
+  [class.view-box-week-mode]="weekMode"
+>
   <div class="main-content-box-day">
-    <div class="header-table header-table-day">
+    <div [attr.week-mode]="weekMode" class="header-table header-table-day">
       <table>
         <thead>
         <tr #row>
           <td [style.height]="getHeaderHeight()">
             <div class="header-box">
-              <span class="header-date">{{ hours[0] | date:'EEEE, dd MMM' }}</span>
+              <span class="header-date">{{ weekMode ? (hours[0] | date:'EEE, dd') : (hours[0] | date:'EEEE, dd MMM') }}</span>
 
-              <div class="header-open-close">
+              <div *ngIf="!weekMode" class="header-open-close">
                 <img
                   height="14px"
                   src="assets/open-close-icon.svg"
@@ -120,6 +128,9 @@
 
     <div
       #mainContent
+      [attr.week-mode]="weekMode"
+      [attr.show-scroll]="!weekMode || dayIdx === 6"
+      [attr.show-right-border]="!weekMode || dayIdx === 6"
       class="content-table content-table-day"
       [style.height]="getMainContentHeight()"
     >
@@ -130,13 +141,15 @@
               (dblclick)="hourDoubleClick(hour)"
               [ngStyle]="{'border-bottom': idx % 2 === 0 ? '1px solid #bbb' : '1px solid $border-color'}"
             >
-              <span *ngIf="idx !== 0" class="time-text">
-                {{ hour | date:'HH:mm' }}
-              </span>
+              <ng-container *ngIf="!weekMode || dayIdx === 0">
+                <span *ngIf="idx !== 0" class="time-text">
+                  {{ hour | date:'HH:mm' }}
+                </span>
 
-              <span class="time-text time-text-half">
-                {{ addHalfHour(hour) | date:'HH:mm' }}
-              </span>
+                  <span class="time-text time-text-half">
+                  {{ addHalfHour(hour) | date:'HH:mm' }}
+                </span>
+              </ng-container>
             </td>
           </tr>
 

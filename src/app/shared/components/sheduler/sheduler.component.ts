@@ -31,7 +31,7 @@ export class ShedulerComponent implements AfterContentInit {
 
   public selectedViewDate = new Date();
   public selectedDate = new Date();
-  public selectedView = ViewDetalization.Day;
+  public selectedView = ViewDetalization.Week;
 
   private shedulerEvents: ShedulerEvent[] = [];
 

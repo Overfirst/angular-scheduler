@@ -8,7 +8,7 @@ import {
   ElementRef, ViewContainerRef, TemplateRef, AfterContentInit, ChangeDetectorRef
 } from '@angular/core';
 
-import {addDays, addMinutes} from "date-fns";
+import { addDays, addMinutes } from "date-fns";
 import { ShedulerEvent } from "../../../../interfaces";
 import { ShedulerService } from "../../../../services/sheduler.service";
 
@@ -20,6 +20,7 @@ import { ShedulerService } from "../../../../services/sheduler.service";
 })
 export class ShedulerDayViewComponent implements AfterContentInit {
   @ViewChild('row', { static: true }) private row: ElementRef<HTMLTableRowElement>;
+  @ViewChild('mainContent', { static: true }) private mainContent: ElementRef<HTMLDivElement>;
 
   @ViewChild('defaultOutlet', { static: true, read: ViewContainerRef }) defaultOutletRef: ViewContainerRef;
   @ViewChild('defaultTemplate', { static: true, read: TemplateRef }) defaultTemplateRef: TemplateRef<any>;
@@ -39,6 +40,13 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   private hourFirstSetted = false;
 
   constructor(public service: ShedulerService, private cdRef: ChangeDetectorRef) {}
+
+  @Input() public weekMode = false;
+  @Input() public dayIdx = -1;
+
+  @Input() public set weekScrollTop(value: number) {
+    this.mainContent.nativeElement.scrollTop = value;
+  };
 
   @Input() public set events(events: ShedulerEvent[]) {
     this.allEvents = events;
@@ -75,9 +83,11 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   @Output() public hourDoubleClicked = new EventEmitter<Date>();
   @Output() public hourChanged = new EventEmitter<Date>();
   @Output() public dayChangeClicked = new EventEmitter<Date>();
+  @Output() public weekModeScroll = new EventEmitter<HTMLDivElement>();
 
   public ngAfterContentInit(): void {
     this.redraw();
+    this.mainContent.nativeElement.onscroll = (event: Event) => this.weekModeScroll.emit(this.mainContent.nativeElement);
   }
 
   public get day() {

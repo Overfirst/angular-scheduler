@@ -20,6 +20,17 @@
       (dayChangeClicked)="viewDateChanged($event)"
     ></sheduler-day-view>
 
+    <sheduler-week-view
+      #weekViewComponent
+      *ngIf="selectedView === 'Week'"
+      [events]="events"
+      [week]="selectedViewDate"
+      (eventDoubleClicked)="eventDoubleClicked($event)"
+      (hourDoubleClicked)="openCreateModal()"
+      (hourChanged)="hourChanged($event)"
+      (dayChangeClicked)="viewDateChanged($event)"
+    ></sheduler-week-view>
+
     <ng-template #view>
       <ng-container [ngSwitch]="selectedView">
         <sheduler-month-view

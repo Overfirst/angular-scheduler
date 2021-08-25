@@ -11,7 +11,8 @@
       ></div>
 
       <ng-container [ngSwitch]="view">
-        <span *ngSwitchDefault>{{ date | date:'dd MMM, YYYY' }}</span>
+        <span *ngSwitchCase="'Day'">{{ date | date:'dd MMM, YYYY' }}</span>
+        <span *ngSwitchCase="'Week'">{{ date | date:'dd MMM, YYYY' }} — {{ endOfWeek(date) | date:'dd MMM, YYYY' }}</span>
         <span *ngSwitchCase="'Month'">{{ date | date:'MMMM, YYYY' }}</span>
         <span *ngSwitchCase="'Year'">{{ date | date:'YYYY' }}</span>
       </ng-container>

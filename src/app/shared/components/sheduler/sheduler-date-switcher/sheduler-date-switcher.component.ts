@@ -1,5 +1,16 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {addDays, addMonths, addYears, isSameDay, isSameMonth, isSameYear} from 'date-fns';
+import {
+  addDays,
+  addMonths,
+  addWeeks,
+  addYears,
+  endOfWeek,
+  isSameDay,
+  isSameMonth,
+  isSameWeek,
+  isSameYear,
+  startOfWeek
+} from 'date-fns';
 import {ViewDetalization} from 'src/app/shared/interfaces';
 
 @Component({
@@ -27,6 +38,10 @@ export class ShedulerDateSwitcherComponent {
   }
 
   public viewChange(): void {
+    if (this.view === ViewDetalization.Week) {
+      this.date = startOfWeek(this.date, { weekStartsOn: 1 });
+    }
+
     this.viewChanged.emit(this.view);
   }
 
@@ -39,9 +54,13 @@ export class ShedulerDateSwitcherComponent {
         break;
 
       case ViewDetalization.Week:
+        this.date = addWeeks(this.date, value);
+        break;
+
       case ViewDetalization.Month:
         this.date = addMonths(this.date, value);
         break;
+
       case ViewDetalization.Year:
         this.date = addYears(this.date, value);
     }
@@ -64,6 +83,10 @@ export class ShedulerDateSwitcherComponent {
         break;
 
       case ViewDetalization.Week:
+        this.date.setFullYear(currentDate.getFullYear());
+        this.date.setMonth(currentDate.getMonth());
+        this.date.setDate(currentDate.getDate());
+        this.date.setDate(startOfWeek(this.date, { weekStartsOn: 1 }).getDate());
         break;
 
       case ViewDetalization.Month:
@@ -87,7 +110,7 @@ export class ShedulerDateSwitcherComponent {
         return isSameDay(this.date, currentDate);
 
       case ViewDetalization.Week:
-        return false;
+        return isSameWeek(this.date, currentDate);
 
       case ViewDetalization.Month:
         return isSameMonth(this.date, currentDate);
@@ -99,5 +122,9 @@ export class ShedulerDateSwitcherComponent {
 
   public createEventClick(): void {
     this.createEventClicked.emit();
+  }
+
+  public endOfWeek(date: Date): Date {
+    return endOfWeek(date, { weekStartsOn: 1 });
   }
 }

@@ -1,5 +1,17 @@
 @import "../../../../common_styles.scss";
 
+.view-box-week-mode {
+  padding-top: 24px;
+
+  &[padding-left=true] {
+    padding-left: 24px;
+  }
+
+  &[padding-right=true] {
+    padding-right: 24px;
+  }
+}
+
 .main-content-box-day {
   width: 100%;
 }
@@ -11,6 +23,12 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+  }
+
+  &[week-mode=true] {
+    td:not(&:last-child) {
+      border-right: none;
+    }
   }
 }
 
@@ -45,7 +63,10 @@
 
 .content-table-day {
   overflow-x: hidden;
-  border-right: 1px solid $border-color;
+
+  &[show-right-border=true] {
+    border-right: 1px solid $border-color;
+  }
 
   td {
     vertical-align: middle;
@@ -79,6 +100,16 @@
 
   tbody {
     position: relative;
+  }
+
+  &[show-scroll=false] {
+    &::-webkit-scrollbar { width: 0; }
+  }
+
+  &[week-mode=true] {
+    td {
+      border-right: none;
+    }
   }
 }
 
