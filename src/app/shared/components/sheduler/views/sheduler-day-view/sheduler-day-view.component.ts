@@ -119,7 +119,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   }
 
   public getEventDayBoxWidth(event: ShedulerEvent): string {
-    const scrollWidth = 18;
+    const scrollWidth = (!this.weekMode || this.dayIdx === 6) ? 18 : 0;
     const boxWidth = this.row.nativeElement.clientWidth - scrollWidth;
     return this.service.getEventWidthForDayView(event, this.defaultEvents, boxWidth) + 'px';
   }
