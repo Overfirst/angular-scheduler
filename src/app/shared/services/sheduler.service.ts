@@ -29,7 +29,7 @@ import { ShedulerEvent, ViewDetalization } from "../interfaces";
 
 @Injectable({ providedIn: 'root' })
 export class ShedulerService {
-  public eventBoxes = new Set<HTMLDivElement>();
+  public eventBoxes: HTMLDivElement[] = [];
 
   public readonly headerRowHeight = 48;
   public readonly defaultPadding = 24;

@@ -61,7 +61,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   private selectedDate: Date = new Date();
 
   @Input() public set day(date: Date) {
-    this.service.eventBoxes.clear();
+    this.service.eventBoxes = [];
     this.selectedDate = date;
     this.hours = this.service.getHoursForDayView(date);
     this.fullDayEvents = this.service.getFullDayEvents(this.allEvents, this.selectedDate);
@@ -150,7 +150,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   }
 
   public redraw(): void {
-    this.service.eventBoxes.clear();
+    this.service.eventBoxes = [];
 
     this.fullDayEvents = this.service.getFullDayEvents(this.events, this.selectedDate);
     this.defaultEvents = this.service.getDefaultDayEvents(this.events, this.selectedDate);

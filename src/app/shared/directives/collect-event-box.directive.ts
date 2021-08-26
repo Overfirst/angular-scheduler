@@ -6,6 +6,6 @@ import { ShedulerService } from '../services/sheduler.service';
 })
 export class ShedulerCollectEventBoxDirective {
   constructor(private elementRef: ElementRef, private service: ShedulerService) {
-    this.service.eventBoxes.add(elementRef.nativeElement);    
+    this.service.eventBoxes.push(elementRef.nativeElement);
   }
 }
