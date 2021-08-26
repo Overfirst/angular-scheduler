@@ -67,7 +67,7 @@
           [style.background]="getEventColor(event)"
           (dblclick)="eventBoxDoubleClick(event)"
         >
-          <span class="event-box-day-name">{{ event.name }}</span>
+          <span *ngIf="!weekMode" class="event-box-day-name">{{ event.name }}</span>
 
           <div
             *ngIf="(!weekMode || dayIdx === 0) && eventFallsOnPrevDay(event)"
@@ -136,7 +136,7 @@
     >
       <table>
         <tbody>
-          <tr *ngFor="let hour of hours; index as idx">
+          <tr [attr.week-mode]="weekMode" *ngFor="let hour of hours; index as idx">
             <td
               (dblclick)="hourDoubleClick(hour)"
               [ngStyle]="{'border-bottom': idx % 2 === 0 ? '1px solid #bbb' : '1px solid $border-color'}"
@@ -146,7 +146,7 @@
                   {{ hour | date:'HH:mm' }}
                 </span>
 
-                  <span class="time-text time-text-half">
+                  <span *ngIf="!weekMode" class="time-text time-text-half">
                   {{ addHalfHour(hour) | date:'HH:mm' }}
                 </span>
               </ng-container>
