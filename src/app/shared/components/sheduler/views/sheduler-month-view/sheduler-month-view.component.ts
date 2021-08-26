@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, ViewChild, ElementRef, Output } from '@angular/core';
-import { ShedulerEvent, ViewDetalization } from 'src/app/shared/interfaces';
+import {ShedulerEvent, ViewComponent, ViewDetalization} from 'src/app/shared/interfaces';
 import { ShedulerService } from 'src/app/shared/services/sheduler.service';
 import { isSameDay, startOfMonth } from "date-fns";
 import { EventEmitter } from '@angular/core';
@@ -79,7 +79,7 @@ export class ShedulerMonthViewComponent  {
   }
 
   public getEventTopOffset(event: ShedulerEvent, wrapper: HTMLDivElement): string {
-    return this.service.getEventTopOffset(event, wrapper) + 'px';
+    return this.service.getEventTopOffset(this, event, wrapper) + 'px';
   }
 
   public getEventWeekDaysOffset(event: ShedulerEvent, monday: Date): string {
@@ -100,11 +100,11 @@ export class ShedulerMonthViewComponent  {
   }
 
   public eventBoxMouseOver(eventBox: HTMLDivElement): void {
-    this.service.eventBoxMouseOver(eventBox);
+    this.service.eventBoxMouseOver(this, eventBox);
   }
 
   public eventBoxMouseLeave(eventBox: HTMLDivElement): void {
-    this.service.eventBoxMouseLeave(eventBox);
+    this.service.eventBoxMouseLeave(this, eventBox);
   }
 
   public getEventColor(event: ShedulerEvent): string {

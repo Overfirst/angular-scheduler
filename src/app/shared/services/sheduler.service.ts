@@ -25,11 +25,11 @@ import {
   addMinutes, isSameDay
 } from "date-fns";
 
-import { ShedulerEvent, ViewDetalization } from "../interfaces";
+import { ShedulerEvent, ViewComponent, ViewDetalization } from "../interfaces";
 
 @Injectable({ providedIn: 'root' })
 export class ShedulerService {
-  public eventBoxes: HTMLDivElement[] = [];
+  public eventBoxes = new WeakMap<ViewComponent, HTMLDivElement[]>();
 
   public readonly headerRowHeight = 48;
   public readonly defaultPadding = 24;
@@ -204,9 +204,9 @@ export class ShedulerService {
     return 0;
   }
 
-  public getEventTopOffset(event: ShedulerEvent, wrapper: HTMLDivElement): number {
+  public getEventTopOffset(viewComponent: ViewComponent, event: ShedulerEvent, wrapper: HTMLDivElement): number {
     const needToCheckWrappers: HTMLDivElement[] = [];
-    const wrappers = Array.from(this.eventBoxes).map(box => box.parentElement!);
+    const wrappers = Array.from(this.eventBoxes.get(viewComponent) || []).map(box => box.parentElement!);
 
     for (let i = 0; i < wrappers.length; i++) {
       const boxWrapper = wrappers[i];
@@ -309,16 +309,16 @@ export class ShedulerService {
       'End date: ' + this.datePipe.transform(event.end, 'yyyy.MM.dd HH:mm')
   }
 
-  public eventBoxMouseOver(eventBox: HTMLDivElement): void {
-    this.eventBoxes.forEach(box => {
+  public eventBoxMouseOver(viewComponent: ViewComponent, eventBox: HTMLDivElement): void {
+    this.eventBoxes.get(viewComponent)!.forEach(box => {
       if (eventBox.getAttribute('event-id') === box.getAttribute('event-id')) {
         box.style.border = '1px solid #000';
       }
     });
   }
 
-  public eventBoxMouseLeave(eventBox: HTMLDivElement): void {
-    this.eventBoxes.forEach(box => {
+  public eventBoxMouseLeave(viewComponent: ViewComponent, eventBox: HTMLDivElement): void {
+    this.eventBoxes.get(viewComponent)!.forEach(box => {
       if (eventBox.getAttribute('event-id') === box.getAttribute('event-id')) {
         box.style.border = '1px solid #bbaacf';
       }
@@ -437,10 +437,10 @@ export class ShedulerService {
     return result;
   }
 
-  public getEventWidthForDayView(event: ShedulerEvent, events: ShedulerEvent[], boxWidth: number): number {
+  public getEventWidthForDayView(viewComponent: ViewComponent, event: ShedulerEvent, events: ShedulerEvent[], boxWidth: number): number {
     const crossEvents: ShedulerEvent[] = [];
     const needBoxes: HTMLDivElement[] = [];
-    const allBoxes = Array.from(this.eventBoxes);
+    const allBoxes = Array.from(this.eventBoxes.get(viewComponent) || []);
 
     const crossEventsCount = events.reduce((total: number, currentEvent: ShedulerEvent) => {
       if (event.id === currentEvent.id) {
@@ -484,8 +484,8 @@ export class ShedulerService {
     return getTotal();
   }
 
-  public getEventDayBoxLeftOffset(wrapper: HTMLDivElement): number {
-    const wrappers = Array.from(this.eventBoxes);
+  public getEventDayBoxLeftOffset(viewComponent: ViewComponent, wrapper: HTMLDivElement): number {
+    const wrappers = Array.from(this.eventBoxes.get(viewComponent) || []);
 
     const isCrossY = (first: HTMLDivElement, second: HTMLDivElement) => {
       const firstStartY = parseInt(first.style.top);

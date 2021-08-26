@@ -120,7 +120,6 @@ export class ShedulerComponent implements AfterContentInit {
       return;
     }
 
-    this.service.eventBoxes = [];
     this.outletRef.clear();
     this.outletRef.createEmbeddedView(this.viewRef);
   }

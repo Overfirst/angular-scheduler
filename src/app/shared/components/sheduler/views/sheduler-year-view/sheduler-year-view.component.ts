@@ -72,11 +72,11 @@ export class ShedulerYearViewComponent {
   }
 
   public eventBoxMouseOver(eventBox: HTMLDivElement): void {
-    this.service.eventBoxMouseOver(eventBox);
+    this.service.eventBoxMouseOver(this, eventBox);
   }
 
   public eventBoxMouseLeave(eventBox: HTMLDivElement): void {
-    this.service.eventBoxMouseLeave(eventBox);
+    this.service.eventBoxMouseLeave(this, eventBox);
   }
 
   public eventBoxDoubleClick(event: ShedulerEvent): void {
@@ -108,7 +108,7 @@ export class ShedulerYearViewComponent {
   }
 
   public getEventTopOffset(event: ShedulerEvent, wrapper: HTMLDivElement): string {
-    return this.service.getEventTopOffset(event, wrapper) + 'px';
+    return this.service.getEventTopOffset(this, event, wrapper) + 'px';
   }
 
   public getEventQuarterOffset(event: ShedulerEvent, quarter: Date): string {

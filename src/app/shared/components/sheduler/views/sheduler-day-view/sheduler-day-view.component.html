@@ -55,6 +55,7 @@
         class="event-box-day-wrapper"
         [attr.event-id]="event.id"
         collectEventBox
+        [viewComponent]="this"
         #wrapper
         [style.top]="getEventDayBoxTopHoursOffset(event)"
         [style.height]="getEventDayBoxHoursDuration(event)"

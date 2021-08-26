@@ -53,6 +53,7 @@
                     *ngIf="!eventBoxOverflowContainer(eventBoxWrapper, eventsBox)"
                     #eventBox
                     collectEventBox
+                    [viewComponent]="this"
                     class="event-box"
                     [title]="getEventTitle(event)"
                     [attr.event-id]="event.id"

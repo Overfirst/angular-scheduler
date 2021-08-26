@@ -63,7 +63,7 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
   }
 
   public redraw(): void {
-    this.service.eventBoxes = [];
+    this.service.eventBoxes.delete(this);
 
     this.weekEvents = this.service.getEventsForWeekDays(this.events, this.weekDays);
 

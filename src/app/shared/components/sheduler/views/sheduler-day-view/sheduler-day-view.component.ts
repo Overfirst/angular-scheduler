@@ -61,7 +61,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   private selectedDate: Date = new Date();
 
   @Input() public set day(date: Date) {
-    this.service.eventBoxes = [];
+    this.service.eventBoxes.delete(this);
     this.selectedDate = date;
     this.hours = this.service.getHoursForDayView(date);
     this.fullDayEvents = this.service.getFullDayEvents(this.allEvents, this.selectedDate);
@@ -121,11 +121,11 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   public getEventDayBoxWidth(event: ShedulerEvent): string {
     const scrollWidth = (!this.weekMode || this.dayIdx === 6) ? 18 : 0;
     const boxWidth = this.row.nativeElement.clientWidth - scrollWidth;
-    return this.service.getEventWidthForDayView(event, this.defaultEvents, boxWidth) + 'px';
+    return this.service.getEventWidthForDayView(this, event, this.defaultEvents, boxWidth) + 'px';
   }
 
   public getEventDayBoxLeftOffset(wrapper: HTMLDivElement): string {
-    return this.service.getEventDayBoxLeftOffset(wrapper) + 'px';
+    return this.service.getEventDayBoxLeftOffset(this, wrapper) + 'px';
   }
 
   public getEventTitle(event: ShedulerEvent): string {
@@ -150,7 +150,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   }
 
   public redraw(): void {
-    this.service.eventBoxes = [];
+    this.service.eventBoxes.delete(this);
 
     this.fullDayEvents = this.service.getFullDayEvents(this.events, this.selectedDate);
     this.defaultEvents = this.service.getDefaultDayEvents(this.events, this.selectedDate);
