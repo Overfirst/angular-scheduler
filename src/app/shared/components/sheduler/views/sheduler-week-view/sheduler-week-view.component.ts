@@ -27,21 +27,20 @@ export class ShedulerWeekViewComponent {
   @Output() public hourChanged = new EventEmitter<Date>();
   @Output() public dayChangeClicked = new EventEmitter<Date>();
 
-
   public eventDoubleClick(event: ShedulerEvent): void {
-
+    this.eventDoubleClicked.emit(event);
   }
 
   public hourDoubleClick(date: Date): void {
-
+    this.hourDoubleClicked.emit(date);
   }
 
   public hourChange(date: Date): void {
-
+    this.hourChanged.emit(date);
   }
 
   public dayChangeClick(date: Date): void {
-
+    this.dayChangeClicked.emit(date);
   }
 
   public tableOnScroll(scrollElement: HTMLDivElement): void {
