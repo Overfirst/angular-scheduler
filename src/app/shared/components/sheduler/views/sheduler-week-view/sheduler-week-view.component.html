@@ -1,17 +1,21 @@
 <div style="display: flex">
-  <ng-container *ngFor="let day of weekDays; index as idx">
-    <sheduler-day-view
-      [weekMode]="true"
-      [dayIdx]="idx"
-      [events]="weekEvents[idx]"
-      [day]="day"
-      [hour]="day"
-      [weekScrollTop]="scrollTop"
-      (eventDoubleClicked)="eventDoubleClick($event)"
-      (hourDoubleClicked)="hourDoubleClick($event)"
-      (hourChanged)="hourChange($event)"
-      (dayChangeClicked)="dayChangeClick($event)"
-      (weekModeScroll)="tableOnScroll($event)"
-    ></sheduler-day-view>
-  </ng-container>
+  <ng-template #template>
+    <ng-container *ngFor="let day of weekDays; index as idx">
+      <sheduler-day-view
+        [weekMode]="true"
+        [dayIdx]="idx"
+        [events]="weekEvents[idx]"
+        [day]="day"
+        [hour]="day"
+        [weekScrollTop]="scrollTop"
+        (eventDoubleClicked)="eventDoubleClick($event)"
+        (hourDoubleClicked)="hourDoubleClick($event)"
+        (hourChanged)="hourChange($event)"
+        (dayChangeClicked)="dayChangeClick($event)"
+        (weekModeScroll)="tableOnScroll($event)"
+      ></sheduler-day-view>
+    </ng-container>
+  </ng-template>
+
+  <ng-container #outlet></ng-container>
 </div>

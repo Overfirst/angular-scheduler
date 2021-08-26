@@ -23,7 +23,9 @@ import {ShedulerDayViewComponent} from "./views/sheduler-day-view/sheduler-day-v
 export class ShedulerComponent implements AfterContentInit {
   @ViewChild('outlet', { static: true, read: ViewContainerRef }) outletRef: ViewContainerRef;
   @ViewChild('view', { static: true, read: TemplateRef }) viewRef: TemplateRef<any>;
+
   @ViewChild('dayViewComponent') dayViewComponent: ShedulerDayViewComponent;
+  @ViewChild('weekViewComponent') weekViewComponent: ShedulerDayViewComponent;
 
   public modalOpened = false;
   public modalEditMode = true;
@@ -110,6 +112,11 @@ export class ShedulerComponent implements AfterContentInit {
   public redrawView(): void {
     if (this.selectedView === ViewDetalization.Day) {
       this.dayViewComponent?.redraw();
+      return;
+    }
+
+    if (this.selectedView === ViewDetalization.Week) {
+      this.weekViewComponent?.redraw();
       return;
     }
 
