@@ -23,3 +23,8 @@ export type ViewComponent =
   ShedulerWeekViewComponent |
   ShedulerMonthViewComponent |
   ShedulerYearViewComponent;
+
+export interface CollectDayComponentData {
+  component: ShedulerDayViewComponent;
+  collection: ShedulerDayViewComponent[];
+}

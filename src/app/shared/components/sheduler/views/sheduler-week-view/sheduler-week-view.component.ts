@@ -8,7 +8,8 @@ import {
   ViewChild, ViewContainerRef, TemplateRef, AfterContentInit
 } from '@angular/core';
 import { ShedulerEvent } from "../../../../interfaces";
-import {ShedulerService} from "../../../../services/sheduler.service";
+import { ShedulerService } from "../../../../services/sheduler.service";
+import { ShedulerDayViewComponent } from "../sheduler-day-view/sheduler-day-view.component";
 
 @Component({
   selector: 'sheduler-week-view',
@@ -17,8 +18,7 @@ import {ShedulerService} from "../../../../services/sheduler.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShedulerWeekViewComponent implements AfterContentInit {
-  @ViewChild('outlet', { static: true, read: ViewContainerRef }) outletRef: ViewContainerRef;
-  @ViewChild('template', { static: true, read: TemplateRef }) templateRef: TemplateRef<any>;
+  public dayComponents: ShedulerDayViewComponent[] = [];
 
   public weekEvents: Array<ShedulerEvent[]> = [];
   public weekDays: Date[] = [];
@@ -64,14 +64,9 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
   }
 
   public redraw(): void {
-    this.service.eventBoxes.delete(this);
-
     this.weekEvents = this.service.getEventsForWeekDays(this.events, this.weekDays);
-
-    this.outletRef.clear();
-    this.outletRef.createEmbeddedView(this.templateRef);
-
     this.cdRef.detectChanges();
+    this.dayComponents.forEach(component => component.redraw());
   }
 
   public fullDayOpenCloseClicked(state: boolean) {

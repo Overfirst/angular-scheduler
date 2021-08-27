@@ -1,23 +1,22 @@
 <div style="display: flex">
-  <ng-template #template>
-    <ng-container *ngFor="let day of weekDays; index as idx">
-      <sheduler-day-view
-        [weekMode]="true"
-        [dayIdx]="idx"
-        [events]="weekEvents[idx]"
-        [day]="day"
-        [hour]="day"
-        [weekScrollTop]="scrollTop"
-        [fullDayOpened]="fullWeekOpened"
-        (eventDoubleClicked)="eventDoubleClick($event)"
-        (hourDoubleClicked)="hourDoubleClick($event)"
-        (hourChanged)="hourChange($event)"
-        (dayChangeClicked)="dayChangeClick($event)"
-        (weekModeScroll)="tableOnScroll($event)"
-        (openCloseClicked)="fullDayOpenCloseClicked($event)"
-      ></sheduler-day-view>
-    </ng-container>
-  </ng-template>
-
-  <ng-container #outlet></ng-container>
+  <ng-container *ngFor="let day of weekDays; index as idx">
+    <sheduler-day-view
+      #dayComponent
+      collectDayComponent
+      [data]="{ component: dayComponent, collection: dayComponents }"
+      [weekMode]="true"
+      [dayIdx]="idx"
+      [events]="weekEvents[idx]"
+      [day]="day"
+      [hour]="day"
+      [weekScrollTop]="scrollTop"
+      [fullDayOpened]="fullWeekOpened"
+      (eventDoubleClicked)="eventDoubleClick($event)"
+      (hourDoubleClicked)="hourDoubleClick($event)"
+      (hourChanged)="hourChange($event)"
+      (dayChangeClicked)="dayChangeClick($event)"
+      (weekModeScroll)="tableOnScroll($event)"
+      (openCloseClicked)="fullDayOpenCloseClicked($event)"
+    ></sheduler-day-view>
+  </ng-container>
 </div>
