@@ -546,7 +546,6 @@ export class ShedulerService {
       weekDays.push(addDays(startDay, i));
     }
 
-    console.log(weekDays)
     return weekDays;
   }
 

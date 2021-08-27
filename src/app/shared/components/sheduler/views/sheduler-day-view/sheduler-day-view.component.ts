@@ -52,7 +52,6 @@ export class ShedulerDayViewComponent implements AfterContentInit {
     this.allEvents = events;
     this.fullDayEvents = this.service.getFullDayEvents(events, this.selectedDate);
     this.defaultEvents = this.service.getDefaultDayEvents(events, this.selectedDate);
-    console.log('fullDayEvents', this.fullDayEvents)
   }
 
   public get events() {
