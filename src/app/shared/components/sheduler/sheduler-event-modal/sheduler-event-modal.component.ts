@@ -3,6 +3,7 @@ import { ShedulerEvent } from "../../../interfaces";
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ShedulerService } from "../../../services/sheduler.service";
 import { ShedulerValidators } from "../../../utils/sheduler-validators";
+import { addHours } from "date-fns";
 
 @Component({
   selector: 'sheduler-event-modal',
@@ -40,7 +41,7 @@ export class ShedulerEventModalComponent {
     }
 
     this.form.controls.start.patchValue(this.service.transformDateForModalInput(date));
-    this.form.controls.end.patchValue(this.service.transformDateForModalInput(date));
+    this.form.controls.end.patchValue(this.service.transformDateForModalInput(addHours(date, 1)));
   }
 
   @Input() public editMode = true;
