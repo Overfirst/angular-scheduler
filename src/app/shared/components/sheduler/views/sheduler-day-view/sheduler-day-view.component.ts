@@ -28,7 +28,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   @ViewChild('fullDaysOutlet', { static: true, read: ViewContainerRef }) fullDaysOutletRef: ViewContainerRef;
   @ViewChild('fullDaysTemplate', { static: true, read: TemplateRef }) fullDaysTemplateRef: TemplateRef<any>;
 
-  public fullDayOpened = false;
+  @Input() public fullDayOpened = false;
 
   public hours: Date[];
   public selectedHour: Date;
@@ -52,6 +52,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
     this.allEvents = events;
     this.fullDayEvents = this.service.getFullDayEvents(events, this.selectedDate);
     this.defaultEvents = this.service.getDefaultDayEvents(events, this.selectedDate);
+    console.log('fullDayEvents', this.fullDayEvents)
   }
 
   public get events() {
@@ -84,6 +85,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   @Output() public hourChanged = new EventEmitter<Date>();
   @Output() public dayChangeClicked = new EventEmitter<Date>();
   @Output() public weekModeScroll = new EventEmitter<HTMLDivElement>();
+  @Output() public openCloseClicked = new EventEmitter<boolean>();
 
   public ngAfterContentInit(): void {
     this.redraw();
@@ -186,5 +188,10 @@ export class ShedulerDayViewComponent implements AfterContentInit {
 
   public clickToNextDay(event: MouseEvent): void {
     this.dayChangeClicked.emit(addDays(this.selectedDate, 1))
+  }
+
+  public fullDayOpenClose(): void {
+    this.fullDayOpened = !this.fullDayOpened;
+    this.openCloseClicked.emit(this.fullDayOpened);
   }
 }

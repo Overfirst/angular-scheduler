@@ -1,10 +1,12 @@
 <ng-template #fullDaysTemplate>
   <div
     *ngIf="fullDayOpened"
+    [attr.show-scroll]="!weekMode || dayIdx === 6"
     class="header-events-box"
   >
     <div
       class="header-events-box-border"
+      *ngIf="!weekMode || dayIdx === 6"
       [style.height]="getFullDaysBorderHeight()"
     ></div>
 
@@ -42,7 +44,7 @@
     </ng-container>
 
     <div *ngIf="fullDayEvents.length === 0">
-      <span class="day-full-empty-text">There are no events that last all day!</span>
+      <span *ngIf="!fullDayOpened" class="day-full-empty-text">There are no events that last all day!</span>
     </div>
   </div>
 </ng-template>
@@ -110,12 +112,12 @@
             <div class="header-box">
               <span class="header-date">{{ weekMode ? (hours[0] | date:'EEE, dd') : (hours[0] | date:'EEEE, dd MMM') }}</span>
 
-              <div *ngIf="!weekMode" class="header-open-close">
+              <div *ngIf="!weekMode || dayIdx === 3" class="header-open-close">
                 <img
                   height="14px"
                   src="assets/open-close-icon.svg"
                   [attr.opened]="fullDayOpened"
-                  (click)="fullDayOpened = !fullDayOpened"
+                  (click)="fullDayOpenClose()"
                 >
               </div>
             </div>

@@ -8,11 +8,13 @@
         [day]="day"
         [hour]="day"
         [weekScrollTop]="scrollTop"
+        [fullDayOpened]="fullWeekOpened"
         (eventDoubleClicked)="eventDoubleClick($event)"
         (hourDoubleClicked)="hourDoubleClick($event)"
         (hourChanged)="hourChange($event)"
         (dayChangeClicked)="dayChangeClick($event)"
         (weekModeScroll)="tableOnScroll($event)"
+        (openCloseClicked)="fullDayOpenCloseClicked($event)"
       ></sheduler-day-view>
     </ng-container>
   </ng-template>

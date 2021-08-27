@@ -103,7 +103,9 @@
   }
 
   &[show-scroll=false] {
-    &::-webkit-scrollbar { width: 0; }
+    &::-webkit-scrollbar {
+      width: 0;
+    }
   }
 
   &[week-mode=true] {
@@ -187,6 +189,12 @@ $time-text-top-offset: -11px;
   width: 100%;
   height: calc(100% - #{$header-row-height + 1});
   overflow-y: scroll;
+
+  &[show-scroll=false] {
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
 }
 
 .header-events-box-border {

@@ -23,6 +23,7 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
   public weekEvents: Array<ShedulerEvent[]> = [];
   public weekDays: Date[] = [];
   public scrollTop = 0;
+  public fullWeekOpened = false;
 
   constructor(private service: ShedulerService, private cdRef: ChangeDetectorRef) {}
 
@@ -71,5 +72,9 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
     this.outletRef.createEmbeddedView(this.templateRef);
 
     this.cdRef.detectChanges();
+  }
+
+  public fullDayOpenCloseClicked(state: boolean) {
+    this.fullWeekOpened = state;
   }
 }
