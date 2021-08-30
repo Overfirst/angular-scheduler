@@ -98,18 +98,20 @@
 </ng-template>
 
 <div
-  [attr.padding-left]="dayIdx === 0"
-  [attr.padding-right]="dayIdx === 6"
   [class.view-box]="!weekMode"
   [class.view-box-week-mode]="weekMode"
 >
   <div class="main-content-box-day">
-    <div [attr.week-mode]="weekMode" class="header-table header-table-day">
+    <div
+      *ngIf="!weekMode"
+      [attr.week-mode]="weekMode"
+      class="header-table header-table-day"
+    >
       <table>
         <thead>
         <tr #row>
           <td [style.height]="getHeaderHeight()">
-            <div class="header-box">
+            <div class="header-box header-box-week">
               <span class="header-date">{{ weekMode ? (hours[0] | date:'EEE, dd') : (hours[0] | date:'EEEE, dd MMM') }}</span>
 
               <div *ngIf="!weekMode || dayIdx === 3" class="header-open-close">

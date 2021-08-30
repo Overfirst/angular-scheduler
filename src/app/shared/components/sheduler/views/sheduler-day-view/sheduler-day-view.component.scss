@@ -1,15 +1,7 @@
 @import "../../../../common_styles.scss";
 
 .view-box-week-mode {
-  padding-top: 24px;
-
-  &[padding-left=true] {
-    padding-left: 24px;
-  }
-
-  &[padding-right=true] {
-    padding-right: 24px;
-  }
+  padding-top: 0;
 }
 
 .main-content-box-day {
@@ -32,33 +24,10 @@
   }
 }
 
-.header-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid $border-color;
-}
-
 .header-date {
   position: relative;
   margin-top: 14px;
   height: $header-row-height - 14px;
-}
-
-.header-open-close {
-  margin-top: 2px;
-  margin-left: 12px;
-  transition: all 0.2s;
-  opacity: 0.5;
-
-  &:hover {
-    opacity: 1;
-    cursor: pointer;
-  }
-
-  img[opened=true] {
-    transform: rotate(180deg);
-  }
 }
 
 .content-table-day {

@@ -1,5 +1,38 @@
-<div style="display: flex">
-  <ng-container *ngFor="let day of weekDays; index as idx">
+<ng-template #longDaysTemplate>
+  <div *ngIf="fullWeekOpened" class="long-days-box">
+
+  </div>
+</ng-template>
+
+<div class="header-table">
+  <table>
+    <thead>
+    <tr [style.height]="getHeaderHeight()">
+      <td *ngFor="let day of weekDays; index as idx">
+        <div class="header-box header-box-week">
+          <span class="header-date">{{ day | date:'EEE, dd' }}</span>
+
+          <div class="header-open-close">
+            <img
+              *ngIf="idx === 3"
+              height="14px"
+              src="assets/open-close-icon.svg"
+              [title]="getOpenCloseTitle()"
+              [attr.opened]="fullWeekOpened"
+              (click)="fullWeekOpened = !fullWeekOpened"
+            >
+          </div>
+        </div>
+      </td>
+
+      <ng-container #longDaysOutlet></ng-container>
+    </tr>
+    </thead>
+  </table>
+</div>
+
+<div class="main-content-week">
+  <div *ngFor="let day of weekDays; index as idx">
     <sheduler-day-view
       #dayComponent
       collectDayComponent
@@ -18,5 +51,5 @@
       (weekModeScroll)="tableOnScroll($event)"
       (openCloseClicked)="fullDayOpenCloseClicked($event)"
     ></sheduler-day-view>
-  </ng-container>
+  </div>
 </div>

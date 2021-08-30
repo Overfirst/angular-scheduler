@@ -154,8 +154,8 @@ export class ShedulerDayViewComponent implements AfterContentInit {
     this.fullDayEvents = this.weekMode ? [] : this.service.getFullDayEvents(this.events, this.selectedDate);
     this.defaultEvents = this.service.getDefaultDayEvents(this.events, this.selectedDate);
 
-    this.fullDaysOutletRef.clear();
-    this.fullDaysOutletRef.createEmbeddedView(this.fullDaysTemplateRef);
+    this.fullDaysOutletRef?.clear();
+    this.fullDaysOutletRef?.createEmbeddedView(this.fullDaysTemplateRef);
 
     this.defaultOutletRef.clear();
     this.defaultOutletRef.createEmbeddedView(this.defaultTemplateRef);
