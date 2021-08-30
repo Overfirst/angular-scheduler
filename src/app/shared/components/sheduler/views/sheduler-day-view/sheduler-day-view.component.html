@@ -116,6 +116,7 @@
                 <img
                   height="14px"
                   src="assets/open-close-icon.svg"
+                  [title]="getOpenCloseTitle()"
                   [attr.opened]="fullDayOpened"
                   (click)="fullDayOpenClose()"
                 >

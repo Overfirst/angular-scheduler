@@ -50,7 +50,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
 
   @Input() public set events(events: ShedulerEvent[]) {
     this.allEvents = events;
-    this.fullDayEvents = this.service.getFullDayEvents(events, this.selectedDate);
+    this.fullDayEvents = this.weekMode ? [] : this.service.getFullDayEvents(events, this.selectedDate);
     this.defaultEvents = this.service.getDefaultDayEvents(events, this.selectedDate);
   }
 
@@ -64,7 +64,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
     this.service.eventBoxes.delete(this);
     this.selectedDate = date;
     this.hours = this.service.getHoursForDayView(date);
-    this.fullDayEvents = this.service.getFullDayEvents(this.allEvents, this.selectedDate);
+    this.fullDayEvents = this.weekMode ? [] : this.service.getFullDayEvents(this.allEvents, this.selectedDate);
     this.defaultEvents = this.service.getDefaultDayEvents(this.allEvents, this.selectedDate);
   }
 
@@ -153,7 +153,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   public redraw(): void {
     this.service.eventBoxes.delete(this);
 
-    this.fullDayEvents = this.service.getFullDayEvents(this.events, this.selectedDate);
+    this.fullDayEvents = this.weekMode ? [] : this.service.getFullDayEvents(this.events, this.selectedDate);
     this.defaultEvents = this.service.getDefaultDayEvents(this.events, this.selectedDate);
 
     this.fullDaysOutletRef.clear();
@@ -192,5 +192,9 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   public fullDayOpenClose(): void {
     this.fullDayOpened = !this.fullDayOpened;
     this.openCloseClicked.emit(this.fullDayOpened);
+  }
+
+  public getOpenCloseTitle(): string {
+    return !this.fullDayOpened ? `Show long events (${this.fullDayEvents.length})` : 'Hide long events';
   }
 }
