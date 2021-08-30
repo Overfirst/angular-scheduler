@@ -548,11 +548,4 @@ export class ShedulerService {
 
     return weekDays;
   }
-
-  public getEventsForWeekDays(events: ShedulerEvent[], weekDays: Date[]): Array<ShedulerEvent[]> {
-    const weekEvents: Array<ShedulerEvent[]> = [];
-    weekDays.forEach(day => weekEvents.push(this.getDefaultDayEvents(events, day)));
-
-    return weekEvents;
-  }
 }

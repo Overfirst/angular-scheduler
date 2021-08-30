@@ -33,7 +33,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   public hours: Date[];
   public selectedHour: Date;
 
-  private allEvents: ShedulerEvent[];
+  private allEvents: ShedulerEvent[] = [];
   public fullDayEvents: ShedulerEvent[];
   public defaultEvents: ShedulerEvent[];
 

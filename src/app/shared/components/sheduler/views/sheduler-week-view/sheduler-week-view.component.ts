@@ -20,7 +20,6 @@ import { ShedulerDayViewComponent } from "../sheduler-day-view/sheduler-day-view
 export class ShedulerWeekViewComponent implements AfterContentInit {
   public dayComponents: ShedulerDayViewComponent[] = [];
 
-  public weekEvents: Array<ShedulerEvent[]> = [];
   public weekDays: Date[] = [];
   public scrollTop = 0;
   public fullWeekOpened = false;
@@ -31,7 +30,6 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
 
   @Input() public set week(date: Date) {
     this.weekDays = this.service.getWeekDays(date);
-    this.weekEvents = this.service.getEventsForWeekDays(this.events, this.weekDays);
   }
 
   @Output() public eventDoubleClicked = new EventEmitter<ShedulerEvent>();
@@ -64,7 +62,6 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
   }
 
   public redraw(): void {
-    this.weekEvents = this.service.getEventsForWeekDays(this.events, this.weekDays);
     this.cdRef.detectChanges();
     this.dayComponents.forEach(component => component.redraw());
   }
