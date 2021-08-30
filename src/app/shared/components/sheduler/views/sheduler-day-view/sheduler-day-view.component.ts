@@ -19,7 +19,6 @@ import { ShedulerService } from "../../../../services/sheduler.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShedulerDayViewComponent implements AfterContentInit {
-  @ViewChild('row', { static: true }) private row: ElementRef<HTMLTableRowElement>;
   @ViewChild('mainContent', { static: true }) private mainContent: ElementRef<HTMLDivElement>;
 
   @ViewChild('defaultOutlet', { static: true, read: ViewContainerRef }) defaultOutletRef: ViewContainerRef;
@@ -120,8 +119,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   }
 
   public getEventDayBoxWidth(event: ShedulerEvent): string {
-    const scrollWidth = (!this.weekMode || this.dayIdx === 6) ? 18 : 0;
-    const boxWidth = this.row.nativeElement.clientWidth - scrollWidth;
+    const boxWidth = this.mainContent.nativeElement.clientWidth;
     return this.service.getEventWidthForDayView(this, event, this.defaultEvents, boxWidth) + 'px';
   }
 
