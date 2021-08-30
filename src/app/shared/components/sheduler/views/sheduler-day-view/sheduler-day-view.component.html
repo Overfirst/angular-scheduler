@@ -23,7 +23,7 @@
           <span>{{ event.name }}</span>
 
           <div
-            *ngIf="eventFallsOnPrevDay(event)"
+            *ngIf="(!weekMode || dayIdx === 0) && eventFallsOnPrevDay(event)"
             (click)="clickToPrevDay($event)"
             (dblclick)="$event.stopPropagation()"
             class="event-box-arrow event-box-arrow-left"
@@ -32,7 +32,7 @@
           </div>
 
           <div
-            *ngIf="eventFallsOnNextDay(event)"
+            *ngIf="(!weekMode || dayIdx === 6) && eventFallsOnNextDay(event)"
             (click)="clickToNextDay($event)"
             (dblclick)="$event.stopPropagation()"
             class="event-box-arrow event-box-arrow-right"
