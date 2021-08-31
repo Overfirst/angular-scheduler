@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
   ChangeDetectorRef,
-  AfterContentInit, ViewChild, ViewContainerRef, TemplateRef
+  AfterContentInit, ViewChild, ViewContainerRef, TemplateRef, ElementRef
 } from '@angular/core';
 import { ShedulerEvent } from "../../../../interfaces";
 import { ShedulerService } from "../../../../services/sheduler.service";
@@ -20,12 +20,13 @@ import { ShedulerDayViewComponent } from "../sheduler-day-view/sheduler-day-view
 export class ShedulerWeekViewComponent implements AfterContentInit {
   @ViewChild('longDaysOutlet', { static: true, read: ViewContainerRef }) longDaysOutletRef: ViewContainerRef;
   @ViewChild('longDaysTemplate', { static: true, read: TemplateRef }) longDaysTemplateRef: TemplateRef<any>;
+  @ViewChild('row', { static: true }) public row: ElementRef<HTMLTableRowElement>;
 
   public dayComponents: ShedulerDayViewComponent[] = [];
 
   public weekDays: Date[] = [];
   public scrollTop = 0;
-  public fullWeekOpened = false;
+  public fullWeekOpened = true;
 
   constructor(private service: ShedulerService, private cdRef: ChangeDetectorRef) {}
 
@@ -65,6 +66,8 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
   }
 
   public redraw(): void {
+    this.service.eventBoxes.delete(this);
+
     this.longDaysOutletRef?.clear();
     this.longDaysOutletRef.createEmbeddedView(this.longDaysTemplateRef);
 
@@ -82,5 +85,26 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
 
   public getHeaderHeight(): string {
     return `${(this.fullWeekOpened ? 4 : 1) * this.service.headerRowHeight}px`
+  }
+
+  public getEventColor(event: ShedulerEvent): string {
+    return this.service.getEventColor(event);
+  }
+
+  public calculateLongEventWeekLeft(event: ShedulerEvent): string {
+    return this.service.getLongEventWeekDayStart(event, this.weekDays) * this.row.nativeElement.clientWidth / 7 + 'px';
+  }
+
+  public calculateLongEventWeekWidth(event: ShedulerEvent): string {
+    return this.service.getLongEventWeekDaysLasts(event, this.weekDays) * (this.row.nativeElement.clientWidth - 2) / 7 + 'px';
+  }
+
+  public calculateLongEventWeekTop(event:ShedulerEvent, wrapper: HTMLDivElement): string {
+    console.log('calculateLongEventWeekTop');
+    return this.service.getEventTopOffset(this, event, wrapper) + 'px';
+  }
+
+  public getLongEventWeekDaysLasts(event: ShedulerEvent): number {
+    return this.service.getLongEventWeekDaysLasts(event, this.weekDays);
   }
 }

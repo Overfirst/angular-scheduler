@@ -135,7 +135,7 @@ export class ShedulerMonthViewComponent  {
     this.dayDoubleClicked.emit(day);
   }
 
-  public getWidthForTextEventText(): string {
+  public getWidthForEventText(): string {
     return `calc(${this.column.nativeElement.clientWidth}px * 0.8)`;
   }
 

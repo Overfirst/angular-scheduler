@@ -1,13 +1,36 @@
 <ng-template #longDaysTemplate>
-  <div *ngIf="fullWeekOpened" class="long-days-box">
-
-  </div>
+<!--  <div *ngIf="fullWeekOpened" class="long-days-box-wrapper">-->
+<!--    <div class="long-days-box">-->
+<!--      <ng-container *ngFor="let event of events">-->
+<!--        <div-->
+<!--          class="long-day-event-box-wrapper"-->
+<!--          #eventBoxWrapper-->
+<!--          *ngIf="getLongEventWeekDaysLasts(event) !== 0"-->
+<!--          [attr.event-id]="event.id"-->
+<!--          [style.left]="calculateLongEventWeekLeft(event)"-->
+<!--          [style.top]="calculateLongEventWeekTop(event, eventBoxWrapper)"-->
+<!--          [style.width]="calculateLongEventWeekWidth(event)"-->
+<!--        >-->
+<!--          <div-->
+<!--            class="long-day-event-box"-->
+<!--            collectEventBox-->
+<!--            [viewComponent]="this"-->
+<!--            [attr.event-id]="event.id"-->
+<!--            [style.background-color]="getEventColor(event)"-->
+<!--            (dblclick)="eventDoubleClick(event)"-->
+<!--          >-->
+<!--            <span>{{ event.name }}</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </ng-container>-->
+<!--    </div>-->
+<!--  </div>-->
 </ng-template>
 
 <div class="header-table">
   <table>
     <thead>
-    <tr [style.height]="getHeaderHeight()">
+    <tr #row [style.height]="getHeaderHeight()">
       <td *ngFor="let day of weekDays; index as idx">
         <div class="header-box header-box-week">
           <span class="header-date">{{ day | date:'EEE, dd' }}</span>

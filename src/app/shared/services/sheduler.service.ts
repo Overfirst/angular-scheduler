@@ -548,4 +548,18 @@ export class ShedulerService {
 
     return weekDays;
   }
+
+  public getLongEventWeekDayStart(event: ShedulerEvent, weekDays: Date[]): number {
+    for (let i = 0; i < weekDays.length; i++) {
+      if (this.eventLastsAllDay(event, weekDays[i])) {
+          return i;
+      }
+    }
+
+    return -1;
+  }
+
+  public getLongEventWeekDaysLasts(event: ShedulerEvent, weekDays: Date[]): number {
+    return weekDays.reduce((total: number, day: Date) => this.eventLastsAllDay(event, day) ? total + 1 : total, 0);
+  }
 }
