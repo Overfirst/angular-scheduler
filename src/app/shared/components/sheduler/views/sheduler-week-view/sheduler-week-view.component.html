@@ -25,6 +25,24 @@
             <div class="event-box-name-wrapper">
               <span class="event-box-name">{{ event.name }}</span>
             </div>
+
+            <div
+              *ngIf="weekLeftArrowCondition(event)"
+              (dblclick)="$event.stopPropagation()"
+              [attr.week-mode]="true"
+              class="event-box-arrow event-box-arrow-left"
+            >
+              <img src="assets/event-arrow-icon.svg">
+            </div>
+
+            <div
+              *ngIf="weekRightArrowCondition(event)"
+              (dblclick)="$event.stopPropagation()"
+              [attr.week-mode]="true"
+              class="event-box-arrow event-box-arrow-right"
+            >
+              <img src="assets/event-arrow-icon.svg">
+            </div>
           </div>
         </div>
       </ng-container>

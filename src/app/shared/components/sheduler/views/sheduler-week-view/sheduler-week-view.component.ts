@@ -10,6 +10,7 @@ import {
 import { ShedulerEvent } from "../../../../interfaces";
 import { ShedulerService } from "../../../../services/sheduler.service";
 import { ShedulerDayViewComponent } from "../sheduler-day-view/sheduler-day-view.component";
+import {addDays, addMinutes, isMonday, isSaturday, startOfWeek} from "date-fns";
 
 @Component({
   selector: 'sheduler-week-view',
@@ -22,6 +23,7 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
   @ViewChild('longDaysTemplate', { static: true, read: TemplateRef }) longDaysTemplateRef: TemplateRef<any>;
   @ViewChild('row', { static: true }) public row: ElementRef<HTMLTableRowElement>;
 
+  private weekStartDay: Date;
   public dayComponents: ShedulerDayViewComponent[] = [];
 
   public weekDays: Date[] = [];
@@ -33,6 +35,7 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
   @Input() public events: ShedulerEvent[] = [];
 
   @Input() public set week(date: Date) {
+    this.weekStartDay = startOfWeek(date, { weekStartsOn: 1 });
     this.weekDays = this.service.getWeekDays(date);
   }
 
@@ -114,5 +117,23 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
 
   public eventMouseLeave(eventBox: HTMLDivElement): void {
     this.service.eventWeekMouseLeave(this, this.dayComponents, eventBox);
+  }
+
+  public weekLeftArrowCondition(event: ShedulerEvent): boolean {
+    const dayIdx = this.service.getLongEventWeekDayStart(event, this.weekDays);
+    const day = addDays(this.weekStartDay, dayIdx);
+
+    return dayIdx === 0 && this.service.eventFallsOnPrevDay(event, day);
+  }
+
+  public weekRightArrowCondition(event: ShedulerEvent): boolean {
+    const dayIdx = this.service.getLongEventWeekDayStart(event, this.weekDays) + this.service.getLongEventWeekDaysLasts(event, this.weekDays) - 1;
+    const day = addDays(this.weekStartDay, dayIdx);
+
+    if (event.id === 13) {
+      console.log(dayIdx);
+    }
+
+    return dayIdx === 6 && this.service.eventFallsOnNextDay(event, day);
   }
 }
