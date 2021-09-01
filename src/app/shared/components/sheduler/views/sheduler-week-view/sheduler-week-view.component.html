@@ -1,30 +1,30 @@
 <ng-template #longDaysTemplate>
-<!--  <div *ngIf="fullWeekOpened" class="long-days-box-wrapper">-->
-<!--    <div class="long-days-box">-->
-<!--      <ng-container *ngFor="let event of events">-->
-<!--        <div-->
-<!--          class="long-day-event-box-wrapper"-->
-<!--          #eventBoxWrapper-->
-<!--          *ngIf="getLongEventWeekDaysLasts(event) !== 0"-->
-<!--          [attr.event-id]="event.id"-->
-<!--          [style.left]="calculateLongEventWeekLeft(event)"-->
-<!--          [style.top]="calculateLongEventWeekTop(event, eventBoxWrapper)"-->
-<!--          [style.width]="calculateLongEventWeekWidth(event)"-->
-<!--        >-->
-<!--          <div-->
-<!--            class="long-day-event-box"-->
-<!--            collectEventBox-->
-<!--            [viewComponent]="this"-->
-<!--            [attr.event-id]="event.id"-->
-<!--            [style.background-color]="getEventColor(event)"-->
-<!--            (dblclick)="eventDoubleClick(event)"-->
-<!--          >-->
-<!--            <span>{{ event.name }}</span>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </ng-container>-->
-<!--    </div>-->
-<!--  </div>-->
+  <div *ngIf="fullWeekOpened" class="long-days-box-wrapper">
+    <div class="long-days-box">
+      <ng-container *ngFor="let event of events">
+        <div
+          class="long-day-event-box-wrapper"
+          #eventBoxWrapper
+          *ngIf="getLongEventWeekDaysLasts(event) !== 0"
+          [attr.event-id]="event.id"
+          [style.left]="calculateLongEventWeekLeft(event)"
+          [style.width]="calculateLongEventWeekWidth(event)"
+          [style.top]="calculateLongEventWeekTop(event, eventBoxWrapper)"
+        >
+          <div
+            class="long-day-event-box"
+            collectEventBox
+            [viewComponent]="this"
+            [attr.event-id]="event.id"
+            [style.background-color]="getEventColor(event)"
+            (dblclick)="eventDoubleClick(event)"
+          >
+            <span>{{ event.name }}</span>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
 </ng-template>
 
 <div class="header-table">
