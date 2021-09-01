@@ -134,6 +134,10 @@ export class ShedulerService {
         break;
     }
 
+    if (event.end.getHours() === 0 && event.end.getMinutes() === 0) {
+      total--;
+    }
+
     return total;
   }
 
