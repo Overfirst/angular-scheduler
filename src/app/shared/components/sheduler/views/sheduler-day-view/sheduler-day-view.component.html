@@ -44,7 +44,7 @@
     </ng-container>
 
     <div *ngIf="fullDayEvents.length === 0">
-      <span *ngIf="!fullDayOpened" class="day-full-empty-text">There are no events that last all day!</span>
+      <span *ngIf="fullDayOpened" class="day-full-empty-text">There are no events that last all day!</span>
     </div>
   </div>
 </ng-template>
@@ -109,7 +109,7 @@
 >
   <div class="main-content-box-day">
     <div
-      *ngIf="!weekMode"
+      #headerTable
       [attr.week-mode]="weekMode"
       class="header-table header-table-day"
     >

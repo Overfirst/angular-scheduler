@@ -27,7 +27,9 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   @ViewChild('fullDaysOutlet', { static: true, read: ViewContainerRef }) fullDaysOutletRef: ViewContainerRef;
   @ViewChild('fullDaysTemplate', { static: true, read: TemplateRef }) fullDaysTemplateRef: TemplateRef<any>;
 
-  @Input() public fullDayOpened = false;
+  @ViewChild('headerTable', { static: true }) headerTable: ElementRef<HTMLDivElement>;
+
+  @Input() public fullDayOpened = true;
 
   public hours: Date[];
   public selectedHour: Date;
@@ -156,8 +158,12 @@ export class ShedulerDayViewComponent implements AfterContentInit {
     this.fullDayEvents = this.weekMode ? [] : this.service.getFullDayEvents(this.events, this.selectedDate);
     this.defaultEvents = this.service.getDefaultDayEvents(this.events, this.selectedDate);
 
-    this.fullDaysOutletRef?.clear();
-    this.fullDaysOutletRef?.createEmbeddedView(this.fullDaysTemplateRef);
+    if (!this.weekMode) {
+      this.fullDaysOutletRef?.clear();
+      this.fullDaysOutletRef?.createEmbeddedView(this.fullDaysTemplateRef);
+    } else if (this.headerTable) {
+        this.headerTable.nativeElement.innerHTML = '';
+    }
 
     this.defaultOutletRef.clear();
     this.defaultOutletRef.createEmbeddedView(this.defaultTemplateRef);
