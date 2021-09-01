@@ -96,7 +96,8 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
   }
 
   public calculateLongEventWeekWidth(event: ShedulerEvent): string {
-    return this.service.getLongEventWeekDaysLasts(event, this.weekDays) * (this.row.nativeElement.clientWidth - 2) / 7 + 'px';
+    const addition = this.service.eventLastsAllDay(event, this.weekDays[6]) ? 18 : 0;
+    return this.service.getLongEventWeekDaysLasts(event, this.weekDays) * (this.row.nativeElement.clientWidth - 2) / 7 - addition + 'px';
   }
 
   public calculateLongEventWeekTop(event:ShedulerEvent, wrapper: HTMLDivElement): string {
