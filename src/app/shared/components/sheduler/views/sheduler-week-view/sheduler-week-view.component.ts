@@ -101,11 +101,18 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
   }
 
   public calculateLongEventWeekTop(event:ShedulerEvent, wrapper: HTMLDivElement): string {
-    console.log('calculateLongEventWeekTop');
     return this.service.getEventTopOffset(this, event, wrapper) + 'px';
   }
 
   public getLongEventWeekDaysLasts(event: ShedulerEvent): number {
     return this.service.getLongEventWeekDaysLasts(event, this.weekDays);
+  }
+
+  public eventMouseOver(eventBox: HTMLDivElement): void {
+    this.service.eventWeekMouseOver(this, this.dayComponents, eventBox);
+  }
+
+  public eventMouseLeave(eventBox: HTMLDivElement): void {
+    this.service.eventWeekMouseLeave(this, this.dayComponents, eventBox);
   }
 }

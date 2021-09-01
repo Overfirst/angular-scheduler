@@ -66,9 +66,13 @@
       >
         <div
           class="event-box-day"
+          #eventBox
           [title]="getEventTitle(event)"
           [style.background]="getEventColor(event)"
+          [attr.event-id]="event.id"
           (dblclick)="eventBoxDoubleClick(event)"
+          (mouseover)="eventMouseOver(eventBox)"
+          (mouseleave)="eventMouseLeave(eventBox)"
         >
           <span *ngIf="!weekMode" class="event-box-day-name">{{ event.name }}</span>
 

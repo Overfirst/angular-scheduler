@@ -13,11 +13,14 @@
         >
           <div
             class="long-day-event-box"
+            #eventBox
             collectEventBox
             [viewComponent]="this"
             [attr.event-id]="event.id"
             [style.background-color]="getEventColor(event)"
             (dblclick)="eventDoubleClick(event)"
+            (mouseover)="eventMouseOver(eventBox)"
+            (mouseleave)="eventMouseLeave(eventBox)"
           >
             <span>{{ event.name }}</span>
           </div>
@@ -73,6 +76,8 @@
       (dayChangeClicked)="dayChangeClick($event)"
       (weekModeScroll)="tableOnScroll($event)"
       (openCloseClicked)="fullDayOpenCloseClicked($event)"
+      (onEventMouseOver)="eventMouseOver($event)"
+      (onEventMouseLeave)="eventMouseLeave($event)"
     ></sheduler-day-view>
   </div>
 </div>

@@ -562,4 +562,33 @@ export class ShedulerService {
   public getLongEventWeekDaysLasts(event: ShedulerEvent, weekDays: Date[]): number {
     return weekDays.reduce((total: number, day: Date) => this.eventLastsAllDay(event, day) ? total + 1 : total, 0);
   }
+
+  public eventBoxWeekMouseHandler(viewComponent: ViewComponent, dayComponents: ViewComponent[], eventBox: HTMLDivElement, isOver: boolean): void {
+    const id = eventBox.getAttribute('event-id');
+    const dayBoxes: HTMLDivElement[] = [];
+
+    dayComponents.forEach(dayComponent => this.eventBoxes.get(dayComponent)?.forEach(box => {
+      if (box.getAttribute('event-id') === id) {
+        dayBoxes.push(box);
+      }
+    }));
+
+    const border = isOver ? '1px solid #000' : '1px solid #bbaacf';
+
+    dayBoxes.forEach(box => (box.childNodes[0] as HTMLDivElement).style.border = border);
+
+    this.eventBoxes.get(viewComponent)!.forEach(box => {
+      if (box.getAttribute('event-id') === id) {
+        box.style.border = border;
+      }
+    })
+  }
+
+  public eventWeekMouseOver(viewComponent: ViewComponent, dayComponents: ViewComponent[], eventBox: HTMLDivElement): void {
+    this.eventBoxWeekMouseHandler(viewComponent, dayComponents, eventBox, true);
+  }
+
+  public eventWeekMouseLeave(viewComponent: ViewComponent, dayComponents: ViewComponent[], eventBox: HTMLDivElement): void {
+    this.eventBoxWeekMouseHandler(viewComponent, dayComponents, eventBox, false);
+  }
 }

@@ -84,6 +84,8 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   @Output() public dayChangeClicked = new EventEmitter<Date>();
   @Output() public weekModeScroll = new EventEmitter<HTMLDivElement>();
   @Output() public openCloseClicked = new EventEmitter<boolean>();
+  @Output() public onEventMouseOver = new EventEmitter<HTMLDivElement>();
+  @Output() public onEventMouseLeave = new EventEmitter<HTMLDivElement>();
 
   public ngAfterContentInit(): void {
     this.redraw();
@@ -194,5 +196,13 @@ export class ShedulerDayViewComponent implements AfterContentInit {
 
   public getOpenCloseTitle(): string {
     return !this.fullDayOpened ? `Show long events (${this.fullDayEvents.length})` : 'Hide long events';
+  }
+
+  public eventMouseOver(eventBox: HTMLDivElement): void {
+    this.onEventMouseOver.emit(eventBox);
+  }
+
+  public eventMouseLeave(eventBox: HTMLDivElement): void {
+    this.onEventMouseLeave.emit(eventBox);
   }
 }
