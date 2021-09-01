@@ -74,7 +74,9 @@
           (mouseover)="eventMouseOver(eventBox)"
           (mouseleave)="eventMouseLeave(eventBox)"
         >
-          <span *ngIf="!weekMode" class="event-box-day-name">{{ event.name }}</span>
+          <div class="event-box-name-wrapper">
+            <span class="event-box-name">{{ event.name }}</span>
+          </div>
 
           <div
             *ngIf="(!weekMode || dayIdx === 0) && eventFallsOnPrevDay(event)"
