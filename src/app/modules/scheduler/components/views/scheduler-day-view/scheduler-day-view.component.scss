@@ -109,6 +109,7 @@ $time-text-top-offset: -11px;
   position: absolute;
   display: flex;
   width: 100%;
+  user-select: none;
 }
 
 .event-box-day-wrapper {
