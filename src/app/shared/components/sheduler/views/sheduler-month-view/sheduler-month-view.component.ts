@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, ViewChild, ElementRef, Output } from '@angular/core';
-import {ShedulerEvent, ViewComponent, ViewDetalization} from 'src/app/shared/interfaces';
+import { ShedulerEvent, ViewDetalization } from 'src/app/shared/interfaces';
 import { ShedulerService } from 'src/app/shared/services/sheduler.service';
 import { isSameDay, startOfMonth } from "date-fns";
 import { EventEmitter } from '@angular/core';

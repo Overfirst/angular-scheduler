@@ -22,7 +22,8 @@ import {
   addHours,
   differenceInHours,
   differenceInMinutes,
-  addMinutes, isSameDay
+  addMinutes,
+  isSameDay
 } from "date-fns";
 
 import { ShedulerEvent, ViewComponent, ViewDetalization } from "../interfaces";

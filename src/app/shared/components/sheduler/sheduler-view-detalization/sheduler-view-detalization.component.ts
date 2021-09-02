@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {ShedulerEvent, ViewDetalization} from "../../../interfaces";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ShedulerEvent, ViewDetalization } from "../../../interfaces";
 
 @Component({
   selector: 'sheduler-view-detalization',

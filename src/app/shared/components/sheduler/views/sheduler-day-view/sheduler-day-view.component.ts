@@ -5,7 +5,11 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  ElementRef, ViewContainerRef, TemplateRef, AfterContentInit, ChangeDetectorRef
+  ElementRef,
+  ViewContainerRef,
+  TemplateRef,
+  AfterContentInit,
+  ChangeDetectorRef
 } from '@angular/core';
 
 import { addDays, addMinutes } from "date-fns";

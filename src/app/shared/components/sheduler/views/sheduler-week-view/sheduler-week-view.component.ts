@@ -5,12 +5,17 @@ import {
   Output,
   EventEmitter,
   ChangeDetectorRef,
-  AfterContentInit, ViewChild, ViewContainerRef, TemplateRef, ElementRef
+  AfterContentInit,
+  ViewChild,
+  ViewContainerRef,
+  TemplateRef,
+  ElementRef
 } from '@angular/core';
+
 import { ShedulerEvent } from "../../../../interfaces";
 import { ShedulerService } from "../../../../services/sheduler.service";
 import { ShedulerDayViewComponent } from "../sheduler-day-view/sheduler-day-view.component";
-import { addDays, addMinutes, isMonday, isSaturday, startOfWeek } from "date-fns";
+import { addDays, startOfWeek } from "date-fns";
 
 @Component({
   selector: 'sheduler-week-view',

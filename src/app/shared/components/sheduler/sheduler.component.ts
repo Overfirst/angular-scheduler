@@ -9,10 +9,10 @@ import {
   ViewContainerRef
 } from '@angular/core';
 
-import {ShedulerEvent, ViewDetalization} from '../../interfaces';
-import {ShedulerService} from "../../services/sheduler.service";
-import {addMinutes, isSameMinute} from "date-fns";
-import {ShedulerDayViewComponent} from "./views/sheduler-day-view/sheduler-day-view.component";
+import { ShedulerEvent, ViewDetalization } from '../../interfaces';
+import { ShedulerService } from "../../services/sheduler.service";
+import { addMinutes, isSameMinute } from "date-fns";
+import { ShedulerDayViewComponent } from "./views/sheduler-day-view/sheduler-day-view.component";
 
 @Component({
   selector: 'sheduler',

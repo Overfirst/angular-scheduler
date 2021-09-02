@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   addDays,
   addMonths,
@@ -11,7 +11,8 @@ import {
   isSameYear,
   startOfWeek
 } from 'date-fns';
-import {ViewDetalization} from 'src/app/shared/interfaces';
+
+import { ViewDetalization } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'sheduler-date-switcher',
