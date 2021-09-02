@@ -690,4 +690,25 @@ export class SchedulerService {
 
     return date;
   }
+
+  public viewDetalizationGetEmptyText(view: ViewDetalization): string {
+    let text = "There are no events on this ";
+
+    switch (view) {
+      case ViewDetalization.Day:
+        text += 'hour';
+        break;
+
+      case ViewDetalization.Week:
+      case ViewDetalization.Month:
+        text += 'day';
+        break;
+
+      case ViewDetalization.Year:
+        text += 'month';
+        break;
+    }
+
+    return text += '!';
+  }
 }

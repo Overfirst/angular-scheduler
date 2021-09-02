@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { SchedulerEvent, ViewDetalization } from "../../../interfaces";
+import {SchedulerService} from "../../../services/scheduler.service";
 
 @Component({
   selector: 'scheduler-view-detalization',
@@ -8,6 +9,8 @@ import { SchedulerEvent, ViewDetalization } from "../../../interfaces";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SchedulerViewDetalizationComponent {
+  constructor(private service: SchedulerService) {}
+
   @Input() view: ViewDetalization;
   @Input() dateEvents: SchedulerEvent[];
   @Input() date: Date;
@@ -19,22 +22,6 @@ export class SchedulerViewDetalizationComponent {
   }
 
   public getEmptyText(): string {
-    let text = "There are no events on this ";
-
-    switch (this.view) {
-      case ViewDetalization.Day:
-        text += 'hour';
-        break;
-
-      case ViewDetalization.Week:
-      case ViewDetalization.Month:
-        text += 'day';
-        break;
-
-      case ViewDetalization.Year:
-        text += 'month';
-    }
-
-    return text += '!';
+    return this.service.viewDetalizationGetEmptyText(this.view);
   }
 }
