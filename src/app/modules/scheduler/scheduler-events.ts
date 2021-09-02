@@ -1,4 +1,4 @@
-import { SchedulerEvent } from "./scheduler/interfaces";
+import { SchedulerEvent } from "./interfaces";
 
 export const schedulerEvents: SchedulerEvent[] = [
   {
