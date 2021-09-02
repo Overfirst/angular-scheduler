@@ -84,10 +84,10 @@ export class ShedulerDateSwitcherComponent {
         break;
 
       case ViewDetalization.Week:
-        this.date.setFullYear(currentDate.getFullYear());
-        this.date.setMonth(currentDate.getMonth());
-        this.date.setDate(currentDate.getDate());
-        this.date.setDate(startOfWeek(this.date, { weekStartsOn: 1 }).getDate());
+        const weekStart = startOfWeek(currentDate,{ weekStartsOn: 1 });
+        this.date.setFullYear(weekStart.getFullYear());
+        this.date.setMonth(weekStart.getMonth());
+        this.date.setDate(weekStart.getDate());
         break;
 
       case ViewDetalization.Month:
