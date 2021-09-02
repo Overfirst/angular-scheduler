@@ -23,7 +23,7 @@ import {
   differenceInHours,
   differenceInMinutes,
   addMinutes,
-  isSameDay, addYears, isSameYear
+  isSameDay, addYears, isSameYear, isSameMinute, endOfMonth, endOfYear, isSameHour, endOfDay
 } from "date-fns";
 
 import { SchedulerEvent, ViewComponent, ViewDetalization } from "../interfaces";
@@ -121,6 +121,10 @@ export class SchedulerService {
           }
         }
 
+        if (event.end.getHours() === 0 && event.end.getMinutes() === 0) {
+          total--;
+        }
+
         break;
 
       case ViewDetalization.Year:
@@ -132,11 +136,11 @@ export class SchedulerService {
           }
         }
 
-        break;
-    }
+        if (event.end.getDate() === 1 && event.end.getHours() === 0 && event.end.getMinutes() === 0) {
+          total--;
+        }
 
-    if (event.end.getHours() === 0 && event.end.getMinutes() === 0) {
-      total--;
+        break;
     }
 
     return total;
