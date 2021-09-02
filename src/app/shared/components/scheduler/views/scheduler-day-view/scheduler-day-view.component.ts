@@ -13,16 +13,16 @@ import {
 } from '@angular/core';
 
 import { addDays, addMinutes } from "date-fns";
-import { ShedulerEvent } from "../../../../interfaces";
-import { ShedulerService } from "../../../../services/sheduler.service";
+import { SchedulerEvent } from "../../../../interfaces";
+import { SchedulerService } from "../../../../services/scheduler.service";
 
 @Component({
-  selector: 'sheduler-day-view',
-  templateUrl: './sheduler-day-view.component.html',
-  styleUrls: ['./sheduler-day-view.component.scss'],
+  selector: 'scheduler-day-view',
+  templateUrl: './scheduler-day-view.component.html',
+  styleUrls: ['./scheduler-day-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShedulerDayViewComponent implements AfterContentInit {
+export class SchedulerDayViewComponent implements AfterContentInit {
   @ViewChild('mainContent', { static: true }) private mainContent: ElementRef<HTMLDivElement>;
 
   @ViewChild('defaultOutlet', { static: true, read: ViewContainerRef }) defaultOutletRef: ViewContainerRef;
@@ -38,13 +38,13 @@ export class ShedulerDayViewComponent implements AfterContentInit {
   public hours: Date[];
   public selectedHour: Date;
 
-  private allEvents: ShedulerEvent[] = [];
-  public fullDayEvents: ShedulerEvent[];
-  public defaultEvents: ShedulerEvent[];
+  private allEvents: SchedulerEvent[] = [];
+  public fullDayEvents: SchedulerEvent[];
+  public defaultEvents: SchedulerEvent[];
 
   private hourFirstSetted = false;
 
-  constructor(public service: ShedulerService, private cdRef: ChangeDetectorRef) {}
+  constructor(public service: SchedulerService, private cdRef: ChangeDetectorRef) {}
 
   @Input() public weekMode = false;
   @Input() public dayIdx = -1;
@@ -53,7 +53,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
     this.mainContent.nativeElement.scrollTop = value;
   };
 
-  @Input() public set events(events: ShedulerEvent[]) {
+  @Input() public set events(events: SchedulerEvent[]) {
     this.allEvents = events;
     this.fullDayEvents = this.weekMode ? [] : this.service.getFullDayEvents(events, this.selectedDate);
     this.defaultEvents = this.service.getDefaultDayEvents(events, this.selectedDate);
@@ -84,7 +84,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
     this.hourChanged.emit(this.selectedHour);
   }
 
-  @Output() public eventDoubleClicked = new EventEmitter<ShedulerEvent>();
+  @Output() public eventDoubleClicked = new EventEmitter<SchedulerEvent>();
   @Output() public hourDoubleClicked = new EventEmitter<Date>();
   @Output() public hourChanged = new EventEmitter<Date>();
   @Output() public dayChangeClicked = new EventEmitter<Date>();
@@ -106,27 +106,27 @@ export class ShedulerDayViewComponent implements AfterContentInit {
     return addMinutes(hour, 30);
   }
 
-  public getEventDayBoxTopHoursOffset(event: ShedulerEvent): string {
+  public getEventDayBoxTopHoursOffset(event: SchedulerEvent): string {
     return 2 * this.service.headerRowHeight * this.service.getEventDayBoxTopHoursOffset(event, this.selectedDate) + 'px';
   }
 
-  public getEventColor(event: ShedulerEvent): string {
+  public getEventColor(event: SchedulerEvent): string {
     return this.service.getEventColor(event);
   }
 
-  public eventBoxDoubleClick(event: ShedulerEvent): void {
+  public eventBoxDoubleClick(event: SchedulerEvent): void {
     this.eventDoubleClicked.emit(event);
   }
 
-  public eventTakingOnSelectedDay(event: ShedulerEvent): boolean {
+  public eventTakingOnSelectedDay(event: SchedulerEvent): boolean {
     return this.service.eventTakingOnSelectedDay(event, this.day);
   }
 
-  public getEventDayBoxHoursDuration(event: ShedulerEvent): string {
+  public getEventDayBoxHoursDuration(event: SchedulerEvent): string {
     return 2 * this.service.headerRowHeight * this.service.getEventHoursDuration(event, this.selectedDate) + 'px';
   }
 
-  public getEventDayBoxWidth(event: ShedulerEvent): string {
+  public getEventDayBoxWidth(event: SchedulerEvent): string {
     const boxWidth = this.mainContent.nativeElement.clientWidth;
     return this.service.getEventWidthForDayView(this, event, this.defaultEvents, boxWidth) + 'px';
   }
@@ -135,7 +135,7 @@ export class ShedulerDayViewComponent implements AfterContentInit {
     return this.service.getEventDayBoxLeftOffset(this, wrapper) + 'px';
   }
 
-  public getEventTitle(event: ShedulerEvent): string {
+  public getEventTitle(event: SchedulerEvent): string {
     return this.service.getEventTitle(event);
   }
 
@@ -183,11 +183,11 @@ export class ShedulerDayViewComponent implements AfterContentInit {
     return this.service.headerRowHeight * this.fullDayEvents.length + 'px';
   }
 
-  public eventFallsOnPrevDay(event: ShedulerEvent): boolean {
+  public eventFallsOnPrevDay(event: SchedulerEvent): boolean {
     return this.service.eventFallsOnPrevDay(event, this.selectedDate);
   }
 
-  public eventFallsOnNextDay(event: ShedulerEvent): boolean {
+  public eventFallsOnNextDay(event: SchedulerEvent): boolean {
     return this.service.eventFallsOnNextDay(event, this.selectedDate);
   }
 

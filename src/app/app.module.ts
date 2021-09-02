@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from './shared/modules/shared.module';
-import { ShedulerModule } from './shared/modules/sheduler.module';
+import { SchedulerModule } from './shared/modules/scheduler.module';
 import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [SharedModule, ShedulerModule],
+  imports: [SharedModule, SchedulerModule],
   providers: [],
   bootstrap: [AppComponent]
 })

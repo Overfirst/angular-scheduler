@@ -21,14 +21,14 @@
     <div class="center-box">
       <button
         [style.width]="'130px'"
-        class="sheduler-btn"
+        class="scheduler-btn"
         [disabled]="selectCurrentDateIsLocked()"
         (click)="selectCurrentDate()"
       >Current {{ view.toLowerCase() }}</button>
 
       <button
         [style.width]="'130px'"
-        class="sheduler-btn"
+        class="scheduler-btn"
         (click)="createEventClick()"
       >Create event</button>
     </div>

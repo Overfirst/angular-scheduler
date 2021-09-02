@@ -1,7 +1,7 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 import { isSameMinute } from "date-fns";
 
-export class ShedulerValidators {
+export class SchedulerValidators {
   static endDateBeforeStartDate(connectControl: AbstractControl): ValidatorFn {
     return function(control: AbstractControl): ValidationErrors | null {
       const startDate = new Date(connectControl.value);

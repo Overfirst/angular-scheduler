@@ -26,10 +26,10 @@ import {
   isSameDay
 } from "date-fns";
 
-import { ShedulerEvent, ViewComponent, ViewDetalization } from "../interfaces";
+import { SchedulerEvent, ViewComponent, ViewDetalization } from "../interfaces";
 
 @Injectable({ providedIn: 'root' })
-export class ShedulerService {
+export class SchedulerService {
   public eventBoxes = new WeakMap<ViewComponent, HTMLDivElement[]>();
 
   public readonly headerRowHeight = 48;
@@ -107,7 +107,7 @@ export class ShedulerService {
     return isFirstDayOfFirstWeek || (!isFirstDayOfFirstWeek && isFirstDayOfMonth(date));
   }
 
-  public getEventDuration(event: ShedulerEvent, date: Date, view: ViewDetalization): number {
+  public getEventDuration(event: SchedulerEvent, date: Date, view: ViewDetalization): number {
     let total = 0;
     let diff;
 
@@ -142,7 +142,7 @@ export class ShedulerService {
     return total;
   }
 
-  public eventOnTargetWeek(event: ShedulerEvent, monday: Date): boolean {
+  public eventOnTargetWeek(event: SchedulerEvent, monday: Date): boolean {
     const totalDaysDifferent = Math.abs(differenceInCalendarDays(event.start, event.end));
 
     for (let i = 0; i <= totalDaysDifferent; i++) {
@@ -154,7 +154,7 @@ export class ShedulerService {
     return false;
   }
 
-  public eventOnTargetQuarter(event: ShedulerEvent, quarter: Date): boolean {
+  public eventOnTargetQuarter(event: SchedulerEvent, quarter: Date): boolean {
     for (let i = 0; i < 3; i++) {
       if (this.eventFallsOnMonth(event, addMonths(quarter, i))) {
         return true;
@@ -164,15 +164,15 @@ export class ShedulerService {
     return false;
   }
 
-  public eventStartedOnTargetWeek(event: ShedulerEvent, monday: Date): boolean {
+  public eventStartedOnTargetWeek(event: SchedulerEvent, monday: Date): boolean {
     return isSameWeek(event.start, monday, { weekStartsOn: 1 });
   }
 
-  public eventEndedOnTargetWeek(event: ShedulerEvent, monday: Date): boolean {
+  public eventEndedOnTargetWeek(event: SchedulerEvent, monday: Date): boolean {
     return isSameWeek(event.end, monday, { weekStartsOn: 1 });
   }
 
-  public eventStartedOnTargetQuarter(event: ShedulerEvent, quarter: Date): boolean {
+  public eventStartedOnTargetQuarter(event: SchedulerEvent, quarter: Date): boolean {
     for (let i = 0; i < 3; i++) {
       if (isSameMonth(addMonths(quarter, i), event.start)) {
         return true;
@@ -182,7 +182,7 @@ export class ShedulerService {
     return false;
   }
 
-  public eventEndedOnTargetQuarter(event: ShedulerEvent, quarter: Date): boolean {
+  public eventEndedOnTargetQuarter(event: SchedulerEvent, quarter: Date): boolean {
     for (let i = 0; i < 3; i++) {
       if (isSameMonth(addMonths(quarter, i), event.end)) {
         return true;
@@ -192,7 +192,7 @@ export class ShedulerService {
     return false;
   }
 
-  public getEventDaysOffsetForTargetWeek(event: ShedulerEvent, monday: Date): number {
+  public getEventDaysOffsetForTargetWeek(event: SchedulerEvent, monday: Date): number {
     if (this.eventStartedOnTargetWeek(event, monday)) {
       const day = getDay(event.start);
       return day === 0 ? 6 : day - 1;
@@ -201,7 +201,7 @@ export class ShedulerService {
     return 0;
   }
 
-  public getEventMonthsOffsetForTargetQuarter(event: ShedulerEvent, quarter: Date): number {
+  public getEventMonthsOffsetForTargetQuarter(event: SchedulerEvent, quarter: Date): number {
     if (this.eventStartedOnTargetQuarter(event, quarter)) {
       return Math.abs(startOfQuarter(quarter).getMonth() - event.start.getMonth());
     }
@@ -209,7 +209,7 @@ export class ShedulerService {
     return 0;
   }
 
-  public getEventTopOffset(viewComponent: ViewComponent, event: ShedulerEvent, wrapper: HTMLDivElement): number {
+  public getEventTopOffset(viewComponent: ViewComponent, event: SchedulerEvent, wrapper: HTMLDivElement): number {
     const needToCheckWrappers: HTMLDivElement[] = [];
     const wrappers = Array.from(this.eventBoxes.get(viewComponent) || []).map(box => box.parentElement!);
 
@@ -246,7 +246,7 @@ export class ShedulerService {
     return topOffset;
   }
 
-  public eventsCountOnDay(day: Date, events: ShedulerEvent[]): number {
+  public eventsCountOnDay(day: Date, events: SchedulerEvent[]): number {
     let totalEvents = 0;
 
     events.forEach(event => {
@@ -258,7 +258,7 @@ export class ShedulerService {
     return totalEvents;
   }
 
-  public eventsCountOnMonth(month: Date, events: ShedulerEvent[]): number {
+  public eventsCountOnMonth(month: Date, events: SchedulerEvent[]): number {
     let totalEvents = 0;
 
     events.forEach(event => {
@@ -270,8 +270,8 @@ export class ShedulerService {
     return totalEvents;
   }
 
-  public getEventsForSelectedDay(day: Date, events: ShedulerEvent[]): ShedulerEvent[] {
-    const suitableEvents: ShedulerEvent[] = [];
+  public getEventsForSelectedDay(day: Date, events: SchedulerEvent[]): SchedulerEvent[] {
+    const suitableEvents: SchedulerEvent[] = [];
 
     events.forEach(event => {
       if (this.eventFallsOnDay(event, day)) {
@@ -282,8 +282,8 @@ export class ShedulerService {
     return suitableEvents;
   }
 
-  public getEventsForSelectedMonth(month: Date, events: ShedulerEvent[]): ShedulerEvent[] {
-    const suitableEvents: ShedulerEvent[] = [];
+  public getEventsForSelectedMonth(month: Date, events: SchedulerEvent[]): SchedulerEvent[] {
+    const suitableEvents: SchedulerEvent[] = [];
 
     events.forEach(event => {
       if (this.eventFallsOnMonth(event, month)) {
@@ -306,7 +306,7 @@ export class ShedulerService {
   }
 
 
-  public getEventTitle(event: ShedulerEvent): string {
+  public getEventTitle(event: SchedulerEvent): string {
     return event.name + '\n\n' +
       'Start date: ' + this.datePipe.transform(event.start, 'yyyy.MM.dd') + '\n' +
       'End date: ' + this.datePipe.transform(event.end, 'yyyy.MM.dd')
@@ -330,7 +330,7 @@ export class ShedulerService {
     });
   }
 
-  public getEventColor(event: ShedulerEvent): string {
+  public getEventColor(event: SchedulerEvent): string {
     if (!event.color) {
       event.color = '#93ff86';
     }
@@ -348,7 +348,7 @@ export class ShedulerService {
     return stringValue;
   }
 
-  private eventFallsOnDay(event: ShedulerEvent, date: Date): boolean {
+  private eventFallsOnDay(event: SchedulerEvent, date: Date): boolean {
     if (isSameDay(event.end, date) && event.end.getHours() === 0 && event.end.getMinutes() === 0) {
       return false;
     }
@@ -364,7 +364,7 @@ export class ShedulerService {
     return inRange(dayStart.getTime()) || inRange(dayEnd.getTime()) || dayStart.getTime() <= eventStartTime && dayEnd.getTime() >= eventEndTime;
   }
 
-  private eventFallsOnMonth(event: ShedulerEvent, month: Date): boolean {
+  private eventFallsOnMonth(event: SchedulerEvent, month: Date): boolean {
     const startTime = startOfMonth(event.start).getTime();
     const endTime = startOfMonth(event.end).getTime();
     const monthTime = month.getTime();
@@ -372,7 +372,7 @@ export class ShedulerService {
     return monthTime >= startTime && monthTime <= endTime;
   }
 
-  public eventTakingOnSelectedDay(event: ShedulerEvent, day: Date): boolean {
+  public eventTakingOnSelectedDay(event: SchedulerEvent, day: Date): boolean {
     const startDay = startOfDay(day);
 
     const dayStartTime = startDay.getTime();
@@ -384,7 +384,7 @@ export class ShedulerService {
     return (dayStartTime <= eventStartTime && dayEndTime > eventStartTime) || (dayStartTime > eventStartTime && dayStartTime < eventEndTime);
   }
 
-  public getEventDayBoxTopHoursOffset(event: ShedulerEvent, day: Date): number {
+  public getEventDayBoxTopHoursOffset(event: SchedulerEvent, day: Date): number {
     if (!isSameDay(event.start, day)) {
        return 0;
     }
@@ -392,7 +392,7 @@ export class ShedulerService {
     return Math.abs(differenceInHours(startOfDay(day), event.start)) + (event.start.getMinutes() < 30 ? 0 : 0.5);
   }
 
-  public getEventHoursDuration(event: ShedulerEvent, day: Date): number {
+  public getEventHoursDuration(event: SchedulerEvent, day: Date): number {
     if (!isSameDay(event.start, day)) {
       const durationHours = (event.end.getTime() - startOfDay(day).getTime()) / 1000 / 3600;
       const intHours = Math.trunc(durationHours);
@@ -442,12 +442,12 @@ export class ShedulerService {
     return result;
   }
 
-  public getEventWidthForDayView(viewComponent: ViewComponent, event: ShedulerEvent, events: ShedulerEvent[], boxWidth: number): number {
-    const crossEvents: ShedulerEvent[] = [];
+  public getEventWidthForDayView(viewComponent: ViewComponent, event: SchedulerEvent, events: SchedulerEvent[], boxWidth: number): number {
+    const crossEvents: SchedulerEvent[] = [];
     const needBoxes: HTMLDivElement[] = [];
     const allBoxes = Array.from(this.eventBoxes.get(viewComponent) || []);
 
-    const crossEventsCount = events.reduce((total: number, currentEvent: ShedulerEvent) => {
+    const crossEventsCount = events.reduce((total: number, currentEvent: SchedulerEvent) => {
       if (event.id === currentEvent.id) {
         return total;
       }
@@ -519,26 +519,26 @@ export class ShedulerService {
     return offset;
   }
 
-  public eventLastsAllDay(event: ShedulerEvent, day: Date): boolean {
+  public eventLastsAllDay(event: SchedulerEvent, day: Date): boolean {
     const startDay = addMinutes(startOfDay(day), 30);
     const endDay = addHours(startDay, 23);
 
     return event.start.getTime() <= startDay.getTime() && event.end.getTime() >= endDay.getTime();
   }
 
-  public getFullDayEvents(events: ShedulerEvent[], day: Date): ShedulerEvent[] {
+  public getFullDayEvents(events: SchedulerEvent[], day: Date): SchedulerEvent[] {
     return events.filter(event => this.eventLastsAllDay(event, day));
   }
 
-  public getDefaultDayEvents(events: ShedulerEvent[], day: Date): ShedulerEvent[] {
+  public getDefaultDayEvents(events: SchedulerEvent[], day: Date): SchedulerEvent[] {
     return events.filter(event => this.eventFallsOnDay(event, day) && !this.eventLastsAllDay(event, day));
   }
 
-  public eventFallsOnPrevDay(event: ShedulerEvent, currentDate: Date): boolean {
+  public eventFallsOnPrevDay(event: SchedulerEvent, currentDate: Date): boolean {
     return this.eventFallsOnDay(event, addDays(startOfDay(currentDate), -1));
   }
 
-  public eventFallsOnNextDay(event: ShedulerEvent, currentDate: Date): boolean {
+  public eventFallsOnNextDay(event: SchedulerEvent, currentDate: Date): boolean {
     return this.eventFallsOnDay(event, addDays(startOfDay(currentDate), 1));
   }
 
@@ -554,7 +554,7 @@ export class ShedulerService {
     return weekDays;
   }
 
-  public getLongEventWeekDayStart(event: ShedulerEvent, weekDays: Date[]): number {
+  public getLongEventWeekDayStart(event: SchedulerEvent, weekDays: Date[]): number {
     for (let i = 0; i < weekDays.length; i++) {
       if (this.eventLastsAllDay(event, weekDays[i])) {
           return i;
@@ -564,7 +564,7 @@ export class ShedulerService {
     return -1;
   }
 
-  public getLongEventWeekDaysLasts(event: ShedulerEvent, weekDays: Date[]): number {
+  public getLongEventWeekDaysLasts(event: SchedulerEvent, weekDays: Date[]): number {
     return weekDays.reduce((total: number, day: Date) => this.eventLastsAllDay(event, day) ? total + 1 : total, 0);
   }
 

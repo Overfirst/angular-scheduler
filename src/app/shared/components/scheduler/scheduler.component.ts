@@ -9,38 +9,38 @@ import {
   ViewContainerRef
 } from '@angular/core';
 
-import { ShedulerEvent, ViewDetalization } from '../../interfaces';
-import { ShedulerService } from "../../services/sheduler.service";
+import { SchedulerEvent, ViewDetalization } from '../../interfaces';
+import { SchedulerService } from "../../services/scheduler.service";
 import { addMinutes, isSameMinute } from "date-fns";
-import { ShedulerDayViewComponent } from "./views/sheduler-day-view/sheduler-day-view.component";
+import { SchedulerDayViewComponent } from "./views/scheduler-day-view/scheduler-day-view.component";
 
 @Component({
-  selector: 'sheduler',
-  templateUrl: './sheduler.component.html',
-  styleUrls: ['./sheduler.component.scss'],
+  selector: 'scheduler',
+  templateUrl: './scheduler.component.html',
+  styleUrls: ['./scheduler.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShedulerComponent implements AfterContentInit {
+export class SchedulerComponent implements AfterContentInit {
   @ViewChild('outlet', { static: true, read: ViewContainerRef }) outletRef: ViewContainerRef;
   @ViewChild('view', { static: true, read: TemplateRef }) viewRef: TemplateRef<any>;
 
-  @ViewChild('dayViewComponent') dayViewComponent: ShedulerDayViewComponent;
-  @ViewChild('weekViewComponent') weekViewComponent: ShedulerDayViewComponent;
+  @ViewChild('dayViewComponent') dayViewComponent: SchedulerDayViewComponent;
+  @ViewChild('weekViewComponent') weekViewComponent: SchedulerDayViewComponent;
 
   public modalOpened = false;
   public modalEditMode = true;
   public dayAndWeekLongEventsOpened = true;
 
-  public modalEditableEvent: ShedulerEvent;
+  public modalEditableEvent: SchedulerEvent;
 
   public selectedViewDate = new Date();
   public selectedDate = new Date();
   public selectedView = ViewDetalization.Week;
 
-  private shedulerEvents: ShedulerEvent[] = [];
+  private schedulerEvents: SchedulerEvent[] = [];
 
-  @Input() public set events(events: ShedulerEvent[]) {
-    this.shedulerEvents = events.map(event => {
+  @Input() public set events(events: SchedulerEvent[]) {
+    this.schedulerEvents = events.map(event => {
       const newEvent = {...event};
 
       if (isSameMinute(event.start, event.end)) {
@@ -53,13 +53,13 @@ export class ShedulerComponent implements AfterContentInit {
     this.sortEvents();
   }
 
-  constructor(private service: ShedulerService) {
+  constructor(private service: SchedulerService) {
     this.dayAndWeekLongEventsOpened = this.service.restoreOpenCloseEventsState();
     this.selectedView = this.service.restoreSelectedView();
   }
 
   public get events() {
-    return this.shedulerEvents;
+    return this.schedulerEvents;
   }
 
   public ngAfterContentInit(): void {
@@ -78,7 +78,7 @@ export class ShedulerComponent implements AfterContentInit {
     this.service.storeSelectedView(view);
   }
 
-  public eventDoubleClicked(event: ShedulerEvent): void {
+  public eventDoubleClicked(event: SchedulerEvent): void {
     this.modalEditMode = true;
     this.modalEditableEvent = event;
     this.modalOpened = true;
@@ -89,7 +89,7 @@ export class ShedulerComponent implements AfterContentInit {
     this.modalOpened = true;
   }
 
-  public modalApplyClicked(event: ShedulerEvent): void {
+  public modalApplyClicked(event: SchedulerEvent): void {
     if (this.modalEditMode) {
       const idx = this.events.findIndex(currentEvent => currentEvent.id === event.id);
       this.events[idx] = event;
@@ -103,7 +103,7 @@ export class ShedulerComponent implements AfterContentInit {
     this.redrawView();
   }
 
-  public modalDeleteClicked(event: ShedulerEvent) {
+  public modalDeleteClicked(event: SchedulerEvent) {
     const idx = this.events.findIndex(currentEvent => currentEvent.id === event.id);
     this.events.splice(idx, 1);
 
@@ -155,7 +155,7 @@ export class ShedulerComponent implements AfterContentInit {
   }
 
   private sortEvents(): void {
-    this.shedulerEvents.sort((first, second) => (second.end.getTime() - second.start.getTime()) - (first.end.getTime() - first.start.getTime()));
+    this.schedulerEvents.sort((first, second) => (second.end.getTime() - second.start.getTime()) - (first.end.getTime() - first.start.getTime()));
   }
 
   public dayAndWeekLongEventsOpenClose(opened: boolean): void {

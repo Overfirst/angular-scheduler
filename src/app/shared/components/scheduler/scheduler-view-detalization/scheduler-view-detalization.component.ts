@@ -1,20 +1,20 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { ShedulerEvent, ViewDetalization } from "../../../interfaces";
+import { SchedulerEvent, ViewDetalization } from "../../../interfaces";
 
 @Component({
-  selector: 'sheduler-view-detalization',
-  templateUrl: './sheduler-view-detalization.component.html',
-  styleUrls: ['./sheduler-view-detalization.component.scss'],
+  selector: 'scheduler-view-detalization',
+  templateUrl: './scheduler-view-detalization.component.html',
+  styleUrls: ['./scheduler-view-detalization.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShedulerViewDetalizationComponent {
+export class SchedulerViewDetalizationComponent {
   @Input() view: ViewDetalization;
-  @Input() dateEvents: ShedulerEvent[];
+  @Input() dateEvents: SchedulerEvent[];
   @Input() date: Date;
 
-  @Output() public eventClicked = new EventEmitter<ShedulerEvent>();
+  @Output() public eventClicked = new EventEmitter<SchedulerEvent>();
 
-  public eventClick(event: ShedulerEvent) {
+  public eventClick(event: SchedulerEvent) {
     this.eventClicked.emit(event);
   }
 

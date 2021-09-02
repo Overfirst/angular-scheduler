@@ -15,12 +15,12 @@ import {
 import { ViewDetalization } from 'src/app/shared/interfaces';
 
 @Component({
-  selector: 'sheduler-date-switcher',
-  templateUrl: './sheduler-date-switcher.component.html',
-  styleUrls: ['./sheduler-date-switcher.component.scss'],
+  selector: 'scheduler-date-switcher',
+  templateUrl: './scheduler-date-switcher.component.html',
+  styleUrls: ['./scheduler-date-switcher.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShedulerDateSwitcherComponent {
+export class SchedulerDateSwitcherComponent {
   @Input() view: ViewDetalization;
   @Input() date: Date;
 

@@ -12,40 +12,40 @@ import {
   ElementRef
 } from '@angular/core';
 
-import { ShedulerEvent } from "../../../../interfaces";
-import { ShedulerService } from "../../../../services/sheduler.service";
-import { ShedulerDayViewComponent } from "../sheduler-day-view/sheduler-day-view.component";
+import { SchedulerEvent } from "../../../../interfaces";
+import { SchedulerService } from "../../../../services/scheduler.service";
+import { SchedulerDayViewComponent } from "../scheduler-day-view/scheduler-day-view.component";
 import { addDays, startOfWeek } from "date-fns";
 
 @Component({
-  selector: 'sheduler-week-view',
-  templateUrl: './sheduler-week-view.component.html',
-  styleUrls: ['./sheduler-week-view.component.scss'],
+  selector: 'scheduler-week-view',
+  templateUrl: './scheduler-week-view.component.html',
+  styleUrls: ['./scheduler-week-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShedulerWeekViewComponent implements AfterContentInit {
+export class SchedulerWeekViewComponent implements AfterContentInit {
   @ViewChild('longDaysOutlet', { static: true, read: ViewContainerRef }) longDaysOutletRef: ViewContainerRef;
   @ViewChild('longDaysTemplate', { static: true, read: TemplateRef }) longDaysTemplateRef: TemplateRef<any>;
   @ViewChild('row', { static: true }) public row: ElementRef<HTMLTableRowElement>;
 
   private weekStartDay: Date;
-  public dayComponents: ShedulerDayViewComponent[] = [];
+  public dayComponents: SchedulerDayViewComponent[] = [];
 
   public weekDays: Date[] = [];
   public scrollTop = 0;
 
-  constructor(private service: ShedulerService, private cdRef: ChangeDetectorRef) {}
+  constructor(private service: SchedulerService, private cdRef: ChangeDetectorRef) {}
 
   @Input() public fullWeekOpened = true;
 
-  @Input() public events: ShedulerEvent[] = [];
+  @Input() public events: SchedulerEvent[] = [];
 
   @Input() public set week(date: Date) {
     this.weekStartDay = startOfWeek(date, { weekStartsOn: 1 });
     this.weekDays = this.service.getWeekDays(date);
   }
 
-  @Output() public eventDoubleClicked = new EventEmitter<ShedulerEvent>();
+  @Output() public eventDoubleClicked = new EventEmitter<SchedulerEvent>();
   @Output() public hourDoubleClicked = new EventEmitter<Date>();
   @Output() public hourChanged = new EventEmitter<Date>();
   @Output() public dayChangeClicked = new EventEmitter<Date>();
@@ -55,7 +55,7 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
     this.redraw();
   }
 
-  public eventDoubleClick(event: ShedulerEvent): void {
+  public eventDoubleClick(event: SchedulerEvent): void {
     this.eventDoubleClicked.emit(event);
   }
 
@@ -97,24 +97,24 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
     return `${(this.fullWeekOpened ? 4 : 1) * this.service.headerRowHeight}px`
   }
 
-  public getEventColor(event: ShedulerEvent): string {
+  public getEventColor(event: SchedulerEvent): string {
     return this.service.getEventColor(event);
   }
 
-  public calculateLongEventWeekLeft(event: ShedulerEvent): string {
+  public calculateLongEventWeekLeft(event: SchedulerEvent): string {
     return this.service.getLongEventWeekDayStart(event, this.weekDays) * this.row.nativeElement.clientWidth / 7 + 'px';
   }
 
-  public calculateLongEventWeekWidth(event: ShedulerEvent): string {
+  public calculateLongEventWeekWidth(event: SchedulerEvent): string {
     const addition = this.service.eventLastsAllDay(event, this.weekDays[6]) ? 18 : 0;
     return this.service.getLongEventWeekDaysLasts(event, this.weekDays) * (this.row.nativeElement.clientWidth - 2) / 7 - addition + 'px';
   }
 
-  public calculateLongEventWeekTop(event:ShedulerEvent, wrapper: HTMLDivElement): string {
+  public calculateLongEventWeekTop(event:SchedulerEvent, wrapper: HTMLDivElement): string {
     return this.service.getEventTopOffset(this, event, wrapper) + 'px';
   }
 
-  public getLongEventWeekDaysLasts(event: ShedulerEvent): number {
+  public getLongEventWeekDaysLasts(event: SchedulerEvent): number {
     return this.service.getLongEventWeekDaysLasts(event, this.weekDays);
   }
 
@@ -126,14 +126,14 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
     this.service.eventWeekMouseLeave(this, this.dayComponents, eventBox);
   }
 
-  public weekLeftArrowCondition(event: ShedulerEvent): boolean {
+  public weekLeftArrowCondition(event: SchedulerEvent): boolean {
     const dayIdx = this.service.getLongEventWeekDayStart(event, this.weekDays);
     const day = addDays(this.weekStartDay, dayIdx);
 
     return dayIdx === 0 && this.service.eventFallsOnPrevDay(event, day);
   }
 
-  public weekRightArrowCondition(event: ShedulerEvent): boolean {
+  public weekRightArrowCondition(event: SchedulerEvent): boolean {
     const dayIdx = this.service.getLongEventWeekDayStart(event, this.weekDays) + this.service.getLongEventWeekDaysLasts(event, this.weekDays) - 1;
     const day = addDays(this.weekStartDay, dayIdx);
 

@@ -1,6 +1,6 @@
-import { ShedulerEvent } from "./shared/interfaces";
+import { SchedulerEvent } from "./shared/interfaces";
 
-export const shedulerEvents: ShedulerEvent[] = [
+export const schedulerEvents: SchedulerEvent[] = [
   {
     id: 1,
     name: 'Creating a scheduler',
@@ -95,8 +95,36 @@ export const shedulerEvents: ShedulerEvent[] = [
   {
     id: 14,
     name: 'Test task 13',
-    start: new Date('2021-08-12 1:00'),
-    end: new Date('2021-09-24 01:30'),
+    start: new Date('2021-08-30 00:00'),
+    end: new Date('2021-08-31 01:30'),
     color: '#3affc8'
+  },
+  {
+    id: 15,
+    name: 'Test task 14',
+    start: new Date('2021-09-01 00:00'),
+    end: new Date('2021-09-04 00:00'),
+    color: '#ff6b68'
+  },
+  {
+    id: 16,
+    name: 'Test task 15',
+    start: new Date('2021-09-02 00:00'),
+    end: new Date('2021-09-03 00:00'),
+    color: '#25bdb9'
+  },
+  {
+    id: 17,
+    name: 'Test task 16',
+    start: new Date('2021-09-03 00:00'),
+    end: new Date('2021-09-05 00:00'),
+    color: '#b030fa'
+  },
+  {
+    id: 18,
+    name: 'Test task 17',
+    start: new Date('2021-08-31 00:00'),
+    end: new Date('2021-09-01 00:00'),
+    color: '#aec106'
   }
 ];

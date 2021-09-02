@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-sheduler": {
+    "angular-scheduler": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -34,7 +34,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-sheduler",
+            "outputPath": "dist/angular-scheduler",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -86,10 +86,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular-sheduler:build:production"
+              "browserTarget": "angular-scheduler:build:production"
             },
             "development": {
-              "browserTarget": "angular-sheduler:build:development"
+              "browserTarget": "angular-scheduler:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -97,11 +97,11 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-sheduler:build"
+            "browserTarget": "angular-scheduler:build"
           }
         }
       }
     }
   },
-  "defaultProject": "angular-sheduler"
+  "defaultProject": "angular-scheduler"
 }

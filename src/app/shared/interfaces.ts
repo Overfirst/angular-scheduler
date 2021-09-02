@@ -1,7 +1,7 @@
-import { ShedulerDayViewComponent } from "./components/sheduler/views/sheduler-day-view/sheduler-day-view.component";
-import { ShedulerWeekViewComponent } from "./components/sheduler/views/sheduler-week-view/sheduler-week-view.component";
-import { ShedulerMonthViewComponent } from "./components/sheduler/views/sheduler-month-view/sheduler-month-view.component";
-import { ShedulerYearViewComponent } from "./components/sheduler/views/sheduler-year-view/sheduler-year-view.component";
+import { SchedulerDayViewComponent } from "./components/scheduler/views/scheduler-day-view/scheduler-day-view.component";
+import { SchedulerWeekViewComponent } from "./components/scheduler/views/scheduler-week-view/scheduler-week-view.component";
+import { SchedulerMonthViewComponent } from "./components/scheduler/views/scheduler-month-view/scheduler-month-view.component";
+import { SchedulerYearViewComponent } from "./components/scheduler/views/scheduler-year-view/scheduler-year-view.component";
 
 export enum ViewDetalization {
   Day = 'Day',
@@ -10,7 +10,7 @@ export enum ViewDetalization {
   Year = 'Year'
 }
 
-export interface ShedulerEvent {
+export interface SchedulerEvent {
   id: number;
   name: string;
   start: Date;
@@ -19,12 +19,12 @@ export interface ShedulerEvent {
 }
 
 export type ViewComponent =
-  ShedulerDayViewComponent |
-  ShedulerWeekViewComponent |
-  ShedulerMonthViewComponent |
-  ShedulerYearViewComponent;
+  SchedulerDayViewComponent |
+  SchedulerWeekViewComponent |
+  SchedulerMonthViewComponent |
+  SchedulerYearViewComponent;
 
 export interface CollectDayComponentData {
-  component: ShedulerDayViewComponent;
-  collection: ShedulerDayViewComponent[];
+  component: SchedulerDayViewComponent;
+  collection: SchedulerDayViewComponent[];
 }

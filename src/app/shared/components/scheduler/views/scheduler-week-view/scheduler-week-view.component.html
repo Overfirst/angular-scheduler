@@ -81,7 +81,7 @@
 
 <div class="main-content-week">
   <div *ngFor="let day of weekDays; index as idx">
-    <sheduler-day-view
+    <scheduler-day-view
       #dayComponent
       collectDayComponent
       [data]="{ component: dayComponent, collection: dayComponents }"
@@ -100,6 +100,6 @@
       (openCloseClicked)="fullDayOpenCloseClicked($event)"
       (onEventMouseOver)="eventMouseOver($event)"
       (onEventMouseLeave)="eventMouseLeave($event)"
-    ></sheduler-day-view>
+    ></scheduler-day-view>
   </div>
 </div>

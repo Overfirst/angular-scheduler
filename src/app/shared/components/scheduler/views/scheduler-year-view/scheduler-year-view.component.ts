@@ -1,19 +1,19 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { isSameMonth } from 'date-fns';
-import { ShedulerEvent, ViewDetalization } from 'src/app/shared/interfaces';
-import { ShedulerService } from 'src/app/shared/services/sheduler.service';
+import { SchedulerEvent, ViewDetalization } from 'src/app/shared/interfaces';
+import { SchedulerService } from 'src/app/shared/services/scheduler.service';
 
 @Component({
-  selector: 'sheduler-year-view',
-  templateUrl: './sheduler-year-view.component.html',
-  styleUrls: ['./sheduler-year-view.component.scss'],
+  selector: 'scheduler-year-view',
+  templateUrl: './scheduler-year-view.component.html',
+  styleUrls: ['./scheduler-year-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShedulerYearViewComponent {
+export class SchedulerYearViewComponent {
   @ViewChild('column', { static: true }) private column: ElementRef<HTMLTableCellElement>;
   @ViewChild('row', { static: true }) private row: ElementRef<HTMLTableRowElement>;
 
-  constructor(private service: ShedulerService) {}
+  constructor(private service: SchedulerService) {}
 
   public quarters: Array<Date[]>;
 
@@ -21,9 +21,9 @@ export class ShedulerYearViewComponent {
   private monthFirstSetted = false;
   private selectedYear: Date;
 
-  public eventsForSelectedMonth: ShedulerEvent[];
+  public eventsForSelectedMonth: SchedulerEvent[];
 
-  @Input() public events: ShedulerEvent[];
+  @Input() public events: SchedulerEvent[];
 
   @Input() public set year(year: Date) {
     this.selectedYear = year;
@@ -42,7 +42,7 @@ export class ShedulerYearViewComponent {
     this.monthChanged.emit(this.selectedMonth);
   }
 
-  @Output() public eventDoubleClicked = new EventEmitter<ShedulerEvent>();
+  @Output() public eventDoubleClicked = new EventEmitter<SchedulerEvent>();
   @Output() public monthDoubleClicked = new EventEmitter<Date>();
   @Output() public monthChanged = new EventEmitter<Date>();
   @Output() public showMoreEventsClicked = new EventEmitter<ViewDetalization>();
@@ -79,15 +79,15 @@ export class ShedulerYearViewComponent {
     this.service.eventBoxMouseLeave(this, eventBox);
   }
 
-  public eventBoxDoubleClick(event: ShedulerEvent): void {
+  public eventBoxDoubleClick(event: SchedulerEvent): void {
     this.eventDoubleClicked.emit(event);
   }
 
-  public getEventColor(event: ShedulerEvent): string {
+  public getEventColor(event: SchedulerEvent): string {
     return this.service.getEventColor(event);
   }
 
-  public getEventTitle(event: ShedulerEvent): string {
+  public getEventTitle(event: SchedulerEvent): string {
     return this.service.getEventTitle(event);
   }
 
@@ -103,28 +103,28 @@ export class ShedulerYearViewComponent {
     return this.service.eventsCountOnMonth(day, this.events);
   }
 
-  public eventOnTargetQuarter(event: ShedulerEvent, month: Date): boolean {
+  public eventOnTargetQuarter(event: SchedulerEvent, month: Date): boolean {
     return this.service.eventOnTargetQuarter(event, month);
   }
 
-  public getEventTopOffset(event: ShedulerEvent, wrapper: HTMLDivElement): string {
+  public getEventTopOffset(event: SchedulerEvent, wrapper: HTMLDivElement): string {
     return this.service.getEventTopOffset(this, event, wrapper) + 'px';
   }
 
-  public getEventQuarterOffset(event: ShedulerEvent, quarter: Date): string {
+  public getEventQuarterOffset(event: SchedulerEvent, quarter: Date): string {
     const offset = this.service.getEventMonthsOffsetForTargetQuarter(event, quarter);
     return offset * this.column.nativeElement.clientWidth + 'px';
   }
 
-  public eventStartedOnTargetQuarter(event: ShedulerEvent, quarter: Date): boolean {
+  public eventStartedOnTargetQuarter(event: SchedulerEvent, quarter: Date): boolean {
     return this.service.eventStartedOnTargetQuarter(event, quarter);
   }
 
-  public eventEndedOnTargetQuarter(event: ShedulerEvent, quarter: Date): boolean {
+  public eventEndedOnTargetQuarter(event: SchedulerEvent, quarter: Date): boolean {
     return this.service.eventEndedOnTargetQuarter(event, quarter);
   }
 
-  public getEventDurationForTargetQuarter(event: ShedulerEvent, quarter: Date): string {
+  public getEventDurationForTargetQuarter(event: SchedulerEvent, quarter: Date): string {
     if (!this.service.eventStartedOnTargetQuarter(event, quarter) && !this.service.eventEndedOnTargetQuarter(event, quarter)) {
       return this.row.nativeElement.clientWidth + 'px';
     }

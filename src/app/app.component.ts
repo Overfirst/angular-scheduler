@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ShedulerEvent } from './shared/interfaces';
-import { shedulerEvents } from "./sheduler-events";
+import { SchedulerEvent } from './shared/interfaces';
+import { schedulerEvents } from "./scheduler-events";
 
 @Component({
   selector: 'app-root',
@@ -8,5 +8,5 @@ import { shedulerEvents } from "./sheduler-events";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public events: ShedulerEvent[] = shedulerEvents;
+  public events: SchedulerEvent[] = schedulerEvents;
 }

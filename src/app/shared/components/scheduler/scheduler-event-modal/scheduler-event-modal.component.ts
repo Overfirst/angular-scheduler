@@ -1,27 +1,27 @@
 import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
-import { ShedulerEvent } from "../../../interfaces";
+import { SchedulerEvent } from "../../../interfaces";
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
-import { ShedulerService } from "../../../services/sheduler.service";
-import { ShedulerValidators } from "../../../utils/sheduler-validators";
+import { SchedulerService } from "../../../services/scheduler.service";
+import { SchedulerValidators } from "../../../utils/scheduler-validators";
 import { addHours } from "date-fns";
 
 @Component({
-  selector: 'sheduler-event-modal',
-  templateUrl: './sheduler-event-modal.component.html',
-  styleUrls: ['./sheduler-event-modal.component.scss'],
+  selector: 'scheduler-event-modal',
+  templateUrl: './scheduler-event-modal.component.html',
+  styleUrls: ['./scheduler-event-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShedulerEventModalComponent {
+export class SchedulerEventModalComponent {
   public form: FormGroup;
   public confirmOpened = false;
 
-  constructor(private service: ShedulerService) {
+  constructor(private service: SchedulerService) {
     const startDateControl = new FormControl(null, Validators.required);
 
     const endDateControl = new FormControl(null, [
       Validators.required,
-      ShedulerValidators.endDateBeforeStartDate(startDateControl),
-      ShedulerValidators.endDateEqualStartDate(startDateControl)
+      SchedulerValidators.endDateBeforeStartDate(startDateControl),
+      SchedulerValidators.endDateEqualStartDate(startDateControl)
     ]);
 
     const controls: { [name: string]: AbstractControl } = {
@@ -46,7 +46,7 @@ export class ShedulerEventModalComponent {
 
   @Input() public editMode = true;
 
-  @Input() public set editableEvent(event: ShedulerEvent) {
+  @Input() public set editableEvent(event: SchedulerEvent) {
     if (!this.editMode) {
       return;
     }
@@ -59,8 +59,8 @@ export class ShedulerEventModalComponent {
   }
 
   @Output() public closeClicked = new EventEmitter<void>();
-  @Output() public applyClicked = new EventEmitter<ShedulerEvent>();
-  @Output() public deleteClicked = new EventEmitter<ShedulerEvent>();
+  @Output() public applyClicked = new EventEmitter<SchedulerEvent>();
+  @Output() public deleteClicked = new EventEmitter<SchedulerEvent>();
 
   public closeClick(): void {
     this.closeClicked.emit();
@@ -73,7 +73,7 @@ export class ShedulerEventModalComponent {
 
     const { value } = this.form;
 
-    const event: ShedulerEvent = {
+    const event: SchedulerEvent = {
       id: this.editMode ? value.id : new Date().getTime(),
       name: value.name.trim(),
       start: new Date(value.start),
@@ -93,7 +93,7 @@ export class ShedulerEventModalComponent {
   }
 
   public confirmModalYesClicked(): void {
-    this.deleteClicked.emit(this.form.value as ShedulerEvent);
+    this.deleteClicked.emit(this.form.value as SchedulerEvent);
     this.confirmOpened = false;
   }
 

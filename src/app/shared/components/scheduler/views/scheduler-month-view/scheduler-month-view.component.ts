@@ -1,30 +1,30 @@
 import { Component, ChangeDetectionStrategy, Input, ViewChild, ElementRef, Output } from '@angular/core';
-import { ShedulerEvent, ViewDetalization } from 'src/app/shared/interfaces';
-import { ShedulerService } from 'src/app/shared/services/sheduler.service';
+import { SchedulerEvent, ViewDetalization } from 'src/app/shared/interfaces';
+import { SchedulerService } from 'src/app/shared/services/scheduler.service';
 import { isSameDay, startOfMonth } from "date-fns";
 import { EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'sheduler-month-view',
-  templateUrl: './sheduler-month-view.component.html',
-  styleUrls: ['./sheduler-month-view.component.scss'],
+  selector: 'scheduler-month-view',
+  templateUrl: './scheduler-month-view.component.html',
+  styleUrls: ['./scheduler-month-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShedulerMonthViewComponent  {
+export class SchedulerMonthViewComponent  {
   @ViewChild('column', { static: true }) private column: ElementRef<HTMLTableCellElement>;
   @ViewChild('row', { static: true }) private row: ElementRef<HTMLTableRowElement>;
 
   public weeks: Array<Date[]> = [];
 
   public selectedDay: Date;
-  public eventsForSelectedDay: ShedulerEvent[];
+  public eventsForSelectedDay: SchedulerEvent[];
 
   private selectedMonth: Date;
   private dayFirstSetted = false;
 
-  constructor(private service: ShedulerService) {}
+  constructor(private service: SchedulerService) {}
 
-  @Input() public events: ShedulerEvent[] = [];
+  @Input() public events: SchedulerEvent[] = [];
 
   @Input() public set month(date: Date) {
     this.selectedMonth = date;
@@ -44,7 +44,7 @@ export class ShedulerMonthViewComponent  {
     this.dayChanged.emit(this.selectedDay);
   }
 
-  @Output() public eventDoubleClicked = new EventEmitter<ShedulerEvent>();
+  @Output() public eventDoubleClicked = new EventEmitter<SchedulerEvent>();
   @Output() public dayDoubleClicked = new EventEmitter<Date>();
   @Output() public dayChanged = new EventEmitter<Date>();
   @Output() public showMoreEventsClicked = new EventEmitter<ViewDetalization>();
@@ -70,7 +70,7 @@ export class ShedulerMonthViewComponent  {
     return this.service.isFullDate(date, this.weeks);
   }
 
-  public getEventDurationForTargetWeek(event: ShedulerEvent, monday: Date): string {
+  public getEventDurationForTargetWeek(event: SchedulerEvent, monday: Date): string {
     if (!this.service.eventStartedOnTargetWeek(event, monday) && !this.service.eventEndedOnTargetWeek(event, monday)) {
       return this.row.nativeElement.clientWidth + 'px';
     }
@@ -78,24 +78,24 @@ export class ShedulerMonthViewComponent  {
     return this.service.getEventDuration(event, monday, ViewDetalization.Month) * this.row.nativeElement.clientWidth / 7 + 'px';
   }
 
-  public getEventTopOffset(event: ShedulerEvent, wrapper: HTMLDivElement): string {
+  public getEventTopOffset(event: SchedulerEvent, wrapper: HTMLDivElement): string {
     return this.service.getEventTopOffset(this, event, wrapper) + 'px';
   }
 
-  public getEventWeekDaysOffset(event: ShedulerEvent, monday: Date): string {
+  public getEventWeekDaysOffset(event: SchedulerEvent, monday: Date): string {
     const offset = this.service.getEventDaysOffsetForTargetWeek(event, monday);
     return offset * this.column.nativeElement.clientWidth + offset + 'px';
   }
 
-  public eventOnTargetWeek(event: ShedulerEvent, monday: Date): boolean {
+  public eventOnTargetWeek(event: SchedulerEvent, monday: Date): boolean {
     return this.service.eventOnTargetWeek(event, monday);
   }
 
-  public eventStartedOnTargetWeek(event: ShedulerEvent, monday: Date): boolean {
+  public eventStartedOnTargetWeek(event: SchedulerEvent, monday: Date): boolean {
     return this.service.eventStartedOnTargetWeek(event, monday);
   }
 
-  public eventEndedOnTargetWeek(event: ShedulerEvent, monday: Date): boolean {
+  public eventEndedOnTargetWeek(event: SchedulerEvent, monday: Date): boolean {
     return this.service.eventEndedOnTargetWeek(event, monday);
   }
 
@@ -107,7 +107,7 @@ export class ShedulerMonthViewComponent  {
     this.service.eventBoxMouseLeave(this, eventBox);
   }
 
-  public getEventColor(event: ShedulerEvent): string {
+  public getEventColor(event: SchedulerEvent): string {
     return this.service.getEventColor(event);
   }
 
@@ -127,7 +127,7 @@ export class ShedulerMonthViewComponent  {
     return isSameDay(day, this.day);
   }
 
-  public eventBoxDoubleClick(event: ShedulerEvent): void {
+  public eventBoxDoubleClick(event: SchedulerEvent): void {
     this.eventDoubleClicked.emit(event);
   }
 
@@ -139,7 +139,7 @@ export class ShedulerMonthViewComponent  {
     return `calc(${this.column.nativeElement.clientWidth}px * 0.8)`;
   }
 
-  public getEventTitle(event: ShedulerEvent): string {
+  public getEventTitle(event: SchedulerEvent): string {
     return this.service.getEventTitle(event);
   }
 

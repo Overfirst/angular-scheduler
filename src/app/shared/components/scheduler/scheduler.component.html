@@ -1,14 +1,14 @@
-<div class="sheduler-box">
+<div class="scheduler-box">
   <div class="view-box">
-    <sheduler-date-switcher
+    <scheduler-date-switcher
       [view]="selectedView"
       [date]="selectedViewDate"
       (viewDateChanged)="viewDateChanged($event)"
       (viewChanged)="viewChanged($event)"
       (createEventClicked)="openCreateModal()"
-    ></sheduler-date-switcher>
+    ></scheduler-date-switcher>
 
-    <sheduler-day-view
+    <scheduler-day-view
       #dayViewComponent
       *ngIf="selectedView === 'Day'"
       [events]="events"
@@ -20,9 +20,9 @@
       (hourChanged)="hourChanged($event)"
       (dayChangeClicked)="viewDateChanged($event)"
       (openCloseClicked)="dayAndWeekLongEventsOpenClose($event)"
-    ></sheduler-day-view>
+    ></scheduler-day-view>
 
-    <sheduler-week-view
+    <scheduler-week-view
       #weekViewComponent
       *ngIf="selectedView === 'Week'"
       [events]="events"
@@ -33,11 +33,11 @@
       (hourChanged)="hourChanged($event)"
       (dayChangeClicked)="viewDateChanged($event)"
       (openCloseClicked)="dayAndWeekLongEventsOpenClose($event)"
-    ></sheduler-week-view>
+    ></scheduler-week-view>
 
     <ng-template #view>
       <ng-container [ngSwitch]="selectedView">
-        <sheduler-month-view
+        <scheduler-month-view
           *ngSwitchCase="'Month'"
           [events]="events"
           [month]="selectedViewDate"
@@ -46,9 +46,9 @@
           (dayDoubleClicked)="openCreateModal()"
           (dayChanged)="dayChanged($event)"
           (showMoreEventsClicked)="showMoreEventsClicked($event)"
-        ></sheduler-month-view>
+        ></scheduler-month-view>
 
-        <sheduler-year-view
+        <scheduler-year-view
           *ngSwitchCase="'Year'"
           [events]="events"
           [year]="selectedViewDate"
@@ -57,7 +57,7 @@
           (monthDoubleClicked)="openCreateModal()"
           (monthChanged)="monthChanged($event)"
           (showMoreEventsClicked)="showMoreEventsClicked($event)"
-        ></sheduler-year-view>
+        ></scheduler-year-view>
       </ng-container>
     </ng-template>
 
@@ -72,14 +72,14 @@
         class="modal-container"
         (click)="$event.stopPropagation()"
       >
-        <sheduler-event-modal
+        <scheduler-event-modal
           [editMode]="modalEditMode"
           [editableEvent]="modalEditableEvent"
           [defaultDate]="selectedDate"
           (applyClicked)="modalApplyClicked($event)"
           (deleteClicked)="modalDeleteClicked($event)"
           (closeClicked)="modalCloseClicked()"
-        ></sheduler-event-modal>
+        ></scheduler-event-modal>
       </div>
     </div>
   </div>
