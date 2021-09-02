@@ -120,7 +120,9 @@ export class SchedulerMonthViewComponent  {
   }
 
   public selectDay(day: Date): void {
-    this.day = day;
+    if (this.dayInCurrentMonth(day)) {
+      this.day = day;
+    }
   }
 
   public isSelectedDay(day: Date): boolean {
@@ -132,7 +134,9 @@ export class SchedulerMonthViewComponent  {
   }
 
   public dayDoubleClick(day: Date): void {
-    this.dayDoubleClicked.emit(day);
+    if (this.dayInCurrentMonth(day)) {
+      this.dayDoubleClicked.emit(day);
+    }
   }
 
   public getWidthForEventText(): string {

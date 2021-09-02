@@ -86,11 +86,13 @@ table {
   background: rgba(204, 204, 204, 0.5);
 
   &:hover {
-    background: rgba(204, 204, 204, 1);
+    cursor: no-drop;
+    background: rgba(204, 204, 204, 0.5);
   }
 
   &:active {
-    background: rgb(185, 185, 185);
+    cursor: no-drop;
+    background: rgba(204, 204, 204, 0.5);
   }
 }
 
