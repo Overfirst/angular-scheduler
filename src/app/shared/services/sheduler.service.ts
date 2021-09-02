@@ -596,4 +596,12 @@ export class ShedulerService {
   public eventWeekMouseLeave(viewComponent: ViewComponent, dayComponents: ViewComponent[], eventBox: HTMLDivElement): void {
     this.eventBoxWeekMouseHandler(viewComponent, dayComponents, eventBox, false);
   }
+
+  public storeOpenCloseEventsState(state: boolean): void {
+    localStorage.setItem('openCloseLongEventsState', state.toString());
+  }
+
+  public restoreOpenCloseEventsState(): boolean {
+    return localStorage.getItem('openCloseLongEventsState') === 'true';
+  }
 }

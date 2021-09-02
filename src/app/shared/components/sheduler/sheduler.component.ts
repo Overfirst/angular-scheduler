@@ -29,6 +29,8 @@ export class ShedulerComponent implements AfterContentInit {
 
   public modalOpened = false;
   public modalEditMode = true;
+  public dayAndWeekLongEventsOpened = true;
+
   public modalEditableEvent: ShedulerEvent;
 
   public selectedViewDate = new Date();
@@ -51,7 +53,9 @@ export class ShedulerComponent implements AfterContentInit {
     this.sortEvents();
   }
 
-  constructor(private service: ShedulerService) {}
+  constructor(private service: ShedulerService) {
+    this.dayAndWeekLongEventsOpened = this.service.restoreOpenCloseEventsState()
+  }
 
   public get events() {
     return this.shedulerEvents;
@@ -150,5 +154,10 @@ export class ShedulerComponent implements AfterContentInit {
 
   private sortEvents(): void {
     this.shedulerEvents.sort((first, second) => (second.end.getTime() - second.start.getTime()) - (first.end.getTime() - first.start.getTime()));
+  }
+
+  public dayAndWeekLongEventsOpenClose(opened: boolean): void {
+    this.dayAndWeekLongEventsOpened = opened;
+    this.service.storeOpenCloseEventsState(opened);
   }
 }

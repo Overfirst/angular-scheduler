@@ -33,9 +33,10 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
 
   public weekDays: Date[] = [];
   public scrollTop = 0;
-  public fullWeekOpened = true;
 
   constructor(private service: ShedulerService, private cdRef: ChangeDetectorRef) {}
+
+  @Input() public fullWeekOpened = true;
 
   @Input() public events: ShedulerEvent[] = [];
 
@@ -48,6 +49,7 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
   @Output() public hourDoubleClicked = new EventEmitter<Date>();
   @Output() public hourChanged = new EventEmitter<Date>();
   @Output() public dayChangeClicked = new EventEmitter<Date>();
+  @Output() public openCloseClicked = new EventEmitter<boolean>();
 
   public ngAfterContentInit(): void {
     this.redraw();
@@ -144,5 +146,10 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
 
   public weekRightArrowClick(): void {
     this.dayChangeClicked.emit(addDays(this.weekStartDay, 7));
+  }
+
+  public longEventsOpenClose(): void {
+    this.fullWeekOpened = !this.fullWeekOpened;
+    this.openCloseClicked.emit(this.fullWeekOpened);
   }
 }

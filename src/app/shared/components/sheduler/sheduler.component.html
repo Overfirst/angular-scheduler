@@ -14,10 +14,12 @@
       [events]="events"
       [day]="selectedViewDate"
       [hour]="selectedDate"
+      [fullDayOpened]="dayAndWeekLongEventsOpened"
       (eventDoubleClicked)="eventDoubleClicked($event)"
       (hourDoubleClicked)="openCreateModal()"
       (hourChanged)="hourChanged($event)"
       (dayChangeClicked)="viewDateChanged($event)"
+      (openCloseClicked)="dayAndWeekLongEventsOpenClose($event)"
     ></sheduler-day-view>
 
     <sheduler-week-view
@@ -25,10 +27,12 @@
       *ngIf="selectedView === 'Week'"
       [events]="events"
       [week]="selectedViewDate"
+      [fullWeekOpened]="dayAndWeekLongEventsOpened"
       (eventDoubleClicked)="eventDoubleClicked($event)"
       (hourDoubleClicked)="openCreateModal()"
       (hourChanged)="hourChanged($event)"
       (dayChangeClicked)="viewDateChanged($event)"
+      (openCloseClicked)="dayAndWeekLongEventsOpenClose($event)"
     ></sheduler-week-view>
 
     <ng-template #view>
