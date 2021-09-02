@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SchedulerEvent } from './shared/interfaces';
-import { schedulerEvents } from "./scheduler-events";
+import { SchedulerEvent } from './modules/scheduler/interfaces';
+import { schedulerEvents } from "./modules/scheduler-events";
 
 @Component({
   selector: 'app-root',

@@ -1,0 +1,13 @@
+@import "../scheduler-event-modal.component";
+
+.modal {
+  width: calc(100vw * 0.3);
+}
+
+.modal-footer {
+  justify-content: flex-end;
+}
+
+.modal-content {
+  margin: 20px;
+}

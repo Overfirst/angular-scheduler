@@ -1,0 +1,109 @@
+<ng-template #longDaysTemplate>
+  <div *ngIf="fullWeekOpened" class="long-days-box-wrapper">
+    <div #longEventsBox class="long-days-box">
+      <ng-container *ngFor="let event of events">
+        <div
+          class="long-day-event-box-wrapper"
+          #eventBoxWrapper
+          *ngIf="getLongEventWeekDaysLasts(event) !== 0"
+          [attr.event-id]="event.id"
+          [style.left]="calculateLongEventWeekLeft(event)"
+          [style.width]="calculateLongEventWeekWidth(event)"
+          [style.top]="calculateLongEventWeekTop(event, eventBoxWrapper)"
+        >
+          <div
+            class="long-day-event-box"
+            #eventBox
+            collectEventBox
+            [viewComponent]="this"
+            [attr.event-id]="event.id"
+            [style.background-color]="getEventColor(event)"
+            (dblclick)="eventDoubleClick(event)"
+            (mouseover)="eventMouseOver(eventBox)"
+            (mouseleave)="eventMouseLeave(eventBox)"
+          >
+            <div class="event-box-name-wrapper">
+              <span class="event-box-name">{{ event.name }}</span>
+            </div>
+
+            <div
+              *ngIf="weekLeftArrowCondition(event)"
+              (dblclick)="$event.stopPropagation()"
+              (click)="weekLeftArrowClick()"
+              [attr.week-mode]="true"
+              class="event-box-arrow event-box-arrow-left"
+            >
+              <img src="../../../../../../assets/event-arrow-icon.svg">
+            </div>
+
+            <div
+              *ngIf="weekRightArrowCondition(event)"
+              (dblclick)="$event.stopPropagation()"
+              (click)="weekRightArrowClick()"
+              [attr.week-mode]="true"
+              class="event-box-arrow event-box-arrow-right"
+            >
+              <img src="../../../../../../assets/event-arrow-icon.svg">
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div *ngIf="longEventsBoxEmpty()" class="week-full-empty-wrapper">
+      <span class="week-full-empty-text">There are no events that last all day or more!</span>
+    </div>
+  </div>
+</ng-template>
+
+<div class="header-table">
+  <table>
+    <thead>
+    <tr #row [style.height]="getHeaderHeight()">
+      <td *ngFor="let day of weekDays; index as idx">
+        <div class="header-box header-box-week">
+          <span class="header-date">{{ day | date:'EEE, dd' }}</span>
+
+          <div class="header-open-close">
+            <img
+              *ngIf="idx === 3"
+              height="14px"
+              src="../../../../../../assets/open-close-icon.svg"
+              [title]="getOpenCloseTitle()"
+              [attr.opened]="fullWeekOpened"
+              (click)="longEventsOpenClose()"
+            >
+          </div>
+        </div>
+      </td>
+
+      <ng-container #longDaysOutlet></ng-container>
+    </tr>
+    </thead>
+  </table>
+</div>
+
+<div class="main-content-week">
+  <div *ngFor="let day of weekDays; index as idx">
+    <scheduler-day-view
+      #dayComponent
+      collectDayComponent
+      [data]="{ component: dayComponent, collection: dayComponents }"
+      [weekMode]="true"
+      [dayIdx]="idx"
+      [day]="day"
+      [events]="events"
+      [hour]="day"
+      [weekScrollTop]="scrollTop"
+      [fullDayOpened]="fullWeekOpened"
+      (eventDoubleClicked)="eventDoubleClick($event)"
+      (hourDoubleClicked)="hourDoubleClick($event)"
+      (hourChanged)="hourChange($event)"
+      (dayChangeClicked)="dayChangeClick($event)"
+      (weekModeScroll)="tableOnScroll($event)"
+      (openCloseClicked)="fullDayOpenCloseClicked($event)"
+      (onEventMouseOver)="eventMouseOver($event)"
+      (onEventMouseLeave)="eventMouseLeave($event)"
+    ></scheduler-day-view>
+  </div>
+</div>
