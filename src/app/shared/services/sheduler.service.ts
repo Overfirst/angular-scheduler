@@ -315,7 +315,7 @@ export class ShedulerService {
   }
 
   public eventBoxMouseOver(viewComponent: ViewComponent, eventBox: HTMLDivElement): void {
-    this.eventBoxes.get(viewComponent)!.forEach(box => {
+    this.eventBoxes.get(viewComponent)?.forEach(box => {
       if (eventBox.getAttribute('event-id') === box.getAttribute('event-id')) {
         box.style.border = '1px solid #000';
       }
@@ -323,7 +323,7 @@ export class ShedulerService {
   }
 
   public eventBoxMouseLeave(viewComponent: ViewComponent, eventBox: HTMLDivElement): void {
-    this.eventBoxes.get(viewComponent)!.forEach(box => {
+    this.eventBoxes.get(viewComponent)?.forEach(box => {
       if (eventBox.getAttribute('event-id') === box.getAttribute('event-id')) {
         box.style.border = '1px solid #bbaacf';
       }
@@ -582,7 +582,7 @@ export class ShedulerService {
 
     dayBoxes.forEach(box => (box.childNodes[0] as HTMLDivElement).style.border = border);
 
-    this.eventBoxes.get(viewComponent)!.forEach(box => {
+    this.eventBoxes.get(viewComponent)?.forEach(box => {
       if (box.getAttribute('event-id') === id) {
         box.style.border = border;
       }
