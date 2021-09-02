@@ -43,6 +43,7 @@ export class SchedulerWeekViewComponent implements AfterContentInit {
   @Input() public set week(date: Date) {
     this.weekStartDay = startOfWeek(date, { weekStartsOn: 1 });
     this.weekDays = this.service.getWeekDays(date);
+    this.redraw();
   }
 
   @Output() public eventDoubleClicked = new EventEmitter<SchedulerEvent>();
