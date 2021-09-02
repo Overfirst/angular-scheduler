@@ -28,7 +28,7 @@
               class="column-content"
               #parent
               [class.pale-date]="!dayInCurrentMonth(day)"
-              [class.today-date]="isToday(day)"
+              [class.current-date]="isToday(day)"
               (click)="selectDay(day)"
             >
               <div *ngIf="isSelectedDay(day)" class="selected-date"></div>
