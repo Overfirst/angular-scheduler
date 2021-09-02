@@ -54,7 +54,8 @@ export class ShedulerComponent implements AfterContentInit {
   }
 
   constructor(private service: ShedulerService) {
-    this.dayAndWeekLongEventsOpened = this.service.restoreOpenCloseEventsState()
+    this.dayAndWeekLongEventsOpened = this.service.restoreOpenCloseEventsState();
+    this.selectedView = this.service.restoreSelectedView();
   }
 
   public get events() {
@@ -74,6 +75,7 @@ export class ShedulerComponent implements AfterContentInit {
   public viewChanged(view: ViewDetalization): void {
     this.selectedView = view;
     this.redrawView();
+    this.service.storeSelectedView(view);
   }
 
   public eventDoubleClicked(event: ShedulerEvent): void {

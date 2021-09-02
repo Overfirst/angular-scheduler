@@ -604,4 +604,18 @@ export class ShedulerService {
   public restoreOpenCloseEventsState(): boolean {
     return localStorage.getItem('openCloseLongEventsState') === 'true';
   }
+
+  public storeSelectedView(view: ViewDetalization): void {
+    localStorage.setItem('selectedView', view.toString());
+  }
+
+  public restoreSelectedView(): ViewDetalization {
+    const view = localStorage.getItem('selectedView');
+
+    if (view === null) {
+      return ViewDetalization.Month;
+    }
+
+    return view as ViewDetalization;
+  }
 }
