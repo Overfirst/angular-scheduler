@@ -29,6 +29,7 @@
             <div
               *ngIf="weekLeftArrowCondition(event)"
               (dblclick)="$event.stopPropagation()"
+              (click)="weekLeftArrowClick()"
               [attr.week-mode]="true"
               class="event-box-arrow event-box-arrow-left"
             >
@@ -38,6 +39,7 @@
             <div
               *ngIf="weekRightArrowCondition(event)"
               (dblclick)="$event.stopPropagation()"
+              (click)="weekRightArrowClick()"
               [attr.week-mode]="true"
               class="event-box-arrow event-box-arrow-right"
             >

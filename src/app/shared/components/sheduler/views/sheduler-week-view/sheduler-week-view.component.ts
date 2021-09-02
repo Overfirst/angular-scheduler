@@ -10,7 +10,7 @@ import {
 import { ShedulerEvent } from "../../../../interfaces";
 import { ShedulerService } from "../../../../services/sheduler.service";
 import { ShedulerDayViewComponent } from "../sheduler-day-view/sheduler-day-view.component";
-import {addDays, addMinutes, isMonday, isSaturday, startOfWeek} from "date-fns";
+import { addDays, addMinutes, isMonday, isSaturday, startOfWeek } from "date-fns";
 
 @Component({
   selector: 'sheduler-week-view',
@@ -130,10 +130,14 @@ export class ShedulerWeekViewComponent implements AfterContentInit {
     const dayIdx = this.service.getLongEventWeekDayStart(event, this.weekDays) + this.service.getLongEventWeekDaysLasts(event, this.weekDays) - 1;
     const day = addDays(this.weekStartDay, dayIdx);
 
-    if (event.id === 13) {
-      console.log(dayIdx);
-    }
-
     return dayIdx === 6 && this.service.eventFallsOnNextDay(event, day);
+  }
+
+  public weekLeftArrowClick(): void {
+    this.dayChangeClicked.emit(addDays(this.weekStartDay, -1));
+  }
+
+  public weekRightArrowClick(): void {
+    this.dayChangeClicked.emit(addDays(this.weekStartDay, 7));
   }
 }
