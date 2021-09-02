@@ -177,7 +177,7 @@ export class SchedulerDayViewComponent implements AfterContentInit {
 
   public getFullDaysBorderHeight(): string {
     if (this.fullDayEvents.length <= 3) {
-      return this.service.headerRowHeight * 3 - 3 + 'px';
+      return this.service.headerRowHeight * 3 - 1 + 'px';
     }
 
     return this.service.headerRowHeight * this.fullDayEvents.length + 'px';
