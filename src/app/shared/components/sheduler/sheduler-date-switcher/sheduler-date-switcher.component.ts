@@ -125,6 +125,10 @@ export class ShedulerDateSwitcherComponent {
     this.createEventClicked.emit();
   }
 
+  startOfWeek(date: Date) {
+    return startOfWeek(date, { weekStartsOn: 1 });
+  }
+
   public endOfWeek(date: Date): Date {
     return endOfWeek(date, { weekStartsOn: 1 });
   }
