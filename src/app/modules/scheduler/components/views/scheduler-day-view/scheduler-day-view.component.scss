@@ -153,7 +153,7 @@ $time-text-top-offset: -11px;
   left: 0;
   top: $header-row-height + 1;
   width: 100%;
-  height: calc(100% - #{$header-row-height + 1});
+  height: calc(100% - #{$header-row-height - 2});
   overflow-y: scroll;
 
   &[show-scroll=false] {

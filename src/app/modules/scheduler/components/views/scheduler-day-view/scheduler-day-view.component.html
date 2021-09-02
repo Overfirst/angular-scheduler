@@ -117,7 +117,7 @@
         <thead>
         <tr #row>
           <td [style.height]="getHeaderHeight()">
-            <div class="header-box header-box-week">
+            <div class="header-box">
               <span class="header-date">{{ weekMode ? (hours[0] | date:'EEE, dd') : (hours[0] | date:'EEEE, dd MMM') }}</span>
 
               <div *ngIf="!weekMode || dayIdx === 3" class="header-open-close">

@@ -145,7 +145,7 @@ export class SchedulerDayViewComponent implements AfterContentInit {
   }
 
   public getHeaderHeight(): string {
-    return `${(this.fullDayOpened ? 4 : 1) * this.service.headerRowHeight}px`
+    return `${(this.fullDayOpened ? 4 : 1) * this.service.headerRowHeight + 2}px`
   }
 
   public getMainContentHeight(): string {
