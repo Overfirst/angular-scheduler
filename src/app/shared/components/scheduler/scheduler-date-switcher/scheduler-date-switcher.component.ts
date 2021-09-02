@@ -1,18 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  addDays,
-  addMonths,
-  addWeeks,
-  addYears,
-  endOfWeek,
-  isSameDay,
-  isSameMonth,
-  isSameWeek,
-  isSameYear,
-  startOfWeek
-} from 'date-fns';
-
+import { endOfWeek, startOfWeek } from 'date-fns';
 import { ViewDetalization } from 'src/app/shared/interfaces';
+import { SchedulerService } from "../../../services/scheduler.service";
 
 @Component({
   selector: 'scheduler-date-switcher',
@@ -21,6 +10,8 @@ import { ViewDetalization } from 'src/app/shared/interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SchedulerDateSwitcherComponent {
+  constructor(private service: SchedulerService) {}
+
   @Input() view: ViewDetalization;
   @Input() date: Date;
 
@@ -47,25 +38,7 @@ export class SchedulerDateSwitcherComponent {
   }
 
   private changeDate(inc: boolean): void {
-    const value = inc ? 1 : -1;
-
-    switch (this.view) {
-      case ViewDetalization.Day:
-        this.date = addDays(this.date, value);
-        break;
-
-      case ViewDetalization.Week:
-        this.date = addWeeks(this.date, value);
-        break;
-
-      case ViewDetalization.Month:
-        this.date = addMonths(this.date, value);
-        break;
-
-      case ViewDetalization.Year:
-        this.date = addYears(this.date, value);
-    }
-
+    this.date = this.service.changeDate(this.view, this.date, inc);
     this.viewDateChanged.emit(this.date);
   }
 
@@ -74,58 +47,19 @@ export class SchedulerDateSwitcherComponent {
       return;
     }
 
-    const currentDate = new Date();
-
-    switch (this.view) {
-      case ViewDetalization.Day:
-        this.date.setFullYear(currentDate.getFullYear());
-        this.date.setMonth(currentDate.getMonth());
-        this.date.setDate(currentDate.getDate());
-        break;
-
-      case ViewDetalization.Week:
-        const weekStart = startOfWeek(currentDate,{ weekStartsOn: 1 });
-        this.date.setFullYear(weekStart.getFullYear());
-        this.date.setMonth(weekStart.getMonth());
-        this.date.setDate(weekStart.getDate());
-        break;
-
-      case ViewDetalization.Month:
-        this.date.setFullYear(currentDate.getFullYear());
-        this.date.setMonth(currentDate.getMonth());
-        break;
-
-      case ViewDetalization.Year:
-        this.date.setFullYear(currentDate.getFullYear());
-    }
-
-    this.date = new Date(this.date);
+    this.date = this.service.selectCurrentDate(this.view, this.date);
     this.viewDateChanged.emit(this.date);
   }
 
   public selectCurrentDateIsLocked(): boolean {
-    const currentDate = new Date();
-
-    switch (this.view) {
-      case ViewDetalization.Day:
-        return isSameDay(this.date, currentDate);
-
-      case ViewDetalization.Week:
-        return isSameWeek(this.date, currentDate);
-
-      case ViewDetalization.Month:
-        return isSameMonth(this.date, currentDate);
-
-      case ViewDetalization.Year:
-        return isSameYear(this.date, currentDate);
-    }
+    return this.service.selectCurrentDateIsLocked(this.view, this.date);
   }
 
   public createEventClick(): void {
     this.createEventClicked.emit();
   }
 
-  startOfWeek(date: Date) {
+  public startOfWeek(date: Date): Date {
     return startOfWeek(date, { weekStartsOn: 1 });
   }
 

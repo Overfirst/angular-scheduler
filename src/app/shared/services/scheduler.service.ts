@@ -23,7 +23,7 @@ import {
   differenceInHours,
   differenceInMinutes,
   addMinutes,
-  isSameDay
+  isSameDay, addYears, isSameYear
 } from "date-fns";
 
 import { SchedulerEvent, ViewComponent, ViewDetalization } from "../interfaces";
@@ -617,5 +617,77 @@ export class SchedulerService {
     }
 
     return view as ViewDetalization;
+  }
+
+  public changeDate(view: ViewDetalization, currentDate: Date, inc: boolean): Date {
+    const value = inc ? 1 : -1;
+    let date: Date;
+
+    switch (view) {
+      case ViewDetalization.Day:
+        date = addDays(currentDate, value);
+        break;
+
+      case ViewDetalization.Week:
+        date = addWeeks(currentDate, value);
+        break;
+
+      case ViewDetalization.Month:
+        date = addMonths(currentDate, value);
+        break;
+
+      case ViewDetalization.Year:
+        date = addYears(currentDate, value);
+      }
+
+    return date;
+  }
+
+  public selectCurrentDateIsLocked(view: ViewDetalization, selectedDate: Date): boolean {
+    const currentDate = new Date();
+
+    switch (view) {
+      case ViewDetalization.Day:
+        return isSameDay(selectedDate, currentDate);
+
+      case ViewDetalization.Week:
+        return isSameWeek(selectedDate, currentDate);
+
+      case ViewDetalization.Month:
+        return isSameMonth(selectedDate, currentDate);
+
+      case ViewDetalization.Year:
+        return isSameYear(selectedDate, currentDate);
+    }
+  }
+
+  public selectCurrentDate(view: ViewDetalization, selectedDate: Date): Date {
+    const currentDate = new Date();
+    const date = new Date(selectedDate);
+
+    switch (view) {
+      case ViewDetalization.Day:
+        date.setFullYear(currentDate.getFullYear());
+        date.setMonth(currentDate.getMonth());
+        date.setDate(currentDate.getDate());
+        break;
+
+      case ViewDetalization.Week:
+        const weekStart = startOfWeek(currentDate,{ weekStartsOn: 1 });
+        date.setFullYear(weekStart.getFullYear());
+        date.setMonth(weekStart.getMonth());
+        date.setDate(weekStart.getDate());
+        break;
+
+      case ViewDetalization.Month:
+        date.setFullYear(currentDate.getFullYear());
+        date.setMonth(currentDate.getMonth());
+        break;
+
+      case ViewDetalization.Year:
+        date.setFullYear(currentDate.getFullYear());
+    }
+
+    return date;
   }
 }
