@@ -1,6 +1,6 @@
 <ng-template #longDaysTemplate>
   <div *ngIf="fullWeekOpened" class="long-days-box-wrapper">
-    <div class="long-days-box">
+    <div #longEventsBox class="long-days-box">
       <ng-container *ngFor="let event of events">
         <div
           class="long-day-event-box-wrapper"
@@ -48,6 +48,10 @@
           </div>
         </div>
       </ng-container>
+    </div>
+
+    <div *ngIf="longEventsBoxEmpty()" class="week-full-empty-wrapper">
+      <span class="week-full-empty-text">There are no events that last all day or more!</span>
     </div>
   </div>
 </ng-template>

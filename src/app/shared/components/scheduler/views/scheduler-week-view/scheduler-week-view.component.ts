@@ -152,4 +152,14 @@ export class SchedulerWeekViewComponent implements AfterContentInit {
     this.fullWeekOpened = !this.fullWeekOpened;
     this.openCloseClicked.emit(this.fullWeekOpened);
   }
+
+  public longEventsBoxEmpty(): boolean {
+    for (let i = 0; i < this.events.length; i++) {
+      if (this.getLongEventWeekDaysLasts(this.events[i]) !== 0) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }
