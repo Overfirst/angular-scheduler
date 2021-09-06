@@ -18,6 +18,7 @@
             [viewComponent]="this"
             [attr.event-id]="event.id"
             [style.background-color]="getEventColor(event)"
+            [title]="getEventTitle(event)"
             (dblclick)="eventDoubleClick(event)"
             (mouseover)="eventMouseOver(eventBox)"
             (mouseleave)="eventMouseLeave(eventBox)"

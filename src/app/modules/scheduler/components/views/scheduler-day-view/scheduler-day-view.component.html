@@ -16,6 +16,7 @@
         class="event-box-day-full-wrapper"
       >
         <div
+          [title]="getEventTitle(event)"
           class="event-box-day-full"
           [style.background]="getEventColor(event)"
           (dblclick)="eventBoxDoubleClick(event)"

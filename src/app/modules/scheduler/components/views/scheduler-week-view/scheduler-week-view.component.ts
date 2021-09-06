@@ -102,6 +102,10 @@ export class SchedulerWeekViewComponent implements AfterContentInit {
     return this.service.getEventColor(event);
   }
 
+  public getEventTitle(event: SchedulerEvent): string {
+    return this.service.getEventTitle(event);
+  }
+
   public calculateLongEventWeekLeft(event: SchedulerEvent): string {
     return this.service.getLongEventWeekDayStart(event, this.weekDays) * this.row.nativeElement.clientWidth / 7 + 'px';
   }
