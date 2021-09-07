@@ -1,27 +1,42 @@
-# AngularScheduler
+# Angular scheduler
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.3.
+## What is this project?
 
-## Development server
+This project is an attempt to recreate the functionality of the event scheduler, similar to Microsoft Outlook with some simplifications. Unlike the Microsoft version, here an annual presentation was added to the three existing views, which, as far as we know, has not been done by anyone before.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Angular 12 was used for the development.
 
-## Code scaffolding
+## Daytime perfomance
+![Daytime performance](./screenshots/day.png)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Weekly perfomance
+![Weekly performance](./screenshots/week.png)
 
-## Build
+## Monthly perfomance
+![Monthly performance](./screenshots/month.png)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Annual perfomance
+![Annual performance](./screenshots/year.png)
 
-## Running unit tests
+## Create & edit modal window
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![Modal window](./screenshots/modal.png)
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+# How can you use this project?
+As an example for creating your own scheduler on Angular.
 
-## Further help
+# Demo
+You can follow [the link](https://overfirst.github.io/angular-scheduler/) for watching a demo.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Browser support
+For latest versions of:
+- Chrome
+- Opera
+- Edge
+- Yandex.Browser
+
+# Development
+- Clone this repository
+- Run the `npm install` command in the root of the repository
+- Run the `npm run start` command to start the local development server
